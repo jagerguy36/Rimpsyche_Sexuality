@@ -59,13 +59,13 @@ namespace Maux36.RimPsyche.Sexuality
                     float multiplier = __instance.sexDrive / Mathf.Max(forSame, forDiff);
                     if (gender == Gender.Male)
                     {
-                        __instance.attractionM = multiplier * forSame;
-                        __instance.attractionF = multiplier * forDiff;
+                        __instance.mAattraction = multiplier * forSame;
+                        __instance.fAattraction = multiplier * forDiff;
                     }
                     else
                     {
-                        __instance.attractionM = multiplier * forDiff;
-                        __instance.attractionF = multiplier * forSame;
+                        __instance.mAattraction = multiplier * forDiff;
+                        __instance.fAattraction = multiplier * forSame;
                     }
                 }
             }

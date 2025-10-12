@@ -8,6 +8,7 @@
     <modVersion>1.0.0</modVersion>
     <loadAfter>
         <li>brrainz.harmony</li>
+        <li>maux36.rimpsyche</li>
     </loadAfter>
     <modDependencies>
         <li>
@@ -19,6 +20,7 @@
         <li>
             <packageId>maux36.rimpsyche</packageId>
             <displayName>Rimpsyche</displayName>
+            <steamWorkshopUrl>steam://url/CommunityFilePage/3535112473</steamWorkshopUrl>
         </li>
     </modDependencies>
     <packageId>Maux36.Rimpsyche.Sexuality</packageId>

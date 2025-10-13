@@ -53,10 +53,12 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 else
                 {
+                    //TODO: Rework sexdrive
                     __instance.sexDrive = SexualityHelper.GenerateSexDriveFor(__instance.orientationCategory);
+                    float attraction = SexualityHelper.GenerateAttractionFor(__instance.orientationCategory);
                     float forSame = __instance.kinsey;
                     float forDiff = 1f - __instance.kinsey;
-                    float multiplier = __instance.sexDrive / Mathf.Max(forSame, forDiff);
+                    float multiplier = attraction / Mathf.Max(forSame, forDiff);
                     if (gender == Gender.Male)
                     {
                         __instance.mAattraction = multiplier * forSame;

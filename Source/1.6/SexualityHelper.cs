@@ -42,6 +42,17 @@ namespace Maux36.RimPsyche.Sexuality
             new CurvePoint(Distribution[5]/GaySum, steps[5])
         };
 
+        public static float GenerateKinsey()
+        {
+            float kinsey = -1f;
+            float flatRatio = Rand.Range(0f, 1f);
+            kinsey = SexualityCurve.Evaluate(flatRatio);
+            return kinsey;
+        }
+        public static float GenerateAttraction()
+        {
+            return GetNormalDistribution();
+        }
         public static float GenerateKinseyFor(SexualOrientation orientation)
         {
             float kinsey = -1f;

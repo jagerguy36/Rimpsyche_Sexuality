@@ -1,12 +1,14 @@
-﻿using Verse;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
     public class SexualityHelper
     {
         //TODO: Look up distribution researches
-        public static List<float> Distribution = new List<float> { 0.6f, 0.15f, 0.1f, 0.05f, 0.05f, 0.01f, 0.04f };
-        public const List<float> steps = new List<float> { 0f, 0.2f, 0.4f, 0.6f, 0.8f, 1f };
+        public static List<float> Distribution = [0.6f, 0.15f, 0.1f, 0.05f, 0.05f, 0.01f, 0.04f];
+        public static readonly List<float> steps = [0f, 0.2f, 0.4f, 0.6f, 0.8f, 1f];
         private static readonly float StraightSum = Distribution[0]+Distribution[1];
         private static readonly float BiSum = Distribution[2]+Distribution[3]+Distribution[4];
         private static readonly float GaySum = Distribution[5]+Distribution[6];
@@ -24,14 +26,14 @@ namespace Maux36.RimPsyche.Sexuality
         }
         public static readonly SimpleCurve StraightCurve = new SimpleCurve
         {
-            new CurvePoint(Distribution[0]/StraightSum, step[0]),
-            new CurvePoint(1f, step[1])
+            new CurvePoint(Distribution[0]/StraightSum, steps[0]),
+            new CurvePoint(1f, steps[1])
         };
         public static readonly SimpleCurve BiCurve = new SimpleCurve
         {
             new CurvePoint(0f, steps[1]),
-            new CurvePoint(Distribution[2]/BiSum, steps[2])
-            new CurvePoint((Distribution[2]+Distribution[3])/BiSum, steps[3])
+            new CurvePoint(Distribution[2]/BiSum, steps[2]),
+            new CurvePoint((Distribution[2]+Distribution[3])/BiSum, steps[3]),
             new CurvePoint(1f, steps[4])
         };
         public static readonly SimpleCurve GayCurve = new SimpleCurve
@@ -51,8 +53,9 @@ namespace Maux36.RimPsyche.Sexuality
                     break;
                 case SexualOrientation.Bisexual:
                     kinsey = BiCurve.Evaluate(flatRatio);
+                    break;
                 case SexualOrientation.Homosexual:
-                    kinsey = GayCurveCurve.Evaluate(flatRatio);
+                    kinsey = GayCurve.Evaluate(flatRatio);
                     break;
                 case SexualOrientation.Asexual:
                     kinsey = SexualityCurve.Evaluate(flatRatio);
@@ -75,7 +78,7 @@ namespace Maux36.RimPsyche.Sexuality
             if (orientation == SexualOrientation.Asexual) return Rand.Range(0, 0.05f);
             else return GetNormalDistribution(0.05f, 1f);
         }
-        public float GetNormalDistribution(float lowBracket = 0f, float highBracket = 1f, int maxAttempts = 4)
+        public static float GetNormalDistribution(float lowBracket = 0f, float highBracket = 1f, int maxAttempts = 4)
         {
             float result;
             int attempts = 0;

@@ -7,7 +7,7 @@ namespace Maux36.RimPsyche.Sexuality
     public class SexualityHelper
     {
         //TODO: Look up distribution researches
-        public static List<float> Distribution = [0.6f, 0.15f, 0.1f, 0.05f, 0.05f, 0.01f, 0.04f];
+        public static List<float> Distribution = [0.6f, 0.1f, 0.1f, 0.05f, 0.05f, 0.05f, 0.05f];
         public static readonly List<float> steps = [0f, 0.2f, 0.4f, 0.6f, 0.8f, 1f];
         private static readonly float StraightSum = Distribution[0]+Distribution[1];
         private static readonly float BiSum = Distribution[2]+Distribution[3]+Distribution[4];

@@ -3,7 +3,6 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
-
     [HarmonyPatch(typeof(PawnGenerator), nameof(PawnGenerator.TryGenerateSexualityTraitFor))]
     public static class TryGenerateSexualityTraitForPatch
     {
@@ -13,7 +12,7 @@ namespace Maux36.RimPsyche.Sexuality
             if (compPsyche != null)
             {
                 Log.Message($"intercepted trygen sexuality for {pawn.Name}. generating.");
-                pawn.compPsyche().SexualitySetup(true);
+                compPsyche.SexualitySetup(true, allowGay);
                 return false;
             }
             return true;

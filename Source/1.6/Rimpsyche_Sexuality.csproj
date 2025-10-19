@@ -60,11 +60,9 @@
   <ItemGroup>
     <Compile Include="HarmonyPatches\Attraction\SecondaryLovinChanceFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />
-    <Compile Include="HarmonyPatches\SexaulityAssignment\Pawn_SexualityTracker_Initialize.cs" />
     <Compile Include="HarmonyPatches\SexaulityAssignment\TryGenerateSexualityTraitForPatch.cs" />
     <Compile Include="RimpsycheSexuality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SexualityHelper.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

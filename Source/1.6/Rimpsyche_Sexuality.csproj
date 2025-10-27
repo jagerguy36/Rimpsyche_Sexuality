@@ -58,10 +58,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Defs\PreferenceDef.cs" />
+    <Compile Include="Preferences\PreferenceDef.cs" />
     <Compile Include="HarmonyPatches\Attraction\SecondaryLovinChanceFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />
     <Compile Include="HarmonyPatches\SexaulityAssignment\TryGenerateSexualityTraitForPatch.cs" />
+    <Compile Include="Preferences\PsychePreferenceWorker.cs" />
+    <Compile Include="Preferences\SexualityPreferenceWorker.cs" />
     <Compile Include="RimpsycheSexuality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

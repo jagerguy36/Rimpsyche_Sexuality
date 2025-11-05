@@ -44,7 +44,7 @@ namespace Maux36.RimPsyche.Sexuality
         public float EditorHeight;
         public PreferenceDef def;
 
-        public abstract void SetUp(Pawn pawn);
+        public abstract bool TryGenerate(Pawn pawn, out PrefEntry[] pref);
         
         public abstract string Report(Pawn pawn);
 

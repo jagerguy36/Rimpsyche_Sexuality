@@ -5,12 +5,12 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
-    public class PsychePerferenceWorker : PreferenceWorker
+    public class PsychePreferenceWorker : PreferenceWorker
     {
         private static readonly List<PersonalityDef> SourceDefs = DefDatabase<PersonalityDef>.AllDefsListForReading;
         private static readonly int nodeCount = SourceDefs.Count;
         private static readonly int[] IndexPool = Enumerable.Range(0, nodeCount).ToArray();
-        public PsychePerferenceWorker()
+        public PsychePreferenceWorker()
         {
             EditorHeight = 100f;
         }
@@ -30,17 +30,17 @@ namespace Maux36.RimPsyche.Sexuality
             }
             return result;
         }
-        public override void SetUp(Pawn pawn)
+        public override bool TryGenerate(Pawn pawn, out PrefEntry[] pref)
         {
-            var compPsyche = pawn.compPsyche();
-            if (compPsyche?.Enabled != true) return;
+            var pref = new PrefEntry[5];
             var relevantNodes = RandomFiveNodes();
             for (int i = 0; i < relevantNodes.Count; i++)
             {
                 float importance = Rand.Range(0f, 1f);
-
+                float target = Rand.Range(-1f, 1f);
+                pref[i] = new PrefEntry(relevantNodes[i], target, importance);
             }
-
+            return true;
         }
 
         public override string Report(Pawn pawn)

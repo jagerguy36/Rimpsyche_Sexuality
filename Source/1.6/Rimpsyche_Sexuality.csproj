@@ -68,6 +68,7 @@
     <Compile Include="Preferences\SexualityPreferenceWorker.cs" />
     <Compile Include="RimpsycheSexuality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sexuality_Utility.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

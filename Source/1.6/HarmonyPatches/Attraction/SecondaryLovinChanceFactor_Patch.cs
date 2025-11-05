@@ -7,7 +7,7 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
-    [HarmonyPatch(typeof(Pawn_RelationsTracker), "SecondaryLovinChanceFactor")]
+    [HarmonyPatch(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.SecondaryLovinChanceFactor))]
     public static class Patch_SecondaryLovinChanceFactor
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
@@ -16,13 +16,14 @@ namespace Maux36.RimPsyche.Sexuality
             FieldInfo pawnField = AccessTools.Field(typeof(Pawn_RelationsTracker), "pawn");
             FieldInfo storyField = AccessTools.Field(typeof(Pawn), "story");
             MethodInfo prettinessMethod = AccessTools.Method(typeof(Pawn_RelationsTracker), "PrettinessFactor");
-            MethodInfo multiplierMethod = AccessTools.Method(typeof(Patch_SecondaryLovinChanceFactor), nameof(Patch_SecondaryLovinChanceFactor.KinseyBasedLovinChance));
+            MethodInfo multiplierMethod = AccessTools.Method(typeof(Patch_SecondaryLovinChanceFactor), nameof(Patch_SecondaryLovinChanceFactor.PsycheBasedLovinChance));
 
             bool chancePatched = false;
 
             //Skip Trait Sexuality Check
             Label? skipLabel = null;
             int insertIndex = -1;
+            //Determine where the skip label should go
             for (int i = 0; i < codes.Count - 2; i++)
             {
                 if (codes[i].opcode == OpCodes.Ldarg_0 &&
@@ -36,7 +37,7 @@ namespace Maux36.RimPsyche.Sexuality
                     break;
                 }
             }
-
+            //If appropriate skip landing position if found insert unconditional skip at insertIndex to skip trait check for sexuality
             if (skipLabel.HasValue && insertIndex >= 0)
             {
                 var newInstruction = new CodeInstruction(OpCodes.Br, skipLabel.Value);
@@ -63,7 +64,7 @@ namespace Maux36.RimPsyche.Sexuality
                         new CodeInstruction(OpCodes.Mul)
                     };
                     codes.InsertRange(i + 2, newInstrs);
-                    chancePatched = true;
+                    chancePatched = chancePatched && true;
                     break;
                 }
             }
@@ -76,13 +77,11 @@ namespace Maux36.RimPsyche.Sexuality
             return codes;
         }
 
-        public static float KinseyBasedLovinChance(Pawn initiator, Pawn otherPawn)
+        public static float PsycheBasedLovinChance(Pawn initiator, Pawn otherPawn)
         {
             var initPsyche = initiator.compPsyche();
-            var reciPsyche = otherPawn.compPsyche();
-            if (initPsyche == null || reciPsyche == null) return 0;
-
-            return 1f;
+            if (initPsyche?.Enabled != true) return 1f;
+            return initPsyche.Sexuality.GetAdjustedAttraction(otherPawn.gender);
         }
     }
 }

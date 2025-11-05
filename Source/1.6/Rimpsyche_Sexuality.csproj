@@ -58,6 +58,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HarmonyPatches\Attraction\RelationsUtility_AttractedToGender_Patch.cs" />
+    <Compile Include="HarmonyPatches\SexDrive\LovePartnerRelationUtility_LovinMtbSinglePawnFactor_Patch.cs" />
     <Compile Include="Preferences\PreferenceDef.cs" />
     <Compile Include="HarmonyPatches\Attraction\SecondaryLovinChanceFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />

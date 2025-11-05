@@ -48,8 +48,27 @@ namespace Maux36.RimPsyche.Sexuality
             return "";
         }
 
+        // use top 5(importance) only for calculation. Top 3 only for report.
+        // sum( (2-|(Xother-Xwish)|)*0.5*importance )
         public override float Evaluate(Pawn obesrver, Pawn target)
         {
+            var observerPsyche = obesrver.compPsyche();
+            if (observerPsyche?.Enabled != true) return 0f;
+            var targetPsyche = target.compPsyche();
+            if (targetPsyche?.Enabled != true) return 0f;
+            var psychePreference = observerPsyche.Sexuality.GetPreference(PreferenceDefOf.PsychePreference);
+            float value = 0f;
+            for (int i = 0; i < psychePreference.Length; i++)
+            {
+                PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(psychePreference[i].stringKey, false);
+                if (p == null)
+                {
+                    Log.Warning($"Psyche Preference unable to load Personality def {psychePreference[i].stringKey}");
+                    //Logic to fix it.
+                }
+                var pv = targetPsyche.Personality.GetPersonality(personality);
+            }
+
             return 0f;
         }
 

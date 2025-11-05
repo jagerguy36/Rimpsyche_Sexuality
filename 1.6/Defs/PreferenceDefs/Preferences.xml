@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <Maux36.RimPsyche.PreferenceDef>
+    <defName>Rimpsyche_PsychePreference</defName>
+    <label>personality perference</label>
+    <description>Preference about personality.</description>
+    <category>Social</category>
+    <cacheType>Never</cacheType>
+    <workerClass>Maux36.RimPsyche.Sexuality.PsychePreferenceWorker</workerClass>
+  </Maux36.RimPsyche.PreferenceDef>
+</Defs>

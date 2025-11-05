@@ -30,22 +30,22 @@ namespace Maux36.RimPsyche.Sexuality
             }
             return result;
         }
-        public override bool TryGenerate(Pawn pawn, out PrefEntry[] pref)
+        public override bool TryGenerate(Pawn pawn, out List<PrefEntry> pref)
         {
-            var pref = new PrefEntry[5];
+            pref = new List<PrefEntry>(5);
             var relevantNodes = RandomFiveNodes();
             for (int i = 0; i < relevantNodes.Count; i++)
             {
                 float importance = Rand.Range(0f, 1f);
                 float target = Rand.Range(-1f, 1f);
-                pref[i] = new PrefEntry(relevantNodes[i], target, importance);
+                pref.Add(new PrefEntry(relevantNodes[i].defName, relevantNodes[i].shortHash, target, importance));
             }
             return true;
         }
 
         public override string Report(Pawn pawn)
         {
-            return "";
+            return "Prefers: ";
         }
 
         // use top 5(importance) only for calculation. Top 3 only for report.
@@ -56,12 +56,12 @@ namespace Maux36.RimPsyche.Sexuality
             if (observerPsyche?.Enabled != true) return 0f;
             var targetPsyche = target.compPsyche();
             if (targetPsyche?.Enabled != true) return 0f;
-            var psychePreference = observerPsyche.Sexuality.GetPreference(PreferenceDefOf.PsychePreference);
+            var psychePreference = observerPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
             float value = 0f;
-            for (int i = 0; i < psychePreference.Length; i++)
+            for (int i = 0; i < psychePreference.Count; i++)
             {
                 PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(psychePreference[i].stringKey, false);
-                if (p == null)
+                if (personality == null)
                 {
                     Log.Warning($"Psyche Preference unable to load Personality def {psychePreference[i].stringKey}");
                     //Logic to fix it.

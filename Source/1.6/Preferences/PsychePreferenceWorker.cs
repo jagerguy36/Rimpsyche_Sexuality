@@ -53,11 +53,12 @@ namespace Maux36.RimPsyche.Sexuality
             if (compPsyche?.Enabled != true) return "RPS_NoPreference";
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
             var parts = new StringBuilder();
+            parts.Append($"{pawn.Name}'s preference\n");
             for (int i = 0; i < reportCount; i++)
             {
                 if (string.IsNullOrEmpty(psychePreference[i].stringKey)) continue;
                 if (parts.Length > 0) parts.Append(" | ");
-                parts.Append($"{pawn.Name}'s preference || {psychePreference[i].stringKey}: {psychePreference[i].target:F2} ({psychePreference[i].importance:F2})");
+                parts.Append($"{psychePreference[i].stringKey}: {psychePreference[i].target:F2} ({psychePreference[i].importance:F2})\n");
             }
             return parts.ToString();
         }

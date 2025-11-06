@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using RimWorld;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -53,9 +55,9 @@ namespace Maux36.RimPsyche.Sexuality
             var parts = new StringBuilder();
             for (int i = 0; i < reportCount; i++)
             {
-                if (string.IsNullOrEmpty(psychePref[i].stringKey)) continue;
+                if (string.IsNullOrEmpty(psychePreference[i].stringKey)) continue;
                 if (parts.Length > 0) parts.Append(" | ");
-                parts.Append($"{pawn.Name}'s preference || {psychePref[i].stringKey}: {psychePref[i].target:F2} ({psychePref[i].importance:F2})");
+                parts.Append($"{pawn.Name}'s preference || {psychePreference[i].stringKey}: {psychePreference[i].target:F2} ({psychePreference[i].importance:F2})");
             }
             return parts.ToString();
         }
@@ -80,7 +82,7 @@ namespace Maux36.RimPsyche.Sexuality
                 var pv = targetPsyche.Personality.GetPersonality(personality);
                 value += (1 - Mathf.Abs(pv - pf.target))* pf.importance; //-5f~5f
             }
-            float auth = observerPsyche.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
+            float auth = observerPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
             float sway = 0.3f + 0.2f * auth; // 0.1~0.5
             float preferenceFactor =  1f + value * 0.2f * sway;
             return preferenceFactor;
@@ -89,9 +91,9 @@ namespace Maux36.RimPsyche.Sexuality
         private static List<PersonalityDef> GetRelevantDefs(List<PrefEntry> psychePrefs)
         {
             List<PersonalityDef> defs = new();
-            for(int i = 0; i < psychePref.Count; i++)
+            for(int i = 0; i < psychePrefs.Count; i++)
             {
-                var pf = psychePreference[i];
+                var pf = psychePrefs[i];
                 PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(pf.stringKey, false);
                 defs.Add(personality);
             }
@@ -107,6 +109,7 @@ namespace Maux36.RimPsyche.Sexuality
         private static readonly float personalityLabelPadding = 2f;
         private static readonly float personalityBarWidth = 100f;
         private static readonly float personalityBarHeight = 4f;
+        public static readonly Color barBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
         public override void DrawEditor(Rect rect, Pawn pawn, bool EditEnabled)
         {
             Rect innerRect = rect.ContractedBy(innerPadding);
@@ -118,14 +121,16 @@ namespace Maux36.RimPsyche.Sexuality
             Text.Anchor = TextAnchor.UpperLeft;
 
             Rect viewRect = new Rect(innerRect.x, titleRect.yMax + titleContentSpacing, innerRect.width, innerRect.height - (titleRect.height + titleContentSpacing));
-            var y = 0;
+            float y = 0f;
+            float barCenterX = viewRect.width * 0.5f;
+
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return;
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
-            var psychePreference = observerPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
+            var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
             var personalityDefList = GetRelevantDefs(psychePreference);
-            for(int i = 0; i < psychePref.Count; i++)
+            for(int i = 0; i < psychePreference.Count; i++)
             {
                 var targetValue = psychePreference[i].target;
                 var def = personalityDefList[i];
@@ -152,18 +157,9 @@ namespace Maux36.RimPsyche.Sexuality
                 Widgets.Label(rightRect, rightLabel);
                 if (EditEnabled)
                 {
-                    float highend = 1f;
-                    float lowend = -1f;
-                    if (!scope.NullOrEmpty())
-                    {
-                        if (scope.TryGetValue(def.shortHash, out var range))
-                        {
-                            (lowend, highend) = range;
-                        }
-                    }
                     //Rect sliderRect = new Rect(barCenterX + barWidth / 2f * lowend , centerY - barHeight / 2f, barWidth*(highend-lowend)*0.5f, 24f);?
                     Rect sliderRect = new Rect(barCenterX - personalityBarWidth / 2f, centerY - personalityBarHeight / 2f, personalityBarWidth, personalityRowHeight);
-                    float newValue = Widgets.HorizontalSlider(sliderRect, targetValue, lowend, highend);
+                    float newValue = Widgets.HorizontalSlider(sliderRect, targetValue, -1f, 1f);
                     //newValue = Mathf.Clamp(newValue, lowend, highend);
                     if (newValue != targetValue)
                     {
@@ -195,7 +191,5 @@ namespace Maux36.RimPsyche.Sexuality
             Text.Font = oldFont;
             return;
         }
-
-        public p
     }
 }

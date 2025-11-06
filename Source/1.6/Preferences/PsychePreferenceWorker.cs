@@ -78,9 +78,12 @@ namespace Maux36.RimPsyche.Sexuality
                     //Logic to fix it.
                 }
                 var pv = targetPsyche.Personality.GetPersonality(personality);
-                value += (2 - Mathf.Abs(pv - pf.target))* pf.importance;
+                value += (1 - Mathf.Abs(pv - pf.target))* pf.importance; //-5f~5f
             }
-            return value * 0.1f;
+            float auth = observerPsyche.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
+            float sway = 0.3f + 0.2f * auth; // 0.1~0.5
+            float preferenceFactor =  1f + value * 0.2f * sway;
+            return preferenceFactor;
         }
 
         private static List<PersonalityDef> GetRelevantDefs(List<PrefEntry> psychePrefs)

@@ -11,7 +11,7 @@ namespace Maux36.RimPsyche.Sexuality
             var compPsyche = pawn.compPsyche();
             if (compPsyche != null)
             {
-                Log.Message($"intercepted trygen sexuality for {pawn.Name}. generating.");
+                //Log.Message($"intercepted trygen sexuality for {pawn.Name}. generating.");
                 compPsyche.SexualitySetup(true, allowGay);
                 return false;
             }

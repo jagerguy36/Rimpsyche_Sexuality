@@ -77,11 +77,36 @@ namespace Maux36.RimPsyche.Sexuality
             return codes;
         }
 
-        public static float PsycheBasedLovinChance(Pawn initiator, Pawn otherPawn)
+        public static float PsycheBasedLovinChance(Pawn pawn, Pawn otherPawn)
         {
-            var initPsyche = initiator.compPsyche();
-            if (initPsyche?.Enabled != true) return 1f;
-            return initPsyche.Sexuality.GetAdjustedAttraction(otherPawn.gender);
+            var pawnPsyche = pawn.compPsyche();
+            //Vanilla logic if psyche not available for some reason.
+            if (pawnPsyche?.Enabled != true)
+            {
+                if (pawn.story != null && pawn.story.traits != null)
+                {
+                    if (pawn.story.traits.HasTrait(TraitDefOf.Asexual))
+                    {
+                        return 0f;
+                    }
+                    if (!pawn.story.traits.HasTrait(TraitDefOf.Bisexual))
+                    {
+                        if (pawn.story.traits.HasTrait(TraitDefOf.Gay))
+                        {
+                            if (otherPawn.gender != pawn.gender)
+                            {
+                                return 0f;
+                            }
+                        }
+                        else if (otherPawn.gender == pawn.gender)
+                        {
+                            return 0f;
+                        }
+                    }
+                }
+                return 1f;
+            }
+            return pawnPsyche.Sexuality.GetAdjustedAttraction(otherPawn.gender);
         }
     }
 }

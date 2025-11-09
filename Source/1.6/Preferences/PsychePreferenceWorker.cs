@@ -1,4 +1,5 @@
 ﻿using RimWorld;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -105,88 +106,132 @@ namespace Maux36.RimPsyche.Sexuality
         public static readonly float titleHeight = 35f;
         public static readonly float titleContentSpacing = 5f;
         private static float personalityLabelWidth => RimpsycheDatabase.maxPersonalityLabelWidth;
-        private static float personalityWidthDiff => 2f * (personalityLabelWidth - 130f);
-        private static readonly float personalityRowHeight = 32f;
+        //private static float personalityWidthDiff => 2f * (personalityLabelWidth - 130f);
+        private static readonly float personalityRowHeight = 20f;
         private static readonly float personalityLabelPadding = 2f;
-        private static readonly float personalityBarWidth = 100f;
         private static readonly float personalityBarHeight = 4f;
         public static readonly Color barBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
+
+        private static readonly float verticalWidth = 20f;
+        private static readonly float verticalPadding = 5f;
         public override void DrawEditor(Rect rect, Pawn pawn, bool EditEnabled)
         {
-            Rect innerRect = rect.ContractedBy(innerPadding);
-            Rect titleRect = new Rect(innerRect.x, innerRect.y, innerRect.width, titleHeight);
+            TextAnchor oldAnchor = Text.Anchor;
+            GameFont oldFont = Text.Font;
+            //Rect innerRect = rect.ContractedBy(innerPadding);
             Text.Anchor = TextAnchor.MiddleCenter;
             string titleString = "RPC_Personality".Translate();
-            Widgets.Label(titleRect, titleString);
             Vector2 titleTextSize = Text.CalcSize(titleString);
+            Rect titleRect = new Rect(rect.x, rect.y, rect.width, titleTextSize.y);
+            Widgets.Label(titleRect, titleString);
             Text.Anchor = TextAnchor.UpperLeft;
 
-            Rect viewRect = new Rect(innerRect.x, titleRect.yMax + titleContentSpacing, innerRect.width, innerRect.height - (titleRect.height + titleContentSpacing));
-            float y = 0f;
-            float barCenterX = viewRect.width * 0.5f;
+            Rect viewRect = new Rect(rect.x, titleRect.yMax + titleContentSpacing, rect.width, rect.height - (titleRect.height + titleContentSpacing));
+            float y = viewRect.y;
 
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return;
-            TextAnchor oldAnchor = Text.Anchor;
-            GameFont oldFont = Text.Font;
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
             var personalityDefList = GetRelevantDefs(psychePreference);
-            for(int i = 0; i < psychePreference.Count; i++)
+            Text.Font = GameFont.Tiny;
+
+            float rowWidth = viewRect.width - verticalWidth;
+            float leftRectX = rect.x + personalityLabelPadding;
+            float rightRectX = rect.x + rowWidth - personalityLabelPadding - personalityLabelWidth;
+            float vertRectX = rect.x + rowWidth;
+            float vertBarX = vertRectX + (verticalWidth - personalityBarHeight) / 2f;
+            float vertBarHeight = (personalityRowHeight - verticalPadding) * 2f;
+
+            for (int i = 0; i < psychePreference.Count; i++)
             {
                 var targetValue = psychePreference[i].target;
+                var importanceValue = psychePreference[i].importance;
                 var def = personalityDefList[i];
                 var (leftLabel, rightLabel, leftColor, rightColor) = (def.low.CapitalizeFirst(), def.high.CapitalizeFirst(), Color.red, Color.green);
 
-                // rowRect and its sub-rects are correctly relative to 'y' which is inside viewRect
-                Rect rowRect = new Rect(0f, y, viewRect.width, personalityRowHeight);
+                Rect rowRect = new Rect(rect.x, y, rowWidth, personalityRowHeight * 2f);
+                Rect vertRect = new Rect(vertRectX, y, verticalWidth, personalityRowHeight * 2f);
 
                 if (Mouse.IsOver(rowRect))
                 {
                     Widgets.DrawHighlight(rowRect);
                     string tooltipString = $"{def.label.CapitalizeFirst()}: {(targetValue * 100f).ToString("F1")}";
                     TooltipHandler.TipRegion(rowRect, tooltipString);
+                    //TODO1 cache this, also remove the ones in the relevant defs
+                    //TODO2 cache relevant defs, and coincide cache nullfying with the option cache.
+                    if (EditEnabled && Event.current.type == EventType.MouseDown && Event.current.button == 0)
+                    {
+                        List<FloatMenuOption> options = new List<FloatMenuOption>();
+                        int capturedIndex = i;
+                        foreach (PersonalityDef potentialDef in DefDatabase<PersonalityDef>.AllDefsListForReading)
+                        {
+                            PersonalityDef capturedDef = potentialDef;
+                            Action action = delegate
+                            {
+                                psychePreference[capturedIndex].stringKey = capturedDef.defName;
+                            };
+                            options.Add(new FloatMenuOption(capturedDef.label.CapitalizeFirst(), action));
+                        }
+                        Find.WindowStack.Add(new FloatMenu(options));
+                        Event.current.Use();
+                    }
+
                 }
-                float centerY = rowRect.y + rowRect.height / 2f;
+                if (Mouse.IsOver(vertRect))
+                {
+                    Widgets.DrawHighlight(vertRect);
+                    string tooltipString = "RPC_Importance".Translate() + $": {(importanceValue * 100f).ToString("F1")}";
+                    TooltipHandler.TipRegion(vertRect, tooltipString);
+                }
+                float uppercenterY = rowRect.y + rowRect.height * 0.25f;
+                float lowercenterY = rowRect.y + rowRect.height * 0.75f;
                 // Left label
-                Rect leftRect = new Rect(rowRect.x + personalityLabelPadding, centerY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
+                Rect leftRect = new Rect(leftRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
                 Text.Anchor = TextAnchor.MiddleLeft;
                 Widgets.Label(leftRect, leftLabel);
 
                 // Right label
-                Rect rightRect = new Rect(rowRect.xMax - personalityLabelWidth - personalityLabelPadding, centerY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
+                Rect rightRect = new Rect(rightRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
                 Text.Anchor = TextAnchor.MiddleRight;
                 Widgets.Label(rightRect, rightLabel);
                 if (EditEnabled)
                 {
-                    //Rect sliderRect = new Rect(barCenterX + barWidth / 2f * lowend , centerY - barHeight / 2f, barWidth*(highend-lowend)*0.5f, 24f);?
-                    Rect sliderRect = new Rect(barCenterX - personalityBarWidth / 2f, centerY - personalityBarHeight / 2f, personalityBarWidth, personalityRowHeight);
+                    Rect sliderRect = new Rect(0, lowercenterY - personalityBarHeight / 2f, rowRect.width, personalityRowHeight);
                     float newValue = Widgets.HorizontalSlider(sliderRect, targetValue, -1f, 1f);
-                    //newValue = Mathf.Clamp(newValue, lowend, highend);
                     if (newValue != targetValue)
                     {
                         psychePreference[i].target = newValue;
                     }
+                    //Importance
+                    psychePreference[i].importance = GUI.VerticalSlider(vertRect, psychePreference[i].importance, 1f, 0f);
                 }
                 else
                 {
                     // Bar background
-                    Rect barRect = new Rect(barCenterX - personalityBarWidth / 2f, centerY - personalityBarHeight / 2f, personalityBarWidth, personalityBarHeight);
+                    Rect barRect = new Rect(0, lowercenterY - personalityBarHeight / 2f, rowRect.width, personalityBarHeight);
                     Widgets.DrawBoxSolid(barRect, barBackgroundColor);
 
                     // Value bar
                     float clamped = Mathf.Clamp(targetValue, -1f, 1f);
-                    float halfBar = Mathf.Abs(clamped) * (personalityBarWidth) / 2f;
+                    float halfBar = Mathf.Abs(clamped) * (rowRect.width) / 2f;
                     Rect valueRect = clamped >= 0
-                        ? new Rect(barCenterX, barRect.y, halfBar, personalityBarHeight)
-                        : new Rect(barCenterX - halfBar, barRect.y, halfBar, personalityBarHeight);
+                        ? new Rect(rowRect.width * 0.5f, barRect.y, halfBar, personalityBarHeight)
+                        : new Rect(rowRect.width * 0.5f - halfBar, barRect.y, halfBar, personalityBarHeight);
 
                     // Color based on intensity (small = yellow, strong = green)
                     float intensity = Mathf.Abs(clamped) * 2f;
                     Color barColor = Color.Lerp(Color.yellow, Color.green, intensity);
                     Widgets.DrawBoxSolid(valueRect, barColor);
+
+                    //Importance
+                    Rect vertBarRect = new Rect(vertBarX, vertRect.y + verticalPadding, personalityBarHeight, vertBarHeight);
+                    Widgets.DrawBoxSolid(vertBarRect, barBackgroundColor);
+                    Rect vertValueRect = new Rect(vertBarX, vertBarRect.y + vertBarHeight * (1- psychePreference[i].importance), personalityBarHeight, vertBarHeight * psychePreference[i].importance);
+                    Color vertBarColor = Color.Lerp(Color.yellow, Color.green, psychePreference[i].importance);
+                    Widgets.DrawBoxSolid(vertValueRect, vertBarColor);
                 }
 
-                y += personalityRowHeight;
+                y += 2f * personalityRowHeight;
             }
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;

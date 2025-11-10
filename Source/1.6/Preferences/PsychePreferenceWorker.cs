@@ -47,21 +47,20 @@ namespace Maux36.RimPsyche.Sexuality
             return true;
         }
 
-        // Top 3 only for report.
         //TODO: use descriptor instead of numbers
         public override string Report(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return "RPS_NoPreference";
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
-            var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
+            var sortedPreferences = psychePreference.OrderBy(p => p.importance).ToList();
             var parts = new StringBuilder();
             parts.Append("RPS_AttractionReport".Translate(pawn.Name.ToStringShort)+"\n");
-            for (int i = 0; i < reportCount; i++)
+            for (int i = 0; i < sortedPreferences.Count; i++)
             {
                 if (string.IsNullOrEmpty(sortedPreferences[i].stringKey)) continue;
-                var def = compPsyche.Personality.GetPersonality(sortedPreferences[i].stringKey);
-                parts.Append($"      {Rimpsyche_Utility.GetPersonalityDesc(def, sortedPreferences[i].targetValue)}\n");
+                var def = DefDatabase<PersonalityDef>.GetNamed(sortedPreferences[i].stringKey);
+                parts.Append($"      {Rimpsyche_Utility.GetPersonalityDesc(def, sortedPreferences[i].target)}\n");
             }
             return parts.ToString();
         }
@@ -92,9 +91,9 @@ namespace Maux36.RimPsyche.Sexuality
             return preferenceFactor;
         }
         private static List<PersonalityDef> relevantDefsCache = null;
-        private static List<PersonalityDef> GetRelevantDefs(List<PrefEntry> psychePrefs, bool cacheDirty)
+        private static List<PersonalityDef> GetRelevantDefs(List<PrefEntry> psychePrefs)
         {
-            if(!cacheDirty && relevantDefsCache != null) return relevantDefsCache;
+            if(relevantDefsCache != null) return relevantDefsCache;
             relevantDefsCache = [];
             for(int i = 0; i < psychePrefs.Count; i++)
             {
@@ -117,7 +116,7 @@ namespace Maux36.RimPsyche.Sexuality
 
         private static readonly float verticalWidth = 20f;
         private static readonly float verticalPadding = 5f;
-        public override void DrawEditor(Rect rect, Pawn pawn, bool EditEnabled, bool cacheDirty)
+        public override void DrawEditor(Rect rect, Pawn pawn, bool EditEnabled)
         {
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
@@ -135,7 +134,7 @@ namespace Maux36.RimPsyche.Sexuality
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return;
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
-            var personalityDefList = GetRelevantDefs(psychePreference, cacheDirty);
+            var personalityDefList = GetRelevantDefs(psychePreference);
             Text.Font = GameFont.Tiny;
 
             float rowWidth = viewRect.width - verticalWidth;

@@ -48,18 +48,20 @@ namespace Maux36.RimPsyche.Sexuality
         }
 
         // Top 3 only for report.
+        //TODO: use descriptor instead of numbers
         public override string Report(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return "RPS_NoPreference";
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
+            var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
             var parts = new StringBuilder();
-            parts.Append($"{pawn.Name.ToStringShort}'s preference\n");
+            parts.Append("RPS_AttractionReport".Translate(pawn.Name.ToStringShort)+"\n");
             for (int i = 0; i < reportCount; i++)
             {
-                if (string.IsNullOrEmpty(psychePreference[i].stringKey)) continue;
-                if (parts.Length > 0) parts.Append(" | ");
-                parts.Append($"{psychePreference[i].stringKey}: {psychePreference[i].target:F2} ({psychePreference[i].importance:F2})\n");
+                if (string.IsNullOrEmpty(sortedPreferences[i].stringKey)) continue;
+                var def = compPsyche.Personality.GetPersonality(sortedPreferences[i].stringKey);
+                parts.Append($"      {Rimpsyche_Utility.GetPersonalityDesc(def, sortedPreferences[i].targetValue)}\n");
             }
             return parts.ToString();
         }

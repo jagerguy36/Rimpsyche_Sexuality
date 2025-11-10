@@ -91,17 +91,18 @@ namespace Maux36.RimPsyche.Sexuality
             float preferenceFactor =  1f + value * 0.2f * sway;
             return preferenceFactor;
         }
-
-        private static List<PersonalityDef> GetRelevantDefs(List<PrefEntry> psychePrefs)
+        private static List<PersonalityDef> relevantDefsCache = null;
+        private static List<PersonalityDef> GetRelevantDefs(List<PrefEntry> psychePrefs, bool cacheDirty)
         {
-            List<PersonalityDef> defs = new();
+            if(!cacheDirty && relevantDefsCache != null) return relevantDefsCache;
+            relevantDefsCache = [];
             for(int i = 0; i < psychePrefs.Count; i++)
             {
                 var pf = psychePrefs[i];
                 PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(pf.stringKey, false);
-                defs.Add(personality);
+                relevantDefsCache.Add(personality);
             }
-            return defs;
+            return relevantDefsCache;
         }
 
         public static readonly float innerPadding = 5f;
@@ -116,7 +117,7 @@ namespace Maux36.RimPsyche.Sexuality
 
         private static readonly float verticalWidth = 20f;
         private static readonly float verticalPadding = 5f;
-        public override void DrawEditor(Rect rect, Pawn pawn, bool EditEnabled)
+        public override void DrawEditor(Rect rect, Pawn pawn, bool EditEnabled, bool cacheDirty)
         {
             TextAnchor oldAnchor = Text.Anchor;
             GameFont oldFont = Text.Font;
@@ -134,7 +135,7 @@ namespace Maux36.RimPsyche.Sexuality
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return;
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
-            var personalityDefList = GetRelevantDefs(psychePreference);
+            var personalityDefList = GetRelevantDefs(psychePreference, cacheDirty);
             Text.Font = GameFont.Tiny;
 
             float rowWidth = viewRect.width - verticalWidth;
@@ -238,6 +239,10 @@ namespace Maux36.RimPsyche.Sexuality
             Text.Anchor = oldAnchor;
             Text.Font = oldFont;
             return;
+        }
+        public override void ClearEditorCache()
+        {
+            relevantDefsCache = null;   
         }
     }
 }

@@ -90,20 +90,8 @@ namespace Maux36.RimPsyche.Sexuality
             float preferenceFactor =  1f + value * 0.2f * sway;
             return preferenceFactor;
         }
-        private static List<PersonalityDef> relevantDefsCache = null;
-        private static List<PersonalityDef> GetRelevantDefs(List<PrefEntry> psychePrefs)
-        {
-            if(relevantDefsCache != null) return relevantDefsCache;
-            relevantDefsCache = [];
-            for(int i = 0; i < psychePrefs.Count; i++)
-            {
-                var pf = psychePrefs[i];
-                PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(pf.stringKey, false);
-                relevantDefsCache.Add(personality);
-            }
-            return relevantDefsCache;
-        }
-
+        
+        //Static values
         public static readonly float innerPadding = 5f;
         public static readonly float titleHeight = 35f;
         public static readonly float titleContentSpacing = 5f;
@@ -112,10 +100,43 @@ namespace Maux36.RimPsyche.Sexuality
         private static readonly float personalityRowHeight = 20f;
         private static readonly float personalityLabelPadding = 2f;
         private static readonly float personalityBarHeight = 4f;
-        public static readonly Color barBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
+        private static readonly Color barBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
 
         private static readonly float verticalWidth = 20f;
         private static readonly float verticalPadding = 5f;
+
+        //Internal Cache
+        private static List<PersonalityDef> relevantDefsCache = null;
+        private static HashSet<int> relevantDefsHash = null;
+        private static List<PersonalityDef> GetRelevantDefs(List<PrefEntry> psychePrefs)
+        {
+            if(relevantDefsCache != null) return relevantDefsCache;
+            relevantDefsCache = [];
+            relevantDefsHash = new();
+            for(int i = 0; i < psychePrefs.Count; i++)
+            {
+                var pf = psychePrefs[i];
+                PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(pf.stringKey, false);
+                relevantDefsCache.Add(personality);
+                relevantDefsHash.Add(personality.shortHash)
+            }
+            return relevantDefsCache;
+        }
+        private static List<PersonalityDef> potentialDefsCache = null;
+        private static List<PersonalityDef> GetPotentialDefs(List<PrefEntry> psychePrefs)
+        {
+            if(potentialDefsCache != null) return potentialDefsCache;
+
+            var relevantDefs = GetRelevantDefs(psychePrefs);
+            potentialDefsCache = [];
+            foreach(var personalityDef in  DefDatabase<PersonalityDef>.AllDefs.Count)
+            {
+                if (relevantDefsHash.Contains(personalityDef.shortHash)) continue;
+                potentialDefsCache.Add(personality);
+            }
+            return potentialDefsCache;
+        }
+
         public override void DrawEditor(Rect rect, Pawn pawn, bool EditEnabled)
         {
             TextAnchor oldAnchor = Text.Anchor;
@@ -159,18 +180,19 @@ namespace Maux36.RimPsyche.Sexuality
                     Widgets.DrawHighlight(rowRect);
                     string tooltipString = $"{def.label.CapitalizeFirst()}: {(targetValue * 100f).ToString("F1")}";
                     TooltipHandler.TipRegion(rowRect, tooltipString);
-                    //TODO1 cache this, also remove the ones in the relevant defs
-                    //TODO2 cache relevant defs, and coincide cache nullfying with the option cache.
                     if (EditEnabled && Event.current.type == EventType.MouseDown && Event.current.button == 0)
                     {
                         List<FloatMenuOption> options = new List<FloatMenuOption>();
                         int capturedIndex = i;
-                        foreach (PersonalityDef potentialDef in DefDatabase<PersonalityDef>.AllDefsListForReading)
+                        foreach (PersonalityDef potentialDef in GetPotentialDefs(psychePreference))
                         {
                             PersonalityDef capturedDef = potentialDef;
                             Action action = delegate
                             {
                                 psychePreference[capturedIndex].stringKey = capturedDef.defName;
+                                relevantDefsCache = null;
+                                relevantDefsHash = null;
+                                potentialDefsCache = null;
                             };
                             options.Add(new FloatMenuOption(capturedDef.label.CapitalizeFirst(), action));
                         }
@@ -241,7 +263,9 @@ namespace Maux36.RimPsyche.Sexuality
         }
         public override void ClearEditorCache()
         {
-            relevantDefsCache = null;   
+            relevantDefsCache = null;
+            relevantDefsHash = null;
+            potentialDefsCache = null;
         }
     }
 }

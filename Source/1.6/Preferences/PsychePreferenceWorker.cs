@@ -118,7 +118,7 @@ namespace Maux36.RimPsyche.Sexuality
                 var pf = psychePrefs[i];
                 PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(pf.stringKey, false);
                 relevantDefsCache.Add(personality);
-                relevantDefsHash.Add(personality.shortHash)
+                relevantDefsHash.Add(personality.shortHash);
             }
             return relevantDefsCache;
         }
@@ -129,10 +129,10 @@ namespace Maux36.RimPsyche.Sexuality
 
             var relevantDefs = GetRelevantDefs(psychePrefs);
             potentialDefsCache = [];
-            foreach(var personalityDef in  DefDatabase<PersonalityDef>.AllDefs.Count)
+            foreach(var personalityDef in  DefDatabase<PersonalityDef>.AllDefs)
             {
                 if (relevantDefsHash.Contains(personalityDef.shortHash)) continue;
-                potentialDefsCache.Add(personality);
+                potentialDefsCache.Add(personalityDef);
             }
             return potentialDefsCache;
         }

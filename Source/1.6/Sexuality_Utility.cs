@@ -1,5 +1,6 @@
 ﻿using LudeonTK;
 using System.Text;
+using RimWorld;
 using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
@@ -11,11 +12,11 @@ namespace Maux36.RimPsyche.Sexuality
             var initPsyche = initiator.compPsyche();
             var reciPsyche = recipient.compPsyche();
             //Return vanilla for non psyche things
-            if (initPsyche.?Enabled != true || reciPsyche?.Enabled != true)
+            if (initPsyche?.Enabled != true || reciPsyche?.Enabled != true)
             {
                 return ((initiator.gender == recipient.gender) ? ((!initiator.story.traits.HasTrait(TraitDefOf.Gay) || !recipient.story.traits.HasTrait(TraitDefOf.Gay)) ? 0.15f : 1f) : ((initiator.story.traits.HasTrait(TraitDefOf.Gay) || recipient.story.traits.HasTrait(TraitDefOf.Gay)) ? 0.15f : 1f));
             }
-            float initOrientationFactor = initPsyche.Sexuality.GetOrientationFactor(recipient.gender);
+            float initOrientationFactor = initPsyche.Sexuality.GetAdjustedAttraction(recipient.gender);
             //TODO
             float reciOrientationFactor = 1; //if initiator knows reci orientation, they should consider this info. How much they care about should depend on confidence, aggressiveness, etc
             return initOrientationFactor * reciOrientationFactor;

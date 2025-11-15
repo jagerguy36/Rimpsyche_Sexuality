@@ -86,8 +86,8 @@ namespace Maux36.RimPsyche.Sexuality
                 value += (1 - Mathf.Abs(pv - pf.target))* pf.importance; //-5f~5f
             }
             float auth = observerPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
-            float sway = 0.3f + 0.2f * auth; // 0.1~0.5
-            float preferenceFactor =  1f + value * sway; // 0.9~1.1 || 0.5~1.5
+            float sway = 0.5f + 0.3f * auth; // 0.2~0.8
+            float preferenceFactor =  1f + value * sway; // 0.8~1.2 || 0.2~1.8
             return preferenceFactor;
         }
         

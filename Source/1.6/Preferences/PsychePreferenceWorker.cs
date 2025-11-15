@@ -53,7 +53,7 @@ namespace Maux36.RimPsyche.Sexuality
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return "RPS_NoPreference";
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
-            var sortedPreferences = psychePreference.OrderBy(p => p.importance).ToList();
+            var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
             var parts = new StringBuilder();
             parts.Append("RPS_AttractionReport".Translate(pawn.Name.ToStringShort)+"\n");
             for (int i = 0; i < sortedPreferences.Count; i++)
@@ -87,7 +87,7 @@ namespace Maux36.RimPsyche.Sexuality
             }
             float auth = observerPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
             float sway = 0.3f + 0.2f * auth; // 0.1~0.5
-            float preferenceFactor =  1f + value * 0.2f * sway;
+            float preferenceFactor =  1f + value * sway; // 0.9~1.1 || 0.5~1.5
             return preferenceFactor;
         }
         

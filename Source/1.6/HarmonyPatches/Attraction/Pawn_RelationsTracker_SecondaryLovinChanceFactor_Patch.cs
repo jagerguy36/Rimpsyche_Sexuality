@@ -8,7 +8,7 @@ using Verse;
 namespace Maux36.RimPsyche.Sexuality
 {
     [HarmonyPatch(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.SecondaryLovinChanceFactor))]
-    public static class Patch_SecondaryLovinChanceFactor
+    public static class Pawn_RelationsTracker_SecondaryLovinChanceFactor_Patch
     {
         static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
         {
@@ -16,7 +16,7 @@ namespace Maux36.RimPsyche.Sexuality
             FieldInfo pawnField = AccessTools.Field(typeof(Pawn_RelationsTracker), "pawn");
             FieldInfo storyField = AccessTools.Field(typeof(Pawn), "story");
             MethodInfo prettinessMethod = AccessTools.Method(typeof(Pawn_RelationsTracker), "PrettinessFactor");
-            MethodInfo multiplierMethod = AccessTools.Method(typeof(Patch_SecondaryLovinChanceFactor), nameof(Patch_SecondaryLovinChanceFactor.PsycheBasedLovinChance));
+            MethodInfo multiplierMethod = AccessTools.Method(typeof(Pawn_RelationsTracker_SecondaryLovinChanceFactor_Patch), nameof(Pawn_RelationsTracker_SecondaryLovinChanceFactor_Patch.PsycheBasedLovinChance));
 
             bool chancePatched = false;
 
@@ -81,32 +81,29 @@ namespace Maux36.RimPsyche.Sexuality
         {
             var pawnPsyche = pawn.compPsyche();
             //Vanilla logic if psyche not available for some reason.
-            if (pawnPsyche?.Enabled != true)
+            if (pawnPsyche?.Enabled == true) return pawnPsyche.Sexuality.GetAdjustedAttraction(otherPawn.gender);
+            if (pawn.story != null && pawn.story.traits != null)
             {
-                if (pawn.story != null && pawn.story.traits != null)
+                if (pawn.story.traits.HasTrait(TraitDefOf.Asexual))
                 {
-                    if (pawn.story.traits.HasTrait(TraitDefOf.Asexual))
+                    return 0f;
+                }
+                if (!pawn.story.traits.HasTrait(TraitDefOf.Bisexual))
+                {
+                    if (pawn.story.traits.HasTrait(TraitDefOf.Gay))
                     {
-                        return 0f;
-                    }
-                    if (!pawn.story.traits.HasTrait(TraitDefOf.Bisexual))
-                    {
-                        if (pawn.story.traits.HasTrait(TraitDefOf.Gay))
-                        {
-                            if (otherPawn.gender != pawn.gender)
-                            {
-                                return 0f;
-                            }
-                        }
-                        else if (otherPawn.gender == pawn.gender)
+                        if (otherPawn.gender != pawn.gender)
                         {
                             return 0f;
                         }
                     }
+                    else if (otherPawn.gender == pawn.gender)
+                    {
+                        return 0f;
+                    }
                 }
-                return 1f;
             }
-            return pawnPsyche.Sexuality.GetAdjustedAttraction(otherPawn.gender);
+            return 1f;
         }
     }
 }

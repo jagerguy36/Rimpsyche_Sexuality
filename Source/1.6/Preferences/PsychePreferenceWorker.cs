@@ -14,7 +14,7 @@ namespace Maux36.RimPsyche.Sexuality
         private static readonly int nodeCount = SourceDefs.Count;
         private static readonly int[] IndexPool = Enumerable.Range(0, nodeCount).ToArray();
         private const int fullCount = 5;
-        private const int reportCount = 3;
+
         public PsychePreferenceWorker()
         {
             EditorHeight = 200f;
@@ -38,11 +38,14 @@ namespace Maux36.RimPsyche.Sexuality
         {
             pref = new List<PrefEntry>(5);
             var relevantNodes = RandomFiveNodes();
+            Log.Message($"generating preference for {pawn.Name}");
             for (int i = 0; i < relevantNodes.Count; i++)
             {
+                var def = relevantNodes[i];
                 float importance = Rand.Range(0f, 1f);
-                float target = Rand.Range(-1f, 1f);
-                pref.Add(new PrefEntry(relevantNodes[i].defName, relevantNodes[i].shortHash, target, importance));
+                float target = SexualityHelper.GetSkewedPreference(def.preferenceBias);
+                Log.Message($"generated {def.label} with scew: {def.preferenceBias} -> {target}");
+                pref.Add(new PrefEntry(def.defName, def.shortHash, target, importance));
             }
             return true;
         }
@@ -65,14 +68,19 @@ namespace Maux36.RimPsyche.Sexuality
             return parts.ToString();
         }
 
-        public override float Evaluate(Pawn obesrver, Pawn target)
+        private static float minF = -0.5f;
+        private static float posRangeInv = 3f; //0.3333
+        public override float Evaluate(Pawn observer, Pawn target)
         {
-            var observerPsyche = obesrver.compPsyche();
-            if (observerPsyche?.Enabled != true) return 0f;
+            Log.Message($"{observer.Name} -> {target.Name}");
+            var observerPsyche = observer.compPsyche();
+            if (observerPsyche?.Enabled != true) return 1f;
             var targetPsyche = target.compPsyche();
-            if (targetPsyche?.Enabled != true) return 0f;
+            if (targetPsyche?.Enabled != true) return 1f;
             var psychePreference = observerPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
             float value = 0f;
+            float auth = observerPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
+            var targetP = targetPsyche.Personality;
             for (int i = 0; i < psychePreference.Count; i++)
             {
                 var pf = psychePreference[i];
@@ -82,12 +90,13 @@ namespace Maux36.RimPsyche.Sexuality
                     Log.Warning($"Psyche Preference unable to load Personality def {pf.stringKey}");
                     //Logic to fix it.
                 }
-                var pv = targetPsyche.Personality.GetPersonality(personality);
-                value += (1 - Mathf.Abs(pv - pf.target))* pf.importance; //-5f~5f
+                var pv = targetP.GetPersonality(personality);
+                value += Mathf.Max(1-Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth); //-0.4~1.0 * 1.25 * 5 => -2.5~6.25
+                Log.Message($"{personality.label}| [{pf.target}] ~ {pv} | {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF)} * {(pf.importance + 0.25f * auth)} = {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth)}");
             }
-            float auth = observerPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
-            float sway = 0.5f + 0.3f * auth; // 0.2~0.8
-            float preferenceFactor =  1f + value * sway; // 0.8~1.2 || 0.2~1.8
+            float sway = observerPsyche.Evaluate(SexualityFormulaDB.PsychePrefAuthSway);// 0.032~0.128 (0.2~0.16~0.8*0.16)
+            float preferenceFactor =  1f + value * sway; // 0.92~1.2 || 0.68~1.8
+            Log.Message($"value: {value}, sway: {sway} | factor: {preferenceFactor}");
             return preferenceFactor;
         }
         

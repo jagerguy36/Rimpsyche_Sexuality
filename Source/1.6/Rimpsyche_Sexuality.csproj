@@ -70,6 +70,7 @@
     <Compile Include="HarmonyPatches\Attraction\Pawn_RelationsTracker_PrettinessFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\Attraction\RelationsUtility_AttractedToGender_Patch.cs" />
     <Compile Include="HarmonyPatches\Romance\Pawn_RelationsTracker_SecondaryRomanceChanceFactor_Patch.cs" />
+    <Compile Include="HarmonyPatches\Romance\InteractionWorker_RomanceAttempt _Patch.cs" />
     <Compile Include="HarmonyPatches\SexDrive\LovePartnerRelationUtility_LovinMtbSinglePawnFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\Attraction\Pawn_RelationsTracker_SecondaryLovinChanceFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />

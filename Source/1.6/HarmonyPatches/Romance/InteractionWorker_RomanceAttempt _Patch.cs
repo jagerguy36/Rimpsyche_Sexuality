@@ -16,11 +16,19 @@ namespace Maux36.RimPsyche.Sexuality
         //Orientation knowledge respect
         private static void Postfix(ref float __result, Pawn initiator, Pawn recipient)
         {
+            if (__result == 0f) return;
             var initPsyche = initiator.compPsyche();
             if (initPsyche.Enabled != true) return;
+
+            //Rebuffed thought should deter approach
+            //
+            //
+
             //confidence etc factor
             //
             //
+
+            //known orientation should affect factors
             if (!initPsyche.Sexuality.knownOrientation.Contains(recipient.thingIDNumber)) return;
             var reciPsyche = recipient.compPsyche();
             if (reciPsyche.Enabled != true) return;

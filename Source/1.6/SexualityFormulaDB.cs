@@ -3,7 +3,7 @@ namespace Maux36.RimPsyche.Sexuality
 {
     public static class SexualityFormulaDB
     {
-        //Shame mechanics
+        //Psyche Attraction
         public static RimpsycheFormula PsychePrefAuthSway = new(
             "PsychePrefAuthSway",
             (tracker) =>

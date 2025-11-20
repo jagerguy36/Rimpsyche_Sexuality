@@ -44,7 +44,7 @@ namespace Maux36.RimPsyche.Sexuality
                 var def = relevantNodes[i];
                 float importance = Rand.Range(0f, 1f);
                 float target = SexualityHelper.GetSkewedPreference(def.preferenceBias);
-                Log.Message($"generated {def.label} with scew: {def.preferenceBias} -> {target}");
+                //Log.Message($"generated {def.label} with scew: {def.preferenceBias} -> {target}");
                 pref.Add(new PrefEntry(def.defName, def.shortHash, target, importance));
             }
             return true;
@@ -92,7 +92,7 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 var pv = targetP.GetPersonality(personality);
                 value += Mathf.Max(1-Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth); //-0.4~1.0 * 1.25 * 5 => -2.5~6.25
-                Log.Message($"{personality.label}| [{pf.target}] ~ {pv} | {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF)} * {(pf.importance + 0.25f * auth)} = {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth)}");
+                //Log.Message($"{personality.label}| [{pf.target}] ~ {pv} | {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF)} * {(pf.importance + 0.25f * auth)} = {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth)}");
             }
             float sway = observerPsyche.Evaluate(SexualityFormulaDB.PsychePrefAuthSway);// 0.032~0.128 (0.2~0.16~0.8*0.16)
             float preferenceFactor =  1f + value * sway; // 0.92~1.2 || 0.68~1.8

@@ -31,6 +31,7 @@ namespace Maux36.RimPsyche.Sexuality
             for (int i = 0; i < codes.Count; i++)
             {
                 var code = codes[i];
+                //Loyalty Offset
                 if (!foundFirst && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 50f)
                 {
                     foundFirst = true;
@@ -110,11 +111,9 @@ namespace Maux36.RimPsyche.Sexuality
             RimpsycheFormulaManager.FormulaIdDict
         );
 
-        //TODO: Fix double call on randomselection weight.?????
         //Prevent Less stupid romance attempt
         private static bool Prefix(Pawn initiator, Pawn recipient)
         {
-            Log.Message($"PREF InteractionWorker_RomanceAttempt called on {initiator.Name} -> {recipient.Name}");
             return true;
         }
 

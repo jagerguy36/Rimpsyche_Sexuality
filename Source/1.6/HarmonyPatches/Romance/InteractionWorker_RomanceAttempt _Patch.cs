@@ -112,21 +112,41 @@ namespace Maux36.RimPsyche.Sexuality
         );
 
         //Prevent Less stupid romance attempt
-        private static bool Prefix(Pawn initiator, Pawn recipient)
+        private static bool Prefix(float __result, Pawn initiator, Pawn recipient)
         {
+
+            var initPsyche = initiator.compPsyche();
+            if (initPsyche.Enabled != true) return true;
+            if (initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(RebuffOvercomeOpinion))
+            {
+                __result = 0f;
+                return false;
+            }
             return true;
         }
+        public static RimpsycheFormula RebuffOvercomeOpinion = new(
+            "RebuffOvercomeOpinion",
+            (tracker) =>
+            {
+                return 0f;
+            },
+            RimpsycheFormulaManager.FormulaIdDict
+        );
 
         //Orientation knowledge respect
         private static void Postfix(ref float __result, Pawn initiator, Pawn recipient)
         {
             if (__result == 0f) return;
+            //Apply Gender Difference
+            if(RimpsycheSettings.romanceAttemptGenderDiff)
+            {
+                if(initiator.gender==Gender.Female && recipient.gender==Gender.Male)
+                {
+                    __result *= 0.15f
+                }
+            }
             var initPsyche = initiator.compPsyche();
             if (initPsyche.Enabled != true) return;
-
-            //Rebuffed thought should deter approach
-            //
-            //
 
             //confidence etc factor
             //

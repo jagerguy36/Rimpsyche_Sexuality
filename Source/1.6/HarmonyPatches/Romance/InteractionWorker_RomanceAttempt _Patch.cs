@@ -21,11 +21,17 @@ namespace Maux36.RimPsyche.Sexuality
             bool foundFirst = false;
             bool foundSecond = false;
 
+            //Gender Based Willingness
+            bool willingnessblockReached = false;
+            var storyField = AccessTools.Field(typeof(Pawn), nameof(Pawn.story));
+            bool skipping1 = false;
+
             //Gender block skip
             var genderField = AccessTools.Field(typeof(Pawn), nameof(Pawn.gender));
             bool genderBlockReached = false;
-            bool skipping = false;
+            bool skipping2 = false;
 
+            List<Label> savedLabels = new List<Label>();
             var newCodes = new List<CodeInstruction>();
 
             for (int i = 0; i < codes.Count; i++)
@@ -52,26 +58,63 @@ namespace Maux36.RimPsyche.Sexuality
                     continue;
                 }
 
+                if (!willingnessblockReached &&
+                    code.opcode == OpCodes.Ldarg_1 &&
+                    codes[i + 1].opcode == OpCodes.Ldfld &&
+                    codes[i + 1].operand is FieldInfo fi1 &&
+                    fi1 == storyField)
+                {
+                    willingnessblockReached = true;
+                    skipping1 = true;
+                    if (code.labels != null && code.labels.Count > 0)
+                    {
+                        savedLabels.AddRange(code.labels);
+                    }
+                    continue;
+                }
+                if (skipping1)
+                {
+                    if (code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 1f &&
+                        codes[i - 2].opcode == OpCodes.Ldc_R4 && (float)codes[i - 2].operand == 0.15f)
+                    {
+                        skipping1 = false;
+                        if (savedLabels.Count > 0)
+                        {
+                            if (code.labels == null)
+                            {
+                                code.labels = savedLabels;
+                            }
+                            else
+                            {
+                                code.labels.AddRange(savedLabels);
+                                savedLabels.Clear();
+                            }
+                        }
+                        newCodes.Add(code);
+                    }
+                    continue;
+                }
+
                 //Skip Gender block
                 if (!genderBlockReached &&
                     code.opcode == OpCodes.Ldarg_1 &&
                     codes[i + 1].opcode == OpCodes.Ldfld &&
-                    codes[i + 1].operand is FieldInfo fi &&
-                    fi == genderField)
+                    codes[i + 1].operand is FieldInfo fi2 &&
+                    fi2 == genderField)
                 {
                     if (i > 1 && codes[i - 1].opcode == OpCodes.Stloc_S)
                     {
                         genderBlockReached = true;
-                        skipping = true;
+                        skipping2 = true;
                         continue;
                     }
                 }
                 
-                if (skipping)
+                if (skipping2)
                 {
                     if (code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 1.15f)
                     {
-                        skipping = false;
+                        skipping2 = false;
                         newCodes.Add(code);
                     }
                     continue;
@@ -117,15 +160,16 @@ namespace Maux36.RimPsyche.Sexuality
 
             var initPsyche = initiator.compPsyche();
             if (initPsyche.Enabled != true) return true;
-            if (initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(RebuffOvercomeOpinion))
+            if (initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(CanOvercomeRebuffValue))
             {
                 __result = 0f;
                 return false;
             }
             return true;
         }
-        public static RimpsycheFormula RebuffOvercomeOpinion = new(
-            "RebuffOvercomeOpinion",
+        //TODO: Implement Rebuff overcome value
+        public static RimpsycheFormula CanOvercomeRebuffValue = new(
+            "CanOvercomeRebuffValue",
             (tracker) =>
             {
                 return 0f;
@@ -133,7 +177,6 @@ namespace Maux36.RimPsyche.Sexuality
             RimpsycheFormulaManager.FormulaIdDict
         );
 
-        //Orientation knowledge respect
         private static void Postfix(ref float __result, Pawn initiator, Pawn recipient)
         {
             if (__result == 0f) return;
@@ -142,7 +185,7 @@ namespace Maux36.RimPsyche.Sexuality
             {
                 if(initiator.gender==Gender.Female && recipient.gender==Gender.Male)
                 {
-                    __result *= 0.15f
+                    __result *= 0.15f;
                 }
             }
             var initPsyche = initiator.compPsyche();
@@ -154,19 +197,29 @@ namespace Maux36.RimPsyche.Sexuality
 
             //known orientation should affect factors
             if (!initPsyche.Sexuality.knownOrientation.Contains(recipient.thingIDNumber)) return;
+            //Case Other's Orientation Known
             var reciPsyche = recipient.compPsyche();
             if (reciPsyche.Enabled != true) return;
             var knownReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator.gender);
-            //Case possible
             if (knownReciAttraction > 0f)
             {
-
+                float otherOrientationConsideration = 1f;
+                //Use knownReciAttraction to calculate how likely they are to initiate
+                otherOrientationConsideration *= initPsyche.Evaluate(OrientationSensitivity);
+                //
+                __result *= otherOrientationConsideration;
             }
-            //Case impossible
-            else
-            {
 
-            }
+
         }
+        //TODO: Implement values
+        public static RimpsycheFormula OrientationSensitivity = new(
+            "OrientationSensitivity",
+            (tracker) =>
+            {
+                return 1f;
+            },
+            RimpsycheFormulaManager.FormulaIdDict
+        );
     }
 }

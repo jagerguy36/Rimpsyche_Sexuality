@@ -10,7 +10,7 @@ namespace Maux36.RimPsyche.Sexuality
         private static void Postfix(ref float __result, Pawn ___pawn, Pawn otherPawn)
         {
             if(__result==0f) return;
-            __result *= DefOfRimpsycheSexuality.Rimpsyche_PsychePreference.worker.Evaluate(___pawn, otherPawn);
+            __result = SexualityHelper.EvaluateRomPreference(___pawn, otherPawn, __result);
         }
     }
 }

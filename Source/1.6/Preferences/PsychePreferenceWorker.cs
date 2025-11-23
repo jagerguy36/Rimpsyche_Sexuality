@@ -68,15 +68,15 @@ namespace Maux36.RimPsyche.Sexuality
             return parts.ToString();
         }
 
-        private static float minF = -0.5f;
-        private static float posRangeInv = 3f; //0.3333
-        public override float Evaluate(Pawn observer, Pawn target)
+        private static readonly float minF = -0.5f;
+        private static readonly float posRangeInv = 3f; //0.3333
+        public override float Evaluate(Pawn observer, Pawn target, float result)
         {
             Log.Message($"{observer.Name} -> {target.Name}");
             var observerPsyche = observer.compPsyche();
-            if (observerPsyche?.Enabled != true) return 1f;
+            if (observerPsyche?.Enabled != true) return result;
             var targetPsyche = target.compPsyche();
-            if (targetPsyche?.Enabled != true) return 1f;
+            if (targetPsyche?.Enabled != true) return result;
             var psychePreference = observerPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
             float value = 0f;
             float auth = observerPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
@@ -97,7 +97,7 @@ namespace Maux36.RimPsyche.Sexuality
             float sway = observerPsyche.Evaluate(SexualityFormulaDB.PsychePrefAuthSway);// 0.032~0.128 (0.2~0.16~0.8*0.16)
             float preferenceFactor =  1f + value * sway; // 0.92~1.2 || 0.68~1.8
             Log.Message($"value: {value}, sway: {sway} | factor: {preferenceFactor}");
-            return preferenceFactor;
+            return result * preferenceFactor;
         }
         
         //Static values

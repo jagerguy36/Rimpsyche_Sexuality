@@ -7,7 +7,7 @@ namespace Maux36.RimPsyche.Sexuality
     [HarmonyPatch(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.PrettinessFactor))]
     public static class Pawn_RelationsTracker_PrettinessFactor_Patch
     {
-        private static void Postfix(ref float __result, Pawn ___pawn, Pawn otherPawn)
+        public static void Postfix(ref float __result, Pawn ___pawn, Pawn otherPawn)
         {
             var pawnPsyche = ___pawn.compPsyche();
             if (pawnPsyche?.Enabled != true) return;

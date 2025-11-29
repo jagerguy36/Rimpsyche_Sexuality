@@ -71,7 +71,8 @@
     <Compile Include="HarmonyPatches\Attraction\RelationsUtility_AttractedToGender_Patch.cs" />
     <Compile Include="HarmonyPatches\CompAbilityEffect_WordOfLove_ValidateTarget_Patch.cs" />
     <Compile Include="HarmonyPatches\Relationship\Pawn_RelationsTracker_GainedOrLostDirectRelation_Patch.cs" />
-    <Compile Include="HarmonyPatches\Romance\InteractionWorker_RomanceAttempt_Patch.cs" />
+    <Compile Include="HarmonyPatches\Romance\InteractionWorker_RomanceAttempt_Interacted_Patch.cs" />
+    <Compile Include="HarmonyPatches\Romance\InteractionWorker_RomanceAttempt_PartnerFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\Romance\Pawn_RelationsTracker_SecondaryRomanceChanceFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\Romance\InteractionWorker_RomanceAttempt_RandomSelectionWeight_Patch.cs" />
     <Compile Include="HarmonyPatches\SexDrive\LovePartnerRelationUtility_LovinMtbSinglePawnFactor_Patch.cs" />

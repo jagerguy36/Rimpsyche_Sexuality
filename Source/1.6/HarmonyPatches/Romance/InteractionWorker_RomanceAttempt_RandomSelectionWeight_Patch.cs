@@ -189,7 +189,7 @@ namespace Maux36.RimPsyche.Sexuality
             __result *= initPsyche.Evaluate(FlatConfidenceAttemptFactor);
 
             //If orientation unknown, then just return
-            if (!initPsyche.Sexuality.knownOrientation.Contains(recipient.thingIDNumber)) return;
+            if (!initPsyche.Sexuality.KnowsOrientationOf(recipient)) return;
             //Case Other's Orientation Known
             var knownReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator);
             float otherOrientationConsideration = 4f * (knownReciAttraction + initPsyche.Evaluate(OrientationSensitivityOffset));

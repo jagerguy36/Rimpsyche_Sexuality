@@ -80,12 +80,12 @@ namespace Maux36.RimPsyche.Sexuality
         public static float PsycheBasedLovinChance(Pawn pawn, Pawn otherPawn)
         {
             var pawnPsyche = pawn.compPsyche();
-            //Vanilla logic if psyche not available for some reason.
             if (pawnPsyche?.Enabled == true)
             {
                 float attraction = pawnPsyche.Sexuality.GetAdjustedAttraction(otherPawn.gender);
                 return SexualityHelper.EvaluateSexPreference(pawn, otherPawn, attraction);
             }
+            //Vanilla logic if psyche not available for some reason.
             if (pawn.story != null && pawn.story.traits != null)
             {
                 if (pawn.story.traits.HasTrait(TraitDefOf.Asexual))

@@ -14,13 +14,12 @@ namespace Maux36.RimPsyche.Sexuality
             if (initPsyche.Sexuality.GetAdjustedAttraction(gender) > 0f)
             {
                 __result = true;
-                return false;
             }
             else
             {
                 __result = false;
-                return false;
             }
+            return false;
         }
     }
 }

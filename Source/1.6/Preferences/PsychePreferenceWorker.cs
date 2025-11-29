@@ -20,7 +20,7 @@ namespace Maux36.RimPsyche.Sexuality
             EditorHeight = 200f;
         }
 
-        public static List<PersonalityDef> RandomFiveNodes()
+        public static List<PersonalityDef> RandomNodes()
         {
             for (int i = 0; i < fullCount; i++)
             {
@@ -36,8 +36,8 @@ namespace Maux36.RimPsyche.Sexuality
         }
         public override bool TryGenerate(Pawn pawn, out List<PrefEntry> pref)
         {
-            pref = new List<PrefEntry>(5);
-            var relevantNodes = RandomFiveNodes();
+            pref = new List<PrefEntry>(fullCount);
+            var relevantNodes = RandomNodes();
             Log.Message($"generating preference for {pawn.Name}");
             for (int i = 0; i < relevantNodes.Count; i++)
             {

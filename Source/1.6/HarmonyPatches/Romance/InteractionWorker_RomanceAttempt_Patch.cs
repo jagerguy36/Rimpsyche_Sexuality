@@ -18,8 +18,6 @@ public static class InteractionWorker_RomanceAttempt_Patch
         var offsetLocal = generator.DeclareLocal(typeof(float)).LocalIndex;
         bool foundFirst = false;
 
-        List<Label> savedLabels = new List<Label>();
-
         for (int i = 0; i < codes.Count; i++)
         {
             var code = codes[i];

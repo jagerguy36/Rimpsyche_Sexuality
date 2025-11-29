@@ -64,7 +64,7 @@ namespace Maux36.RimPsyche.Sexuality
                 if (target.gender != gender2) return false;
                 return true;
             }
-            return initPsyche.Sexuality.CanFeelAttractionToPawnGender(target);
+            return initPsyche.Sexuality.CanFeelAttractionToGender(target.gender);
         }
     }
 }

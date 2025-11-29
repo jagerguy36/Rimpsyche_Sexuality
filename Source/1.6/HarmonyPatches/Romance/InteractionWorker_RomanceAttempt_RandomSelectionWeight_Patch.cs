@@ -176,9 +176,6 @@ namespace Maux36.RimPsyche.Sexuality
                 return;
             }
 
-            //Attraction factor based on Psyche 
-            __result *= initPsyche.Sexuality.GetAdjustedAttraction(recipient.gender);
-
             //Apply Gender Difference
             if (RimpsycheSettings.romanceAttemptGenderDiff)
             {
@@ -194,7 +191,7 @@ namespace Maux36.RimPsyche.Sexuality
             //If orientation unknown, then just return
             if (!initPsyche.Sexuality.knownOrientation.Contains(recipient.thingIDNumber)) return;
             //Case Other's Orientation Known
-            var knownReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator.gender);
+            var knownReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator);
             float otherOrientationConsideration = 4f * (knownReciAttraction + initPsyche.Evaluate(OrientationSensitivityOffset));
             __result *= Mathf.Clamp01(otherOrientationConsideration);
         }

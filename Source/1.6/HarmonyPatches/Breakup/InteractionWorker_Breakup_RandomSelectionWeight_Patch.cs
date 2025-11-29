@@ -6,8 +6,8 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
-    [HarmonyPatch(typeof(InteractionWorker_RomanceAttempt), "PartnerFactor")]
-    public static class InteractionWorker_RomanceAttempt_PartnerFactor_Patch
+    [HarmonyPatch(typeof(InteractionWorker_Breakup), "RandomSelectionWeight")]
+    public static class InteractionWorker_Breakup_RandomSelectionWeight_Patch
     {
         //Remove vanilla orientation block.
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
@@ -15,7 +15,7 @@ namespace Maux36.RimPsyche.Sexuality
             var codes = new List<CodeInstruction>(instructions);
 
             //Loyalty offset
-            var method_GetOffset = AccessTools.Method(typeof(InteractionWorker_RomanceAttempt_PartnerFactor_Patch), nameof(GetLoyaltyOffset));
+            var method_GetOffset = AccessTools.Method(typeof(InteractionWorker_Breakup_RandomSelectionWeight_Patch), nameof(GetLoyaltyOffset));
             var offsetLocal = generator.DeclareLocal(typeof(float)).LocalIndex;
             bool foundFirst = false;
 
@@ -34,7 +34,7 @@ namespace Maux36.RimPsyche.Sexuality
                     yield return new CodeInstruction(OpCodes.Add);
                     continue;
                 }
-                if (foundFirst && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 0f)
+                if (foundFirst && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == -100f)
                 {
                     yield return code;
                     yield return new CodeInstruction(OpCodes.Ldloc, offsetLocal);
@@ -50,16 +50,15 @@ namespace Maux36.RimPsyche.Sexuality
             var initPsyche = initiator.compPsyche();
             if (initPsyche?.Enabled == true)
             {
-                offset = initPsyche.Evaluate(PartnerFactorLoyaltyOffset);
+                offset = initPsyche.Evaluate(BreakupLoyaltyOffset);
             }
             return offset;
         }
-
-        //num *= Mathf.InverseLerp(100f, 0f, recipient.relations.OpinionOf(pawn));
-        //with loyalty 1 ->  Mathf.InverseLerp(-100f, -200f, value) | no matter how bad the opinion for their current lover is, they will not betray their current lover.
-        //with loyalty -1 ->  Mathf.InverseLerp(200, 100f, value) | no matter how good the opinion is, it will have no mitigating effect.
-        public static RimpsycheFormula PartnerFactorLoyaltyOffset = new(
-            "PartnerFactorLoyaltyOffset",
+        //float num = Mathf.InverseLerp(100f, -100f, initiator.relations.OpinionOf(recipient));
+        //with loyalty 1 ->  Mathf.InverseLerp(-100f, -300f, value) | no matter how bad the opinion for their current lover is, they will not break up.
+        //with loyalty -1 ->  Mathf.InverseLerp(200, 0f, value) | no matter how good the opinion is, it will only have some mitigating effect.
+        public static RimpsycheFormula BreakupLoyaltyOffset = new(
+            "BreakupLoyaltyOffset",
             (tracker) =>
             {
                 float loyalty = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Loyalty);

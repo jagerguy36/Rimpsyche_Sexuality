@@ -50,7 +50,7 @@ namespace Maux36.RimPsyche.Sexuality
                     newCodes.Add(new CodeInstruction(OpCodes.Add));
                     continue;
                 }
-                if (!foundSecond && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == -50f)
+                if (foundFirst && !foundSecond && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == -50f)
                 {
                     foundSecond = true;
                     newCodes.Add(code);
@@ -147,6 +147,9 @@ namespace Maux36.RimPsyche.Sexuality
             }
             return offset;
         }
+        //num4 = Mathf.InverseLerp(50f, -50f, value);
+        //with loyalty 1 ->  Mathf.InverseLerp(-100f, -200f, value) | no matter how bad the opinion for the current lover is, they will not attempt to seduce others.
+        //with loyalty -1 ->  Mathf.InverseLerp(200f, 100f, value) | no matter how good the opinion is, it will have no mitigating effect.
         public static RimpsycheFormula LoyaltyRomanceOffset = new(
             "LoyaltyRomanceOffset",
             (tracker) =>

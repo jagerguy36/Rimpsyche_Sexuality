@@ -69,6 +69,7 @@
     <Compile Include="DefOfRimpsycheSexuality.cs" />
     <Compile Include="HarmonyPatches\Attraction\Pawn_RelationsTracker_PrettinessFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\Attraction\RelationsUtility_AttractedToGender_Patch.cs" />
+    <Compile Include="HarmonyPatches\Breakup\InteractionWorker_Breakup_RandomSelectionWeight_Patch.cs" />
     <Compile Include="HarmonyPatches\CompAbilityEffect_WordOfLove_ValidateTarget_Patch.cs" />
     <Compile Include="HarmonyPatches\Relationship\Pawn_RelationsTracker_GainedOrLostDirectRelation_Patch.cs" />
     <Compile Include="HarmonyPatches\Romance\InteractionWorker_RomanceAttempt_Interacted_Patch.cs" />

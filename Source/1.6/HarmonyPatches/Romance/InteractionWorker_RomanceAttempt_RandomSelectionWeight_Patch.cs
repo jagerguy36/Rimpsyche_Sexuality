@@ -3,6 +3,7 @@ using RimWorld;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using UnityEngine;
 using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
@@ -58,6 +59,7 @@ namespace Maux36.RimPsyche.Sexuality
                     continue;
                 }
 
+                //Remove gender based willingness. Make num5 = 1f;
                 if (!willingnessblockReached &&
                     code.opcode == OpCodes.Ldarg_1 &&
                     codes[i + 1].opcode == OpCodes.Ldfld &&
@@ -95,7 +97,7 @@ namespace Maux36.RimPsyche.Sexuality
                     continue;
                 }
 
-                //Skip Gender block
+                //Skip Gender block (whole num8 block). 
                 if (!genderBlockReached &&
                     code.opcode == OpCodes.Ldarg_1 &&
                     codes[i + 1].opcode == OpCodes.Ldfld &&
@@ -109,7 +111,7 @@ namespace Maux36.RimPsyche.Sexuality
                         continue;
                     }
                 }
-                
+                //Skip Gender block until 1.15f is seen.
                 if (skipping2)
                 {
                     if (code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 1.15f)
@@ -119,6 +121,7 @@ namespace Maux36.RimPsyche.Sexuality
                     }
                     continue;
                 }
+                //Remove * num8
                 if (genderBlockReached &&
                     code.opcode == OpCodes.Ldloc_S &&
                     i + 2 < codes.Count &&
@@ -154,70 +157,78 @@ namespace Maux36.RimPsyche.Sexuality
             RimpsycheFormulaManager.FormulaIdDict
         );
 
-        //Prevent Less stupid romance attempt
-        private static bool Prefix(float __result, Pawn initiator, Pawn recipient)
-        {
-
-            var initPsyche = initiator.compPsyche();
-            if (initPsyche.Enabled != true) return true;
-            if (initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(CanOvercomeRebuffValue))
-            {
-                __result = 0f;
-                return false;
-            }
-            return true;
-        }
-        //TODO: Implement Rebuff overcome value
-        public static RimpsycheFormula CanOvercomeRebuffValue = new(
-            "CanOvercomeRebuffValue",
-            (tracker) =>
-            {
-                return 0f;
-            },
-            RimpsycheFormulaManager.FormulaIdDict
-        );
-
         private static void Postfix(ref float __result, Pawn initiator, Pawn recipient)
         {
             if (__result == 0f) return;
-            //Apply Gender Difference
-            if(RimpsycheSettings.romanceAttemptGenderDiff)
+            var initPsyche = initiator.compPsyche();
+            var reciPsyche = recipient.compPsyche();
+            //Return vanilla for non psyche things
+            if (initPsyche?.Enabled != true || reciPsyche?.Enabled != true)
             {
-                if(initiator.gender==Gender.Female && recipient.gender==Gender.Male)
+                __result *= ((initiator.gender == recipient.gender) ? ((!initiator.story.traits.HasTrait(TraitDefOf.Gay) || !recipient.story.traits.HasTrait(TraitDefOf.Gay)) ? 0.15f : 1f) : ((initiator.story.traits.HasTrait(TraitDefOf.Gay) || recipient.story.traits.HasTrait(TraitDefOf.Gay)) ? 0.15f : 1f));
+                return;
+            }
+
+            //Prevent Less stupid romance attempt
+            if (initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(CanOvercomeRebuffValue))
+            {
+                __result = 0f;
+                return;
+            }
+
+            //Attraction factor based on Psyche 
+            __result *= initPsyche.Sexuality.GetAdjustedAttraction(recipient.gender);
+
+            //Apply Gender Difference
+            if (RimpsycheSettings.romanceAttemptGenderDiff)
+            {
+                if (initiator.gender == Gender.Female && recipient.gender == Gender.Male)
                 {
                     __result *= 0.15f;
                 }
             }
-            var initPsyche = initiator.compPsyche();
-            if (initPsyche.Enabled != true) return;
 
-            //confidence etc factor
-            //
-            //
+            //Flat confidence factor
+            __result *= initPsyche.Evaluate(FlatConfidenceAttemptFactor);
 
-            //known orientation should affect factors
+            //If orientation unknown, then just return
             if (!initPsyche.Sexuality.knownOrientation.Contains(recipient.thingIDNumber)) return;
             //Case Other's Orientation Known
-            var reciPsyche = recipient.compPsyche();
-            if (reciPsyche.Enabled != true) return;
             var knownReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator.gender);
-            if (knownReciAttraction > 0f)
-            {
-                float otherOrientationConsideration = 1f;
-                //Use knownReciAttraction to calculate how likely they are to initiate
-                otherOrientationConsideration *= initPsyche.Evaluate(OrientationSensitivity);
-                //
-                __result *= otherOrientationConsideration;
-            }
-
-
+            float otherOrientationConsideration = 4f * (knownReciAttraction + initPsyche.Evaluate(OrientationSensitivityOffset));
+            __result *= Mathf.Clamp01(otherOrientationConsideration);
         }
-        //TODO: Implement values
-        public static RimpsycheFormula OrientationSensitivity = new(
-            "OrientationSensitivity",
+        public static RimpsycheFormula CanOvercomeRebuffValue = new(
+            "CanOvercomeRebuffValue",
             (tracker) =>
             {
-                return 1f;
+                var confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
+                return -3f - 3f * confidence;
+            },
+            RimpsycheFormulaManager.FormulaIdDict
+        );
+        public static RimpsycheFormula FlatConfidenceAttemptFactor = new(
+            "FlatConfidenceAttemptFactor",
+            (tracker) =>
+            {
+                var confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
+                return 1f + 0.1f * confidence;
+            },
+            RimpsycheFormulaManager.FormulaIdDict
+        );
+        public static RimpsycheFormula OrientationSensitivityOffset = new(
+            "OrientationSensitivityOffset",
+            (tracker) =>
+            {
+                var confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
+                var openness = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Openness);
+                var optimism = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Optimism);
+                var compassion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Compassion);
+                var selfInterest = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_SelfInterest);
+                var confidenceFactor = 0.1f * confidence;
+                var hopefulnessFactor = 0.1f * Mathf.Max(0f, openness) * Mathf.Max(0f, optimism - 0.5f);
+                var entitlementFactor = 0.1f * Mathf.Max(0f, -compassion) * Mathf.Max(0f, selfInterest);
+                return confidenceFactor + hopefulnessFactor + entitlementFactor - 0.25f;
             },
             RimpsycheFormulaManager.FormulaIdDict
         );

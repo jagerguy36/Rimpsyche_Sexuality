@@ -1,7 +1,5 @@
 ﻿using HarmonyLib;
 using RimWorld;
-using System.Collections.Generic;
-using System.Reflection.Emit;
 using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
@@ -11,12 +9,16 @@ namespace Maux36.RimPsyche.Sexuality
     {
         public static void Postfix(Pawn initiator, Pawn recipient)
         {
-            if (initiator.CurJob?.def == JobDefOf.TryRomance)
-            {
-                var initPsyche = initiator.compPsyche();
-                if (initPsyche?.Enabled != true) return;
-                initPsyche.Sexuality.IncrementRelationshipWith(recipient, 0f);
-            }
+            var initPsyche = initiator.compPsyche();
+            if (initPsyche?.Enabled != true) return;
+            var initSexuality = initPsyche.Sexuality;
+
+            //Learn orientation
+            initSexuality.LearnOrientationOf(recipient);
+
+            //Remember that initiator is attracted to recipient unless forced.
+            if (initiator.CurJob?.def == JobDefOf.TryRomance) return;
+            initSexuality.IncrementRelationshipWith(recipient, 0f);
         }
     }
 }

@@ -8,6 +8,7 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
+    //TODO: 0.15f hard limit should be adjsted
     [HarmonyPatch(typeof(InteractionWorker_RomanceAttempt), nameof(InteractionWorker_RomanceAttempt.RandomSelectionWeight))]
     public static class InteractionWorker_RomanceAttempt_RandomSelectionWeight_Patch
     {

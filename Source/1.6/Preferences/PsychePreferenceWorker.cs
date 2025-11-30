@@ -38,7 +38,7 @@ namespace Maux36.RimPsyche.Sexuality
         {
             pref = new List<PrefEntry>(fullCount);
             var relevantNodes = RandomNodes();
-            Log.Message($"generating preference for {pawn.Name}");
+            //Log.Message($"generating preference for {pawn.Name}");
             for (int i = 0; i < relevantNodes.Count; i++)
             {
                 var def = relevantNodes[i];
@@ -72,7 +72,7 @@ namespace Maux36.RimPsyche.Sexuality
         private static readonly float posRangeInv = 3f; //0.3333
         public override float Evaluate(Pawn observer, Pawn target, float result)
         {
-            Log.Message($"{observer.Name} -> {target.Name}");
+            //Log.Message($"{observer.Name} -> {target.Name}");
             var observerPsyche = observer.compPsyche();
             if (observerPsyche?.Enabled != true) return result;
             var targetPsyche = target.compPsyche();
@@ -96,7 +96,7 @@ namespace Maux36.RimPsyche.Sexuality
             }
             float sway = observerPsyche.Evaluate(SexualityFormulaDB.PsychePrefAuthSway);// 0.032~0.128 (0.2~0.16~0.8*0.16)
             float preferenceFactor =  1f + value * sway; // 0.92~1.2 || 0.68~1.8
-            Log.Message($"value: {value}, sway: {sway} | factor: {preferenceFactor}");
+            //Log.Message($"value: {value}, sway: {sway} | factor: {preferenceFactor}");
             return result * preferenceFactor;
         }
         

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/Maux36.RimPsyche.InterestDomainDef/interests/li/topics/li[name="gender"]</xpath>
+    <value>
+      <result Class="Maux36.RimPsyche.Sexuality.LearnOrientation">
+        <learningChance>0.75</learningChance> 
+      </result>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/Maux36.RimPsyche.InterestDomainDef/interests/li/topics/li[name="identity"]</xpath>
+    <value>
+      <result Class="Maux36.RimPsyche.Sexuality.LearnOrientation">
+        <learningChance>0.25</learningChance> 
+      </result>
+    </value>
+  </Operation>
+
+</Patch>

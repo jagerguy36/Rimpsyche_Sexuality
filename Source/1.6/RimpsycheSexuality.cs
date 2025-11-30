@@ -1,12 +1,10 @@
-﻿using RimWorld;
-using UnityEngine;
-using Verse;
+﻿using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
-    public class Rimpsyche : Mod
+    public class RimpsycheSexuality : Mod
     {
-        public Rimpsyche(ModContentPack content) : base(content)
+        public RimpsycheSexuality(ModContentPack content) : base(content)
         {
             if (!ModsConfig.IsActive("maux36.rimpsyche"))
             {

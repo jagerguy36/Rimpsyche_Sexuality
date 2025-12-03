@@ -173,7 +173,7 @@ namespace Maux36.RimPsyche.Sexuality
                 return;
             }
 
-            //Prevent Less stupid romance attempt
+            //Prevent stupid romance attempt
             if (initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(CanOvercomeRebuffValue))
             {
                 __result = 0f;
@@ -192,6 +192,12 @@ namespace Maux36.RimPsyche.Sexuality
             //Flat confidence factor
             __result *= initPsyche.Evaluate(FlatConfidenceAttemptFactor);
 
+            //Recipient Partner Consideration
+            if (!new HistoryEvent(recipient.GetHistoryEventForLoveRelationCountPlusOne(), recipient.Named(HistoryEventArgsNames.Doer)).DoerWillingToDo())
+            {
+                __result *= initPsyche.Evaluate(CompeteForLoveFactor);
+            }
+
             //If orientation unknown, then just return
             if (!initPsyche.Sexuality.KnowsOrientationOf(recipient)) return;
             //Case Other's Orientation Known
@@ -205,6 +211,15 @@ namespace Maux36.RimPsyche.Sexuality
             {
                 var confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
                 return -3f - 3f * confidence;
+            },
+            RimpsycheFormulaManager.FormulaIdDict
+        );
+        public static RimpsycheFormula CompeteForLoveFactor = new(
+            "CompeteForLoveFactor",
+            (tracker) =>
+            {
+                var cooperative = Mathf.Min(tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Competitiveness), 0f);
+                return 1f + 0.8f * cooperative;
             },
             RimpsycheFormulaManager.FormulaIdDict
         );

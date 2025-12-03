@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rimpsyche_Sexuality", "Rimpsyche_Sexuality.csproj", "{EDC289FA-7926-4DE1-9A41-54B168E50028}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rimpsyche_RJW_Compat", "..\Rimpsyche_RJW_Compat\Rimpsyche_RJW_Compat.csproj", "{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{EDC289FA-7926-4DE1-9A41-54B168E50028}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDC289FA-7926-4DE1-9A41-54B168E50028}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDC289FA-7926-4DE1-9A41-54B168E50028}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rimpsyche_Sexuality", "Rimp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rimpsyche_RJW_Compat", "..\Mods\Rimpsyche_RJW_Compat\Rimpsyche_RJW_Compat.csproj", "{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rimpsyche_Intimacy_Compat", "..\Mods\Rimpsyche_Intimacy_Compat\Rimpsyche_Intimacy_Compat.csproj", "{57B2C41C-4E1E-4B8E-A65D-F3CAAC7812C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCC88D4C-B2B8-41AF-81F1-FB4F8293C364}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57B2C41C-4E1E-4B8E-A65D-F3CAAC7812C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B2C41C-4E1E-4B8E-A65D-F3CAAC7812C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B2C41C-4E1E-4B8E-A65D-F3CAAC7812C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B2C41C-4E1E-4B8E-A65D-F3CAAC7812C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

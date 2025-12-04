@@ -1,8 +1,7 @@
 ﻿using HarmonyLib;
-using Maux36.RimPsyche;
 using rjw;
 
-namespace Rimpsyche_RJW_Compat
+namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
 {
     [HarmonyPatch(typeof(Pawn_SexualityTracker), nameof(Pawn_SexualityTracker.Validate))]
     public static class Pawn_SexualityTracker_Validate_Patch

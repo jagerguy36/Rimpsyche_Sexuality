@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName = "SexFrequency"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>*/StatDef[defName = "SexFrequency"]/parts</xpath>
+        <order>Prepend</order>
+        <value>
+          <li Class="Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat.RimpsycheSexdriveStatPart"/>
+        </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName = "SexFrequency"]</xpath>
+        <order>Prepend</order>
+        <value>
+          <parts>
+            <li Class="Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat.RimpsycheSexdriveStatPart"/>
+          </parts>
+        </value>
+    </nomatch>
+  </Operation>
+
+</Patch>

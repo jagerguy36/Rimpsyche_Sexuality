@@ -1,8 +1,9 @@
 ﻿using LudeonTK;
-using System.Text;
 using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using UnityEngine;
 using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
@@ -51,6 +52,13 @@ namespace Maux36.RimPsyche.Sexuality
             DebugTables.MakeTablesDialog(from x in pawn.Map.mapPawns.SpawnedPawnsInFaction(pawn.Faction)
                                          where x != pawn && x.RaceProps.Humanlike
                                          select x, list.ToArray());
+        }
+        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        public static void LogNextLovinTick(Pawn pawn)
+        {
+            var nlt = pawn.mindState.canLovinTick;
+            var tickCurrent = Find.TickManager.TicksGame;
+            Log.Message($"current tick: {tickCurrent} || NLT: {nlt} ... nextTickFactor: {Mathf.Min(1f / pawn.compPsyche().Sexuality.GetAdjustedSexdrive(), 60f)}");
         }
     }
 }

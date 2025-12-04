@@ -1,9 +1,8 @@
 ﻿using HarmonyLib;
-using Maux36.RimPsyche;
 using rjw;
 using Verse;
 
-namespace Rimpsyche_RJW_Compat
+namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
 {
     [HarmonyPatch(typeof(OrientationUtility), nameof(OrientationUtility.PreferenceFactor))]
     public static class OrientationUtility_PreferenceFactor_Patch

@@ -17,15 +17,12 @@ namespace Maux36.RimPsyche.Sexuality
             var codes = new List<CodeInstruction>(instructions);
 
             MethodInfo getMultiplier = AccessTools.Method(typeof(JobDriver_Lovin_GenerateRandomMinTicksToNextLovin_Patch), nameof(JobDriver_Lovin_GenerateRandomMinTicksToNextLovin_Patch.GetSexdriveMultiplier));
-            MethodInfo GaussianMethod = AccessTools.Method(typeof(Rand), nameof(Rand.Gaussian), new[] { typeof(float), typeof(float) });
 
             for (int i = 0; i < codes.Count; i++)
             {
                 var code = codes[i];
                 yield return code;
-                if (codes[i].opcode == OpCodes.Ldloc_0 &&
-                codes[i + 1].opcode == OpCodes.Ldc_R4 && (float)codes[i + 1].operand == 0.3f &&
-                codes[i + 2].opcode == OpCodes.Call && Equals(codes[i + 2].operand, GaussianMethod))
+                if (codes[i].opcode == OpCodes.Ldc_R4 && (float)codes[i].operand == 2500f)
                 {
                     yield return new CodeInstruction(OpCodes.Ldarg_1);
                     yield return new CodeInstruction(OpCodes.Call, getMultiplier);
@@ -38,7 +35,9 @@ namespace Maux36.RimPsyche.Sexuality
             var initPsyche = initiator.compPsyche();
             if (initPsyche?.Enabled == true)
             {
-                var nextTickFactor = Mathf.Min(1f / initPsyche.Sexuality.GetAdjustedSexdrive(), 5f);
+                //cf rjw sex_drive clamped low at 0.05f
+                var sexDrive = Mathf.Max(initPsyche.Sexuality.GetAdjustedSexdrive(), 0.05f);
+                var nextTickFactor = 1f / sexDrive;
                 return nextTickFactor;
             }
             return 1f;

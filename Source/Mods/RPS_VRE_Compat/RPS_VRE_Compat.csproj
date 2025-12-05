@@ -62,7 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AgeCheck\Rimpsyche_Utility_GetPawnAge_Patch.cs" />
-    <Compile Include="HarmonyInit.cs" />
+    <Compile Include="VRE_HarmonyInit.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SexualityAssignment\SexualityTracker_Initialzie_Patch.cs" />
     <Compile Include="SexualitySuppression\SexualityTracker_CheckSexualitySuppressed_Patch.cs" />

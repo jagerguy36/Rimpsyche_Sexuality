@@ -9,7 +9,7 @@ namespace Maux36.RimPsyche.Sexuality.RPS_VRE_Compat
     {
         public static bool Prefix(Pawn pawn, ref float __result)
         {
-            if (HarmonyInit.androidPawnkindShorthash.Contains(pawn.kindDef.shortHash)) __result = 18f;
+            if (VRE_HarmonyInit.androidPawnkindShorthash.Contains(pawn.kindDef.shortHash)) __result = 18f;
             return false;
         }
     }

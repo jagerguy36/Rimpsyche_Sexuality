@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using RimWorld;
 using Verse;
 using VREAndroids;
 
@@ -9,8 +10,7 @@ namespace Maux36.RimPsyche.Sexuality.RPS_VRE_Compat
     {
         public static bool Prefix(Pawn ___pawn, ref bool __result)
         {
-            Log.Message($"{___pawn.Name} patched CheckSexualitySuppressed call");
-            if (!HarmonyInit.androidPawnkindShorthash.Contains(___pawn.kindDef.shortHash)) return true;
+            if (!VRE_HarmonyInit.androidPawnkindShorthash.Contains(___pawn.kindDef.shortHash)) return true;
             if (___pawn.Emotionless())
             {
                 __result = true;
@@ -20,12 +20,19 @@ namespace Maux36.RimPsyche.Sexuality.RPS_VRE_Compat
         }
     }
 
-    [HarmonyPatch(typeof(Pawn_SexualityTracker), nameof(Pawn_SexualityTracker.DirtyGeneCache))]
-    public static class SexualityTracker_DirtyGeneCache_Patch
+    [HarmonyPatch(typeof(Pawn_GeneTracker), "Notify_GenesChanged")]
+    public static class GeneTracker_Notify_GeneChanged
     {
-        public static void Postfix(Pawn_SexualityTracker __instance)
+        public static void Postfix(Pawn_GeneTracker __instance, GeneDef addedOrRemovedGene, Pawn ___pawn)
         {
-            __instance.DirtySuppressedCheck();
+            if (ModsConfig.BiotechActive && VRE_HarmonyInit.androidSuppressionGene.Contains(addedOrRemovedGene.shortHash))
+            {
+                var compPsyche = ___pawn.compPsyche();
+                if (compPsyche != null)
+                {
+                    compPsyche.Sexuality.DirtySuppressedCheck();
+                }
+            }
         }
     }
 }

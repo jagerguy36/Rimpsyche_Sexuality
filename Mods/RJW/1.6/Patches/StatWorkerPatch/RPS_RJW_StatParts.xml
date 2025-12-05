@@ -7,7 +7,7 @@
       <xpath>*/StatDef[defName = "SexFrequency"]/parts</xpath>
         <order>Prepend</order>
         <value>
-          <li Class="Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat.RimpsycheSexdriveStatPart"/>
+          <li Class="Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat.RimpsycheRJWSexdriveStatPart"/>
         </value>
     </match>
     <nomatch Class="PatchOperationAdd">
@@ -15,7 +15,7 @@
         <order>Prepend</order>
         <value>
           <parts>
-            <li Class="Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat.RimpsycheSexdriveStatPart"/>
+            <li Class="Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat.RimpsycheRJWSexdriveStatPart"/>
           </parts>
         </value>
     </nomatch>

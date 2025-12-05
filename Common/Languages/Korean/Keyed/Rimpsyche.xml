@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Preference -->
+  <RPS_NoPreference>선호사항 없음</RPS_NoPreference>
+  <RPS_AttractionReport>{0}가 매력을 느끼는 성격:</RPS_AttractionReport>
+
+  <!-- Stats -->
+  <RP_Stat_Sexdrive>성욕</RP_Stat_Sexdrive>
+
+</LanguageData>

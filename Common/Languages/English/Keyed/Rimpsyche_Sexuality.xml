@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Preference -->
+  <RPS_NoPreference>No Preference available</RPS_NoPreference>
+  <RPS_AttractionReport>Personality {0} is drawn to:</RPS_AttractionReport>
+
+  <!-- Stats -->
+  <RP_Stat_Sexdrive>Sexdrive</RP_Stat_Sexdrive>
+
+</LanguageData>

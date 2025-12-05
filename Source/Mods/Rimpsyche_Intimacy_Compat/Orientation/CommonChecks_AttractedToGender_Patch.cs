@@ -2,7 +2,7 @@
 using LoveyDoveySexWithEuterpe;
 using Verse;
 
-namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat.Orientation
+namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat
 {
     [HarmonyPatch(typeof(CommonChecks), nameof(CommonChecks.AttractedToGender))]
     public static class CommonChecks_AttractedToGender_Patch

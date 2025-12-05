@@ -84,7 +84,6 @@
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />
     <Compile Include="HarmonyPatches\SexaulityAssignment\TryGenerateSexualityTraitForPatch.cs" />
     <Compile Include="Preferences\PsychePreferenceWorker.cs" />
-    <Compile Include="Preferences\SexualityPreferenceWorker.cs" />
     <Compile Include="RimpsycheSexuality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SexualityFormulaDB.cs" />

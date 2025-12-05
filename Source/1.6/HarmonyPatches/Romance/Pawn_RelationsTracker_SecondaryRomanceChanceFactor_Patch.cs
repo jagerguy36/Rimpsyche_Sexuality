@@ -4,6 +4,7 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
+    [HarmonyPatchCategory("RPS_Preference")]
     [HarmonyPatch(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.SecondaryRomanceChanceFactor))]
     public static class Pawn_RelationsTracker_SecondaryRomanceChanceFactor_Patch
     {

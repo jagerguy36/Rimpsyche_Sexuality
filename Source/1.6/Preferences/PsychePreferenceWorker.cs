@@ -56,6 +56,7 @@ namespace Maux36.RimPsyche.Sexuality
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return "RPS_NoPreference";
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
+            if (psychePreference == null) return "RPS_NoPreference";
             var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
             var parts = new StringBuilder();
             parts.Append("RPS_AttractionReport".Translate(pawn.Name.ToStringShort)+"\n");
@@ -73,6 +74,7 @@ namespace Maux36.RimPsyche.Sexuality
         public override float Evaluate(Pawn observer, Pawn target, float result)
         {
             //Log.Message($"{observer.Name} -> {target.Name}");
+            if (RimpsycheSettings.usePreferenceSystem != true) return result;
             var observerPsyche = observer.compPsyche();
             if (observerPsyche?.Enabled != true) return result;
             var targetPsyche = target.compPsyche();
@@ -164,6 +166,7 @@ namespace Maux36.RimPsyche.Sexuality
             var compPsyche = pawn.compPsyche();
             if (compPsyche?.Enabled != true) return;
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
+            if (psychePreference == null) return;
             var personalityDefList = GetRelevantDefs(psychePreference);
             Text.Font = GameFont.Tiny;
 

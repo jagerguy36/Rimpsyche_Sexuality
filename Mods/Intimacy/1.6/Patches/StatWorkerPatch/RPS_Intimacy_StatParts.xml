@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+  <Operation Class="PatchOperationConditional">
+    <xpath>Defs/StatDef[defName = "SEX_LovinFrequencyMultiplier"]/parts</xpath>
+    <match Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName = "SEX_LovinFrequencyMultiplier"]/parts</xpath>
+        <order>Prepend</order>
+        <value>
+          <li Class="Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat.RimpsycheIntimacySexdriveStatPart"/>
+        </value>
+    </match>
+    <nomatch Class="PatchOperationAdd">
+      <xpath>Defs/StatDef[defName = "SEX_LovinFrequencyMultiplier"]</xpath>
+        <order>Prepend</order>
+        <value>
+          <parts>
+            <li Class="Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat.RimpsycheIntimacySexdriveStatPart"/>
+          </parts>
+        </value>
+    </nomatch>
+  </Operation>
+
+</Patch>

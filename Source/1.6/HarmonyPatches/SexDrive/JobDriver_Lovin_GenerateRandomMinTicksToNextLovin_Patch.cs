@@ -36,7 +36,7 @@ namespace Maux36.RimPsyche.Sexuality
             if (initPsyche?.Enabled == true)
             {
                 //cf rjw sex_drive clamped low at 0.05f
-                var sexDrive = Mathf.Max(initPsyche.Sexuality.GetAdjustedSexdrive(), 0.05f);
+                var sexDrive = initPsyche.Sexuality.GetAdjustedSexdrive();
                 var nextTickFactor = 1f / sexDrive;
                 return nextTickFactor;
             }

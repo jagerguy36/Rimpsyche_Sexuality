@@ -3,6 +3,8 @@
 <loadFolders>
 	<v1.6>
 		<li>1.6</li>
+		<li IfModActive="lovelydovey.sex.witheuterpe">Mods/Intimacy/1.6</li>
 		<li IfModActive="rim.job.world">Mods/RJW/1.6</li>
+		<li IfModActive="vanillaracesexpanded.android">Mods/RPS_VRE/1.6</li>
 	</v1.6>
 </loadFolders>

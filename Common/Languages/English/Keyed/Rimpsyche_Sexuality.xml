@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <!-- General -->
+  <RimpsycheSexualitySettingCategory>RimPsyche - Sexuality</RimpsycheSexualitySettingCategory>
+
+  <!-- Settings -->
+  <RimpsycheKinseyDistributionSettings>Sexuality Distribution Settings (Requires restart)</RimpsycheKinseyDistributionSettings>
+  <RimpsycheKinseyDefaultSetting>Default Distribution</RimpsycheKinseyDefaultSetting>
+  <RimpsycheUsePreferenceSystem>Use Preference System</RimpsycheUsePreferenceSystem>
+  <RimpsycheUsePreferenceSystemTooltip>Give each pawns their own preference.</RimpsycheUsePreferenceSystemTooltip>
+  <RimpsycheRomanceAttemptGenderDiff>Gender Difference</RimpsycheRomanceAttemptGenderDiff>
+  <RimpsycheRomanceAttemptGenderDiffTooltip>Women are less likely to make a romance attempt at men. (Vanilla logic) </RimpsycheRomanceAttemptGenderDiffTooltip>
+
+  <!-- Tab -->
+  <RPC_Orientation>Sexuality</RPC_Orientation>
+  <RPC_Kinsey>Kinsey Rating</RPC_Kinsey>
+  <RPC_MaxAttraction>Max Attraction</RPC_MaxAttraction>
+  <RPC_AttractionMale>Male</RPC_AttractionMale>
+  <RPC_AttractionFemale>Female</RPC_AttractionFemale>
+  <RPC_SexDrive>Sex Drive</RPC_SexDrive>
+  <RPC_Heterosexual>Heterosexual</RPC_Heterosexual>
+  <RPC_Bisexual>Bisexual</RPC_Bisexual>
+  <RPC_Homosexual>Homosexual</RPC_Homosexual>
+  <RPC_Asexual>Asexual</RPC_Asexual>
+  <RPC_SexualityUndefined>Undefined</RPC_SexualityUndefined>
+
+  <!-- Edit Mode -->
+  <RPS_HypoAttraction>Not attracted</RPS_HypoAttraction>
+  <RPS_HyperAttraction>Hyper attracted</RPS_HyperAttraction>
+  <RPS_Hyposexual>Hyposexual</RPS_Hyposexual>
+  <RPS_Hypersexual>Hypersexual</RPS_Hypersexual>
+
   <!-- Preference -->
   <RPS_NoPreference>No Preference available</RPS_NoPreference>
   <RPS_AttractionReport>Personality {0} is drawn to:</RPS_AttractionReport>

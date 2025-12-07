@@ -174,7 +174,8 @@ namespace Maux36.RimPsyche.Sexuality
             }
 
             //Prevent stupid romance attempt
-            if (initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(CanOvercomeRebuffValue))
+            //Relationship Moudle will implement its own method to block interaction.
+            if (!Rimpsyche.RelationshipModuleLoaded && initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(CanOvercomeRebuffValue))
             {
                 __result = 0f;
                 return;

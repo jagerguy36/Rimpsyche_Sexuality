@@ -17,6 +17,13 @@ namespace Maux36.RimPsyche.Sexuality
         {
             var codes = new List<CodeInstruction>(instructions);
 
+            //CompPsyche
+            var method_compPsyche = AccessTools.Method(typeof(PawnExtensions), nameof(PawnExtensions.compPsyche));
+            var property_compPsyche_Enabled = AccessTools.PropertyGetter(typeof(CompPsyche), nameof(CompPsyche.Enabled));
+            var method_inhumanized = AccessTools.Method(typeof(AnomalyUtility), nameof(AnomalyUtility.Inhumanized));
+            var psycheLocal = generator.DeclareLocal(typeof(CompPsyche)).LocalIndex;
+            bool gotPsyche = false;
+
             //Loyalty offset
             var method_GetOffset = AccessTools.Method(typeof(InteractionWorker_RomanceAttempt_RandomSelectionWeight_Patch), nameof(GetLoyaltyOffset));
             var offsetLocal = generator.DeclareLocal(typeof(float)).LocalIndex;
@@ -39,6 +46,60 @@ namespace Maux36.RimPsyche.Sexuality
             for (int i = 0; i < codes.Count; i++)
             {
                 var code = codes[i];
+                //CompPsyche
+                if (!gotPsyche &&
+                    code.opcode == OpCodes.Call && Equals(code.operand, method_inhumanized))
+                {
+                    //Instead of Inumanized, call compPsyche and place it in the psycheLocal
+                    newCodes.Add(new CodeInstruction(OpCodes.Call, method_compPsyche));
+                    newCodes.Add(new CodeInstruction(OpCodes.Stloc, psycheLocal));
+
+                    //If psycheLocal is null, return 0f. Otherwise, move onto calling Enabled.
+                    newCodes.Add(new CodeInstruction(OpCodes.Ldloc, psycheLocal));
+                    var compPsyhce_not_null_label = generator.DefineLabel();
+                    newCodes.Add(new CodeInstruction(OpCodes.Brtrue_S, compPsyhce_not_null_label));
+                    newCodes.Add(new CodeInstruction(OpCodes.Ldc_R4, 0f));
+                    newCodes.Add(new CodeInstruction(OpCodes.Ret));
+                    newCodes.Add(new CodeInstruction(OpCodes.Ldloc, psycheLocal).WithLabels(compPsyhce_not_null_label));
+                    newCodes.Add(new CodeInstruction(OpCodes.Callvirt, property_compPsyche_Enabled));
+                    //If Enabled is true, then continue the code to the next ldarg.1 If not, then the following codes will return 0f
+                    codes[i + 1].opcode = OpCodes.Brtrue_S;
+                    continue;
+                }
+
+                //TODO: utilize opinion to get new limit for SLC
+
+
+                // float num = initiator.relations.SecondaryRomanceChanceFactor(recipient);
+                //IL_004a: ldarg.1
+                //IL_004b: ldfld class RimWorld.Pawn_RelationsTracker Verse.Pawn::relations
+                //IL_0050: ldarg.2
+                //IL_0051: callvirt instance float32 RimWorld.Pawn_RelationsTracker::SecondaryRomanceChanceFactor(class Verse.Pawn)
+                //IL_0056: stloc.0
+                //// if (num < 0.15f)
+                //IL_0057: ldloc.0
+                //IL_0058: ldc.r4 0.15
+                //IL_005d: bge.un.s IL_0065
+                //// return 0f;
+                //IL_005f: ldc.r4 0.0
+                //IL_0064: ret
+
+                //// float num2 = 5f;
+                //IL_0065: ldc.r4 5
+                //IL_006a: stloc.1
+                //// int num3 = initiator.relations.OpinionOf(recipient);
+                //IL_006b: ldarg.1
+                //IL_006c: ldfld class RimWorld.Pawn_RelationsTracker Verse.Pawn::relations
+                //IL_0071: ldarg.2
+                //IL_0072: callvirt instance int32 RimWorld.Pawn_RelationsTracker::OpinionOf(class Verse.Pawn)
+                //IL_0077: stloc.2
+                //// if ((float)num3 < num2)
+                //IL_0078: ldloc.2
+                //IL_0079: conv.r4
+                //IL_007a: ldloc.1
+                //IL_007b: bge.un.s IL_0083
+
+
                 //Loyalty Offset
                 if (!foundFirst && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 50f)
                 {
@@ -132,7 +193,6 @@ namespace Maux36.RimPsyche.Sexuality
                     i += 2;
                     continue;
                 }
-
                 newCodes.Add(code);
             }
 

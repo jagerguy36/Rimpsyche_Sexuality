@@ -11,7 +11,8 @@ namespace Maux36.RimPsyche.Sexuality
         {
             var harmony = new Harmony("rimworld.mod.Maux.RimPsyche.Sexuality");
             harmony.PatchAllUncategorized(Assembly.GetExecutingAssembly());
-            if (RimpsycheSettings.usePreferenceSystem)
+            //Relation module will implement preference on its own
+            if (!Rimpsyche.RelationshipModuleLoaded && RimpsycheSettings.usePreferenceSystem)
             {
                 harmony.PatchCategory("RPS_Preference");
             }

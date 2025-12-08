@@ -37,6 +37,8 @@ namespace Maux36.RimPsyche.Sexuality
             listing_Standard.CheckboxLabeled("RimpsycheUsePreferenceSystem".Translate(), ref RimpsycheSettings.usePreferenceSystem, "RimpsycheUsePreferenceSystemTooltip".Translate());
             listing_Standard.Gap(12f);
             listing_Standard.CheckboxLabeled("RimpsycheRomanceAttemptGenderDiff".Translate(), ref RimpsycheSettings.romanceAttemptGenderDiff, "RimpsycheRomanceAttemptGenderDiffTooltip".Translate());
+            listing_Standard.Gap(12f);
+            RimpsycheSettings.minRelAttraction = (float)Math.Round(listing_Standard.SliderLabeled("RimpsycheMinRelAttraction".Translate() + " (" + "Default".Translate() + " 0.7): " + RimpsycheSettings.minRelAttraction, RimpsycheSettings.minRelAttraction, 0.00f, 1f, tooltip: "RimpsycheMinRelAttractionTooltip".Translate()), 2);
 
             listing_Standard.End();
             Widgets.EndScrollView();

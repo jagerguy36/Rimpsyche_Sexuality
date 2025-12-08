@@ -3,6 +3,7 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
+    [HarmonyPriority(Priority.First)]
     [HarmonyPatch(typeof(PawnGenerator), nameof(PawnGenerator.TryGenerateSexualityTraitFor))]
     public static class TryGenerateSexualityTraitForPatch
     {

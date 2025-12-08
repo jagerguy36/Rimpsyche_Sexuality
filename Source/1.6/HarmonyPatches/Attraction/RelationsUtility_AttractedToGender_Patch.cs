@@ -4,6 +4,7 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
+    [HarmonyPriority(Priority.First)]
     [HarmonyPatch(typeof(RelationsUtility), nameof(RelationsUtility.AttractedToGender))]
     public static class RelationsUtility_AttractedToGender_Patch
     {

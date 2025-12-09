@@ -8,7 +8,12 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
-    //TODO: 0.15f hard limit should be adjsted
+    //1. Replace inhumanized check with compPsyche.Enabled check (faster inhumanized check and comp will be used later)
+    //2. Modify SLC hard limit of 0.15f based on pawn personality
+    //3. Modify num4 line so that loyalty dictates the lerp value
+    //4. Remove num5 line. Postfix will implement similar feature.
+    //5. Remove num8 line. Postfix will implement similar feature.
+    //Using transpiler so that postfix/prefix from other mods survive.
     [HarmonyPatch(typeof(InteractionWorker_RomanceAttempt), nameof(InteractionWorker_RomanceAttempt.RandomSelectionWeight))]
     public static class InteractionWorker_RomanceAttempt_RandomSelectionWeight_Patch
     {
@@ -17,25 +22,33 @@ namespace Maux36.RimPsyche.Sexuality
         {
             var codes = new List<CodeInstruction>(instructions);
 
-            //CompPsyche
+            //1. CompPsyche
             var method_compPsyche = AccessTools.Method(typeof(PawnExtensions), nameof(PawnExtensions.compPsyche));
             var property_compPsyche_Enabled = AccessTools.PropertyGetter(typeof(CompPsyche), nameof(CompPsyche.Enabled));
             var method_inhumanized = AccessTools.Method(typeof(AnomalyUtility), nameof(AnomalyUtility.Inhumanized));
             var psycheLocal = generator.DeclareLocal(typeof(CompPsyche)).LocalIndex;
             bool gotPsyche = false;
+            
+            //2. SLC
+            var method_slc = AccessTools.Method(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.SecondaryRomanceChanceFactor));
+            var method_opinionOf = AccessTools.Method(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.OpinionOf));
+            var method_GetSLClimit = AccessTools.Method(typeof(InteractionWorker_RomanceAttempt_RandomSelectionWeight_Patch), nameof(GetSLClimit));
+            int slcIndex = -1;
+            bool gotSLCindex = false;
+            bool modifiedSLClimit = false;
 
-            //Loyalty offset
+            //3. Loyalty offset
             var method_GetOffset = AccessTools.Method(typeof(InteractionWorker_RomanceAttempt_RandomSelectionWeight_Patch), nameof(GetLoyaltyOffset));
             var offsetLocal = generator.DeclareLocal(typeof(float)).LocalIndex;
             bool foundFirst = false;
             bool foundSecond = false;
 
-            //Gender Based Willingness
+            //4. Gender Based Willingness
             bool willingnessblockReached = false;
             var storyField = AccessTools.Field(typeof(Pawn), nameof(Pawn.story));
             bool skipping1 = false;
 
-            //Gender block skip
+            //5. Sexuality block skip
             var genderField = AccessTools.Field(typeof(Pawn), nameof(Pawn.gender));
             bool genderBlockReached = false;
             bool skipping2 = false;
@@ -46,7 +59,7 @@ namespace Maux36.RimPsyche.Sexuality
             for (int i = 0; i < codes.Count; i++)
             {
                 var code = codes[i];
-                //CompPsyche
+                //1. CompPsyche
                 if (!gotPsyche &&
                     code.opcode == OpCodes.Call && Equals(code.operand, method_inhumanized))
                 {
@@ -64,43 +77,41 @@ namespace Maux36.RimPsyche.Sexuality
                     newCodes.Add(new CodeInstruction(OpCodes.Callvirt, property_compPsyche_Enabled));
                     //If Enabled is true, then continue the code to the next ldarg.1 If not, then the following codes will return 0f
                     codes[i + 1].opcode = OpCodes.Brtrue_S;
+                    gotPsyche = true;
                     continue;
                 }
 
-                //TODO: utilize opinion to get new limit for SLC
+                //2. Modify SLC hard limit
+                if (!gotSLCindex &&
+                    i - 1 > 0 &&
+                    codes[i - 1].opcode == OpCodes.Call && Equals(code.operand, method_slc) &&
+                    code.IsStloc())
+                {
+                    slcIndex = code.LocalIndex();
+                    newCodes.Add(code);
+                    //skip (num < 0.15f) check
+                    i += 5;
+                    continue;
+                }
+                if (gotSLCindex &&
+                    !modifiedSLClimit &&
+                    i - 2 > 0 &&
+                    codes[i - 2].opcode == OpCodes.Call && Equals(code.operand, method_opinionOf) &&
+                    code.IsLdloc()
+                    )
+                {
+                    newCodes.Add(new CodeInstruction(OpCodes.Ldloc, gotSLCindex)); //load SLC
+                    newCodes.Add(new CodeInstruction(code.opcode, code.operand)); //load opinion
+                    newCodes.Add(new CodeInstruction(OpCodes.Ldloc, psycheLocal)); // load compPsyche
+                    newCodes.Add(new CodeInstruction(OpCodes.Callvirt, method_GetSLClimit)); //get limit value
+                    var passed_SLC_label = generator.DefineLabel();
+                    newCodes.Add(new CodeInstruction(OpCodes.Bge_Un_S, passed_SLC_label));//if SLC >= limit, go to passed label
+                    newCodes.Add(new CodeInstruction(OpCodes.Ldc_R4, 0f)); //if not, then get 0
+                    newCodes.Add(new CodeInstruction(OpCodes.Ret)); // return it
+                    newCodes.Add(code.WithLabels(passed_SLC_label)); //if passed, go onto do the original code.
+                }
 
-
-                // float num = initiator.relations.SecondaryRomanceChanceFactor(recipient);
-                //IL_004a: ldarg.1
-                //IL_004b: ldfld class RimWorld.Pawn_RelationsTracker Verse.Pawn::relations
-                //IL_0050: ldarg.2
-                //IL_0051: callvirt instance float32 RimWorld.Pawn_RelationsTracker::SecondaryRomanceChanceFactor(class Verse.Pawn)
-                //IL_0056: stloc.0
-                //// if (num < 0.15f)
-                //IL_0057: ldloc.0
-                //IL_0058: ldc.r4 0.15
-                //IL_005d: bge.un.s IL_0065
-                //// return 0f;
-                //IL_005f: ldc.r4 0.0
-                //IL_0064: ret
-
-                //// float num2 = 5f;
-                //IL_0065: ldc.r4 5
-                //IL_006a: stloc.1
-                //// int num3 = initiator.relations.OpinionOf(recipient);
-                //IL_006b: ldarg.1
-                //IL_006c: ldfld class RimWorld.Pawn_RelationsTracker Verse.Pawn::relations
-                //IL_0071: ldarg.2
-                //IL_0072: callvirt instance int32 RimWorld.Pawn_RelationsTracker::OpinionOf(class Verse.Pawn)
-                //IL_0077: stloc.2
-                //// if ((float)num3 < num2)
-                //IL_0078: ldloc.2
-                //IL_0079: conv.r4
-                //IL_007a: ldloc.1
-                //IL_007b: bge.un.s IL_0083
-
-
-                //Loyalty Offset
+                //3. Modify num4
                 if (!foundFirst && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 50f)
                 {
                     foundFirst = true;
@@ -121,7 +132,7 @@ namespace Maux36.RimPsyche.Sexuality
                     continue;
                 }
 
-                //Remove gender based willingness. Make num5 = 1f;
+                //4. Remove num5
                 if (!willingnessblockReached &&
                     code.opcode == OpCodes.Ldarg_1 &&
                     codes[i + 1].opcode == OpCodes.Ldfld &&
@@ -159,7 +170,7 @@ namespace Maux36.RimPsyche.Sexuality
                     continue;
                 }
 
-                //Skip Gender block (whole num8 block). 
+                //5. Skip num8 block. 
                 if (!genderBlockReached &&
                     code.opcode == OpCodes.Ldarg_1 &&
                     codes[i + 1].opcode == OpCodes.Ldfld &&
@@ -173,9 +184,9 @@ namespace Maux36.RimPsyche.Sexuality
                         continue;
                     }
                 }
-                //Skip Gender block until 1.15f is seen.
                 if (skipping2)
                 {
+                    //Skip num8 block until 1.15f is seen.
                     if (code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 1.15f)
                     {
                         skipping2 = false;
@@ -183,13 +194,13 @@ namespace Maux36.RimPsyche.Sexuality
                     }
                     continue;
                 }
-                //Remove * num8
                 if (genderBlockReached &&
                     code.opcode == OpCodes.Ldloc_S &&
                     i + 2 < codes.Count &&
                     codes[i + 1].opcode == OpCodes.Mul &&
                     codes[i + 2].opcode == OpCodes.Ret)
                 {
+                    //Remove * num8
                     i += 2;
                     continue;
                 }
@@ -197,6 +208,10 @@ namespace Maux36.RimPsyche.Sexuality
             }
 
             return newCodes;
+        }
+        static float GetSLClimit(int initOpinion, CompPsyche initComp)
+        {
+            return 0.15f;
         }
         static float GetLoyaltyOffset(Pawn initiator)
         {

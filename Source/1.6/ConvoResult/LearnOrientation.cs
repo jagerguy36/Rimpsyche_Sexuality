@@ -7,12 +7,11 @@ namespace Maux36.RimPsyche.Sexuality
         public float learningChance = 1f;
         public override void ApplyEffect(Pawn initiator, Pawn recipient, float alignment, float initOpinionOffset, float reciOpinionOffset)
         {
+            //compPsyche check is redundant because this is convo result
             if (Rand.Value < learningChance)
-            {
-                //compPsyche check is redundant because this is convo result
                 initiator.compPsyche().Sexuality.LearnOrientationOf(recipient);
+            if (Rand.Value < learningChance)
                 recipient.compPsyche().Sexuality.LearnOrientationOf(initiator);
-            }
         }
     }
 }

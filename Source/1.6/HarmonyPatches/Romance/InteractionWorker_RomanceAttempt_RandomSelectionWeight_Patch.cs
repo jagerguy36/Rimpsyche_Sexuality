@@ -84,32 +84,34 @@ namespace Maux36.RimPsyche.Sexuality
                 //2. Modify SLC hard limit
                 if (!gotSLCindex &&
                     i - 1 > 0 &&
-                    codes[i - 1].opcode == OpCodes.Call && Equals(code.operand, method_slc) &&
+                    codes[i - 1].opcode == OpCodes.Callvirt && Equals(codes[i - 1].operand, method_slc) &&
                     code.IsStloc())
                 {
                     slcIndex = code.LocalIndex();
                     newCodes.Add(code);
                     //skip (num < 0.15f) check
                     i += 5;
+                    gotSLCindex = true;
                     continue;
                 }
                 if (gotSLCindex &&
                     !modifiedSLClimit &&
                     i - 2 > 0 &&
-                    codes[i - 2].opcode == OpCodes.Call && Equals(code.operand, method_opinionOf) &&
+                    codes[i - 2].opcode == OpCodes.Callvirt && Equals(codes[i - 2].operand, method_opinionOf) &&
                     code.IsLdloc()
                     )
                 {
-                    newCodes.Add(new CodeInstruction(OpCodes.Ldloc, gotSLCindex)); //load SLC
-                    newCodes.Add(new CodeInstruction(code.opcode, code.operand)); //load opinion
+                    newCodes.Add(new CodeInstruction(OpCodes.Ldloc, slcIndex)); //load SLC
+                    newCodes.Add(new CodeInstruction(code.opcode, code.operand)); //opinion
                     newCodes.Add(new CodeInstruction(OpCodes.Ldloc, psycheLocal)); // load compPsyche
-                    newCodes.Add(new CodeInstruction(OpCodes.Ldarg_2)); //load recipient
                     newCodes.Add(new CodeInstruction(OpCodes.Callvirt, method_GetSLClimit)); //get limit value
                     var passed_SLC_label = generator.DefineLabel();
                     newCodes.Add(new CodeInstruction(OpCodes.Bge_Un_S, passed_SLC_label));//if SLC >= limit, go to passed label
                     newCodes.Add(new CodeInstruction(OpCodes.Ldc_R4, 0f)); //if not, then get 0
                     newCodes.Add(new CodeInstruction(OpCodes.Ret)); // return it
-                    newCodes.Add(code.WithLabels(passed_SLC_label)); //if passed, go onto do the original code.
+                    newCodes.Add(code.WithLabels(passed_SLC_label));
+                    modifiedSLClimit = true;
+                    continue;
                 }
 
                 //3. Modify num4
@@ -207,14 +209,27 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 newCodes.Add(code);
             }
-
+            if (!gotPsyche)
+                Log.Error("[Rimpsyche - Sexuality] Romance attempt patch failed to get Inhumanized check hook");
+            if (!modifiedSLClimit)
+                Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to modify Secondary Lovin Chance min Romance attempt value");
+            if (!foundSecond)
+                Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to modify loyalty offset");
+            if (!willingnessblockReached)
+                Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to remove gender based confidence");
+            if (!genderBlockReached)
+                Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to remove vanilla sexual orientation factor");
+            //foreach (var code in newCodes)
+            //{
+            //    Log.Message($"{code.opcode}, {code.operand}");
+            //}
             return newCodes;
         }
-        static float GetSLClimit(int initOpinion, CompPsyche initComp, Pawn recipient)
+        static float GetSLClimit(int initOpinion, CompPsyche initComp)
         {
             float num = 0.15f;
             num -= initComp.Evaluate(SexualOpenness);
-            num -= LerpDoubleClamped(-50f, 50f, -0.05f, 0.05f, (float)initOpinion);
+            num -= GenMath.LerpDoubleClamped(-50f, 50f, -0.05f, 0.05f, (float)initOpinion);
             return num;
         }
         public static RimpsycheFormula SexualOpenness = new(
@@ -289,7 +304,7 @@ namespace Maux36.RimPsyche.Sexuality
             }
 
             //Consider the other's orientation
-            var pReciAttraction;
+            float pReciAttraction;
             if (initPsyche.Sexuality.KnowsOrientationOf(recipient))
                 pReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator);
             else
@@ -312,7 +327,7 @@ namespace Maux36.RimPsyche.Sexuality
             {
                 var cooperative = Mathf.Min(tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Competitiveness), 0f);
                 var passion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
-                return Clamp01(1f + 0.8f * cooperative + 0.2 * passion);
+                return Mathf.Clamp01(1f + 0.8f * cooperative + 0.2f * passion);
             },
             RimpsycheFormulaManager.FormulaIdDict
         );

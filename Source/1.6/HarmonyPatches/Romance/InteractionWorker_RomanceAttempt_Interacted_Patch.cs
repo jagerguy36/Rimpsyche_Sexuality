@@ -11,10 +11,13 @@ namespace Maux36.RimPsyche.Sexuality
         {
             var initPsyche = initiator.compPsyche();
             if (initPsyche?.Enabled != true) return;
+            var reciPsyche = recipient.compPsyche();
+            if (reciPsyche?.Enabled != true) return;
             var initSexuality = initPsyche.Sexuality;
 
             //Learn orientation
             initSexuality.LearnOrientationOf(recipient);
+            reciPsyche.Sexuality.LearnOrientationOf(initiator);
 
             //Remember that initiator is attracted to recipient unless forced.
             if (initiator.CurJob?.def == JobDefOf.TryRomance) return;

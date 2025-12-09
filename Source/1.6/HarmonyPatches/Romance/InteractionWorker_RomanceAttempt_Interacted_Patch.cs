@@ -10,9 +10,9 @@ namespace Maux36.RimPsyche.Sexuality
         public static void Postfix(Pawn initiator, Pawn recipient)
         {
             var initPsyche = initiator.compPsyche();
-            if (initPsyche?.Enabled != true) return;
             var reciPsyche = recipient.compPsyche();
-            if (reciPsyche?.Enabled != true) return;
+            if (reciPsyche?.Enabled != true || initPsyche?.Enabled != true) return;
+            
             var initSexuality = initPsyche.Sexuality;
 
             //Learn orientation

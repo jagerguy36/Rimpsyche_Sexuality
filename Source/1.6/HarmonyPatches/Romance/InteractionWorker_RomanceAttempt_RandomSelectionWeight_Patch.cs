@@ -281,8 +281,7 @@ namespace Maux36.RimPsyche.Sexuality
                 pReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator);
             else
                 pReciAttraction = 0.5f;
-            float otherOrientationConsideration = 4f * (pReciAttraction + initPsyche.Evaluate(OrientationSensitivityOffset));
-            __result *= Mathf.Clamp01(otherOrientationConsideration);
+            __result *= Mathf.Clamp01(4f * (pReciAttraction + initPsyche.Evaluate(OrientationSensitivityOffset))); // y = 4*(x + C)
         }
         public static RimpsycheFormula CanOvercomeRebuffValue = new(
             "CanOvercomeRebuffValue",

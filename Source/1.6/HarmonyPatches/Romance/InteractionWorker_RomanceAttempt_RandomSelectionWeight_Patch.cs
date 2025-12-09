@@ -103,6 +103,7 @@ namespace Maux36.RimPsyche.Sexuality
                     newCodes.Add(new CodeInstruction(OpCodes.Ldloc, gotSLCindex)); //load SLC
                     newCodes.Add(new CodeInstruction(code.opcode, code.operand)); //load opinion
                     newCodes.Add(new CodeInstruction(OpCodes.Ldloc, psycheLocal)); // load compPsyche
+                    newCodes.Add(new CodeInstruction(OpCodes.Ldarg_2)); //load recipient
                     newCodes.Add(new CodeInstruction(OpCodes.Callvirt, method_GetSLClimit)); //get limit value
                     var passed_SLC_label = generator.DefineLabel();
                     newCodes.Add(new CodeInstruction(OpCodes.Bge_Un_S, passed_SLC_label));//if SLC >= limit, go to passed label
@@ -209,7 +210,7 @@ namespace Maux36.RimPsyche.Sexuality
 
             return newCodes;
         }
-        static float GetSLClimit(int initOpinion, CompPsyche initComp)
+        static float GetSLClimit(int initOpinion, CompPsyche initComp, Pawn recipient)
         {
             return 0.15f;
         }
@@ -274,11 +275,13 @@ namespace Maux36.RimPsyche.Sexuality
                 __result *= initPsyche.Evaluate(CompeteForLoveFactor);
             }
 
-            //If orientation unknown, then just return
-            if (!initPsyche.Sexuality.KnowsOrientationOf(recipient)) return;
-            //Case Other's Orientation Known
-            var knownReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator);
-            float otherOrientationConsideration = 4f * (knownReciAttraction + initPsyche.Evaluate(OrientationSensitivityOffset));
+            //Consider the other's orientation
+            var pReciAttraction;
+            if (initPsyche.Sexuality.KnowsOrientationOf(recipient))
+                pReciAttraction = reciPsyche.Sexuality.GetAdjustedAttraction(initiator);
+            else
+                pReciAttraction = 0.5f;
+            float otherOrientationConsideration = 4f * (pReciAttraction + initPsyche.Evaluate(OrientationSensitivityOffset));
             __result *= Mathf.Clamp01(otherOrientationConsideration);
         }
         public static RimpsycheFormula CanOvercomeRebuffValue = new(
@@ -317,10 +320,10 @@ namespace Maux36.RimPsyche.Sexuality
                 var optimism = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Optimism);
                 var compassion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Compassion);
                 var selfInterest = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_SelfInterest);
-                var confidenceFactor = 0.1f * confidence;
-                var hopefulnessFactor = 0.1f * Mathf.Max(0f, openness) * Mathf.Max(0f, optimism - 0.5f);
-                var entitlementFactor = 0.1f * Mathf.Max(0f, -compassion) * Mathf.Max(0f, selfInterest);
-                return confidenceFactor + hopefulnessFactor + entitlementFactor - 0.25f;
+                var confidenceFactor = 0.1f * confidence; //-0.1~0.1
+                var hopefulnessFactor = 0.1f * Mathf.Max(0f, openness) * Mathf.Max(0f, optimism - 0.5f);//-0.15~0.05
+                var entitlementFactor = 0.1f * Mathf.Max(0f, -compassion) * Mathf.Max(0f, selfInterest);//-0.1~0.1
+                return confidenceFactor + hopefulnessFactor + entitlementFactor - 0.25f;//-0.6~0
             },
             RimpsycheFormulaManager.FormulaIdDict
         );

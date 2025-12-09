@@ -50,7 +50,7 @@ namespace Maux36.RimPsyche.Sexuality
             return true;
         }
 
-        //TODO: use descriptor instead of numbers
+        //TODO: better preference report
         public override string Report(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();

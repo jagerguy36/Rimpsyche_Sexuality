@@ -42,7 +42,7 @@ namespace Maux36.RimPsyche.Sexuality
                     {
                         skipping = false;
                         yield return new CodeInstruction(OpCodes.Ldloc_1);
-                        yield return new CodeInstruction(OpCodes.Callvirt, method_CanCastWordOfLove);
+                        yield return new CodeInstruction(OpCodes.Call, method_CanCastWordOfLove);
                         var nCode = new CodeInstruction(OpCodes.Brtrue, code.operand);
                         yield return nCode;
                     }

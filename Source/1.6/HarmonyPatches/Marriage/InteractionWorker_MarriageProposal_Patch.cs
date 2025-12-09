@@ -56,7 +56,7 @@ namespace Maux36.RimPsyche.Sexuality
                         ldarg_line.labels.AddRange(code.labels);
                     }
                     yield return ldarg_line;
-                    yield return new CodeInstruction(OpCodes.Callvirt, MarriageAcceptanceBase);
+                    yield return new CodeInstruction(OpCodes.Call, MarriageAcceptanceBase);
                     continue;
                 }
                 yield return code;

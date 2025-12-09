@@ -212,8 +212,21 @@ namespace Maux36.RimPsyche.Sexuality
         }
         static float GetSLClimit(int initOpinion, CompPsyche initComp, Pawn recipient)
         {
-            return 0.15f;
+            float num = 0.15f;
+            num -= initComp.Evaluate(SexualOpenness);
+            num -= LerpDoubleClamped(-50f, 50f, -0.05f, 0.05f, (float)initOpinion);
+            return num;
         }
+        public static RimpsycheFormula SexualOpenness = new(
+            "SexualOpenness",
+            (tracker) =>
+            {
+                float openness = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Openness);
+                float experimental = Mathf.Max(0f, tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Experimentation));
+                return 0.1f * openness + 0.05f * experimental;
+            },
+            RimpsycheFormulaManager.FormulaIdDict
+        );
         static float GetLoyaltyOffset(Pawn initiator)
         {
             float offset = 0f;

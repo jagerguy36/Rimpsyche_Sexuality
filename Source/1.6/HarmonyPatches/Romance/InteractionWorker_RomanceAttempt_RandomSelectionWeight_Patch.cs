@@ -249,7 +249,7 @@ namespace Maux36.RimPsyche.Sexuality
                 return;
             }
 
-            //Prevent stupid romance attempt
+            //Prevent recently rebuffed pawns from trying again
             //Relationship Moudle will implement its own method to block interaction.
             if (!Rimpsyche.RelationshipModuleLoaded && initPsyche.Sexuality.GetLatestRebuffImpact(recipient) < initPsyche.Evaluate(CanOvercomeRebuffValue))
             {
@@ -288,7 +288,8 @@ namespace Maux36.RimPsyche.Sexuality
             (tracker) =>
             {
                 var confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
-                return -3f - 3f * confidence;
+                var passion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
+                return -3f - 2f * confidence - passion;
             },
             RimpsycheFormulaManager.FormulaIdDict
         );
@@ -297,7 +298,8 @@ namespace Maux36.RimPsyche.Sexuality
             (tracker) =>
             {
                 var cooperative = Mathf.Min(tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Competitiveness), 0f);
-                return 1f + 0.8f * cooperative;
+                var passion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
+                return Clamp01(1f + 0.8f * cooperative + 0.2 * passion);
             },
             RimpsycheFormulaManager.FormulaIdDict
         );
@@ -306,7 +308,8 @@ namespace Maux36.RimPsyche.Sexuality
             (tracker) =>
             {
                 var confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
-                return 1f + 0.1f * confidence;
+                var passion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
+                return 1f + 0.1f * confidence + 0.1f * passion;
             },
             RimpsycheFormulaManager.FormulaIdDict
         );

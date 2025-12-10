@@ -12,7 +12,10 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
             var observerPsyche = pawn.compPsyche();
             if (observerPsyche?.Enabled == true)
             {
-                __result = observerPsyche.Sexuality.GetAdjustedAttraction(partner);
+                var adjustedAttraction = observerPsyche.Sexuality.GetAdjustedAttraction(partner);
+                if (pawn.HasPsychicLoveWith(partner))
+                    adjustedAttraction = Mathf.Max(1f, adjustedAttraction);
+                __result = adjustedAttraction;
                 return false;
             }
             return true;

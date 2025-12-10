@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 using rjw;
+using UnityEngine;
 using Verse;
 
 namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat

@@ -231,7 +231,7 @@ namespace Maux36.RimPsyche.Sexuality
             float limit = 0.15f;
             limit -= initComp.Evaluate(SexualOpenness); //-0.15~0.15
             limit -= GenMath.LerpDoubleClamped(-50f, 50f, -0.05f, 0.05f, (float)initOpinion);
-            limit = Mathf.Max(0.01, limit);
+            limit = Mathf.Max(0.01f, limit);
             float attraction = initComp.Sexuality.GetAdjustedAttraction(recipient);
             if (attraction == 0f)
                 return false;

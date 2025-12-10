@@ -32,7 +32,7 @@ namespace Maux36.RimPsyche.Sexuality
             //2. SRC
             var method_src = AccessTools.Method(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.SecondaryRomanceChanceFactor));
             var method_opinionOf = AccessTools.Method(typeof(Pawn_RelationsTracker), nameof(Pawn_RelationsTracker.OpinionOf));
-            var method_NotInterested = AccessTools.Method(typeof(InteractionWorker_RomanceAttempt_RandomSelectionWeight_Patch), nameof(NotInterested));
+            var method_Interested = AccessTools.Method(typeof(InteractionWorker_RomanceAttempt_RandomSelectionWeight_Patch), nameof(Interested));
             int srcIndex = -1;
             bool gotSRCindex = false;
             bool modifiedSRClimit = false;
@@ -105,9 +105,9 @@ namespace Maux36.RimPsyche.Sexuality
                     newCodes.Add(new CodeInstruction(OpCodes.Ldloc, srcIndex)); //load SRC
                     newCodes.Add(new CodeInstruction(OpCodes.Ldloc, psycheLocal)); // load compPsyche
                     newCodes.Add(new CodeInstruction(OpCodes.Ldarg_2)); //load recipient
-                    newCodes.Add(new CodeInstruction(OpCodes.Call, method_NotInterested)); //get limit value
+                    newCodes.Add(new CodeInstruction(OpCodes.Call, method_Interested));
                     var passed_SRC_label = generator.DefineLabel();
-                    newCodes.Add(new CodeInstruction(OpCodes.Brfalse_S, passed_SRC_label));//Interested, go to passed label
+                    newCodes.Add(new CodeInstruction(OpCodes.Brtrue_S, passed_SRC_label));//If interested, go to passed label
                     newCodes.Add(new CodeInstruction(OpCodes.Ldc_R4, 0f)); //if not, then get 0
                     newCodes.Add(new CodeInstruction(OpCodes.Ret)); // return it
                     newCodes.Add(code.WithLabels(passed_SRC_label));
@@ -222,13 +222,21 @@ namespace Maux36.RimPsyche.Sexuality
                 Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to remove vanilla sexual orientation factor");
             return newCodes;
         }
-        static bool NotInterested(int initOpinion, float romanceFactor, CompPsyche initComp, Pawn recipient)
+        static bool Interested(int initOpinion, float romanceFactor, CompPsyche initComp, Pawn recipient)
         {
-            float num = 0.15f;
-            num -= initComp.Evaluate(SexualOpenness);
-            num -= GenMath.LerpDoubleClamped(-50f, 50f, -0.05f, 0.05f, (float)initOpinion);
-            //TODO implement logic
-            return false;
+            if (romanceFactor == 0f)
+                return false;
+            float limit = 0.15f;
+            limit -= initComp.Evaluate(SexualOpenness); //-0.15~0.15
+            limit -= GenMath.LerpDoubleClamped(-50f, 50f, -0.05f, 0.05f, (float)initOpinion);
+            float attraction = initComp.Sexuality.GetAdjustedAttraction(recipient);
+            if (attraction == 0f)
+                return false;
+            if (attraction < limit)
+                return false;
+            if (romanceFactor / attraction < 0.15f)
+                return false;
+            return true;
         }
         public static RimpsycheFormula SexualOpenness = new(
             "SexualOpenness",

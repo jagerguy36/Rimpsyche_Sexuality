@@ -212,8 +212,10 @@ namespace Maux36.RimPsyche.Sexuality
             }
             if (!gotPsyche)
                 Log.Error("[Rimpsyche - Sexuality] Romance attempt patch failed to get Inhumanized check hook");
-            //if (!modifiedSRClimit)
-            //    Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to modify Secondary Lovin Chance min Romance attempt value");
+            if (!gotSRCindex)
+               Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to remove Secondary Romance Chance min value"); 
+            if (!modifiedSRClimit)
+               Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to apply modified Secondary Lovin Chance limit");
             if (!foundSecond)
                 Log.Error("[Rimpsyche - Sexuality] Romance attempt failed to modify loyalty offset");
             if (!willingnessblockReached)

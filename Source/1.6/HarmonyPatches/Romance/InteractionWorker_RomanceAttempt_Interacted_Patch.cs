@@ -16,12 +16,14 @@ namespace Maux36.RimPsyche.Sexuality
             var initSexuality = initPsyche.Sexuality;
 
             //Learn orientation
-            initSexuality.LearnOrientationOf(recipient);
             reciPsyche.Sexuality.LearnOrientationOf(initiator);
 
-            //Remember that initiator is attracted to recipient unless forced.
-            if (initiator.CurJob?.def == JobDefOf.TryRomance) return;
-            initSexuality.IncrementRelationshipWith(recipient, 0f);
+            //Unless forced: Remember that initiator is attracted to recipient as well as learning orientation.
+            //learning orientation is included in increment
+            if (initiator.CurJob?.def != JobDefOf.TryRomance)
+                initSexuality.IncrementRelationshipWith(recipient, 0f);
+            else
+                initSexuality.LearnOrientationOf(recipient);
         }
     }
 }

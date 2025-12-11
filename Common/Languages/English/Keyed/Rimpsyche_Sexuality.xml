@@ -11,8 +11,8 @@
   <RimpsycheUsePreferenceSystemTooltip>Give each pawns their own preference.</RimpsycheUsePreferenceSystemTooltip>
   <RimpsycheRomanceAttemptGenderDiff>Gender Difference</RimpsycheRomanceAttemptGenderDiff>
   <RimpsycheRomanceAttemptGenderDiffTooltip>Women are less likely to make a romance attempt at men. (Vanilla logic) </RimpsycheRomanceAttemptGenderDiffTooltip>
-  <RimpsycheMinRelAttraction>Relation Min. Attraction(%)</RimpsycheMinRelAttraction>
-  <RimpsycheMinRelAttractionTooltip>Minimum attraction towards pawns one is interested in will be adjusted to this percentage of their Max Attraction.</RimpsycheMinRelAttractionTooltip>
+  <RimpsycheMinRelAttraction>Relation Min. Attraction</RimpsycheMinRelAttraction>
+  <RimpsycheMinRelAttractionTooltip>Minimum attraction towards pawns one is interested in will be adjusted to this.</RimpsycheMinRelAttractionTooltip>
 
   <!-- Title -->
   <RPC_Preference>Preference</RPC_Preference>

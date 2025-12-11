@@ -11,8 +11,8 @@
   <RimpsycheUsePreferenceSystemTooltip>각 림에게 취향을 부여합니다.</RimpsycheUsePreferenceSystemTooltip>
   <RimpsycheRomanceAttemptGenderDiff>성별 차이</RimpsycheRomanceAttemptGenderDiff>
   <RimpsycheRomanceAttemptGenderDiffTooltip>여성은 일반적으로 남성에게 먼저 고백할 가능성이 낮습니다. (바닐라 로직)</RimpsycheRomanceAttemptGenderDiffTooltip>
-  <RimpsycheMinRelAttraction>관계도 최소 선호도(%)</RimpsycheMinRelAttraction>
-  <RimpsycheMinRelAttractionTooltip>관심있는 림들에 대한 림들의 선호도는 최소 이 수치(최대 선호도 대비 퍼센트)로 조정됩니다.</RimpsycheMinRelAttractionTooltip>
+  <RimpsycheMinRelAttraction>관계도 최소 선호도</RimpsycheMinRelAttraction>
+  <RimpsycheMinRelAttractionTooltip>관심있는 림들에 대한 림들의 선호도는 최소 이 수치로 조정됩니다.</RimpsycheMinRelAttractionTooltip>
 
   <!-- Title -->
   <RPC_Preference>취향</RPC_Preference>

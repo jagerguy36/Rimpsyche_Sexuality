@@ -20,9 +20,14 @@ namespace Maux36.RimPsyche.Sexuality.RPS_ROR_Compat
         {
             if (__instance.Interacted)
             {
+                var pawnPsyche = ___Initiator.compPsyche();
+                var partnerPsyche = ___Recipient.compPsyche();
+                if (pawnPsyche.Enabled != true || partnerPsyche.Enabled != true)
+                    return;
                 int interactionDuration = GetInteractionDuration(__instance);
                 float num = 0.02f * Mathf.Clamp01((float)(Find.TickManager.TicksGame - ___StartInteractionTick) / (float)interactionDuration);
-                Log.Message($"Rimpsyche adding partial outcome to {___Initiator.Name} and {___Recipient.Name} by {num}");
+                pawnPsyche.Sexuality.IncrementRelationshipWith(___Recipient, num);
+                partnerPsyche.Sexuality.IncrementRelationshipWith(___Initiator, num);
             }
         }
     }
@@ -41,9 +46,14 @@ namespace Maux36.RimPsyche.Sexuality.RPS_ROR_Compat
             if (__instance.Interacted)
             {
 
+                var pawnPsyche = ___Initiator.compPsyche();
+                var partnerPsyche = ___Recipient.compPsyche();
+                if (pawnPsyche.Enabled != true || partnerPsyche.Enabled != true)
+                    return;
                 float RomanceNeedGainFromInteraction = GetRomanceNeedGainFromInteraction(__instance);
                 float num = 0.02f * RomanceNeedGainFromInteraction;
-                Log.Message($"Rimpsyche adding partial outcome to {___Initiator.Name} and {___Recipient.Name} by {num}");
+                pawnPsyche.Sexuality.IncrementRelationshipWith(___Recipient, num);
+                partnerPsyche.Sexuality.IncrementRelationshipWith(___Initiator, num);
             }
         }
     }

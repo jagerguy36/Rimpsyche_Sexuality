@@ -66,6 +66,7 @@
     <Compile Include="Orientation\CommonChecks_AttractedToGender_Patch.cs" />
     <Compile Include="Orientation\SexUtilities_SexDisposition_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relationship\SexUtilities_ApplyLovinThoughts_Patch.cs" />
     <Compile Include="SexDrive\InteractionWorker_Seduce_Patch.cs" />
     <Compile Include="SexDrive\RimpsycheIntimacySexdriveStatPart.cs" />
   </ItemGroup>

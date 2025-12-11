@@ -11,8 +11,16 @@
   <RimpsycheUsePreferenceSystemTooltip>Give each pawns their own preference.</RimpsycheUsePreferenceSystemTooltip>
   <RimpsycheRomanceAttemptGenderDiff>Gender Difference</RimpsycheRomanceAttemptGenderDiff>
   <RimpsycheRomanceAttemptGenderDiffTooltip>Women are less likely to make a romance attempt at men. (Vanilla logic) </RimpsycheRomanceAttemptGenderDiffTooltip>
+  <RimpsycheMinRelAttraction>Relation Min. Attraction(%)</RimpsycheMinRelAttraction>
+  <RimpsycheMinRelAttractionTooltip>Minimum attraction towards pawns one is interested in will be adjusted to this percentage of their Max Attraction.</RimpsycheMinRelAttractionTooltip>
+
+  <!-- Title -->
+  <RPC_Preference>Preference</RPC_Preference>
 
   <!-- Tab -->
+  <RimpsycheShowInterest>Show Interest</RimpsycheShowInterest>
+  <RimpsycheShowPreference>Show Preference</RimpsycheShowPreference>
+
   <RPC_Orientation>Sexuality</RPC_Orientation>
   <RPC_Kinsey>Kinsey Rating</RPC_Kinsey>
   <RPC_MaxAttraction>Max Attraction</RPC_MaxAttraction>
@@ -24,12 +32,6 @@
   <RPC_Homosexual>Homosexual</RPC_Homosexual>
   <RPC_Asexual>Asexual</RPC_Asexual>
   <RPC_SexualityUndefined>Undefined</RPC_SexualityUndefined>
-
-  <!-- Edit Mode -->
-  <RPS_HypoAttraction>Not attracted</RPS_HypoAttraction>
-  <RPS_HyperAttraction>Hyper attracted</RPS_HyperAttraction>
-  <RPS_Hyposexual>Hyposexual</RPS_Hyposexual>
-  <RPS_Hypersexual>Hypersexual</RPS_Hypersexual>
 
   <!-- Preference -->
   <RPS_NoPreference>No Preference available</RPS_NoPreference>

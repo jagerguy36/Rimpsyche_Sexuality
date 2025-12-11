@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <!-- General -->
+  <RimpsycheSexualitySettingCategory>림사이키 - 성적지향</RimpsycheSexualitySettingCategory>
+
+  <!-- Settings -->
+  <RimpsycheKinseyDistributionSettings>성적 지향 분포 세팅 (재시작 필요)</RimpsycheKinseyDistributionSettings>
+  <RimpsycheKinseyDefaultSetting>기본값으로</RimpsycheKinseyDefaultSetting>
+  <RimpsycheUsePreferenceSystem>취향 시스템 사용</RimpsycheUsePreferenceSystem>
+  <RimpsycheUsePreferenceSystemTooltip>각 림에게 취향을 부여합니다.</RimpsycheUsePreferenceSystemTooltip>
+  <RimpsycheRomanceAttemptGenderDiff>성별 차이</RimpsycheRomanceAttemptGenderDiff>
+  <RimpsycheRomanceAttemptGenderDiffTooltip>여성은 일반적으로 남성에게 먼저 고백할 가능성이 낮습니다. (바닐라 로직)</RimpsycheRomanceAttemptGenderDiffTooltip>
+  <RimpsycheMinRelAttraction>관계도 최소 선호도(%)</RimpsycheMinRelAttraction>
+  <RimpsycheMinRelAttractionTooltip>관심있는 림들에 대한 림들의 선호도는 최소 이 수치(최대 선호도 대비 퍼센트)로 조정됩니다.</RimpsycheMinRelAttractionTooltip>
+
+  <!-- Title -->
+  <RPC_Preference>취향</RPC_Preference>
+
+  <!-- Tab -->
+  <RimpsycheShowInterest>관심사</RimpsycheShowInterest>
+  <RimpsycheShowPreference>취향</RimpsycheShowPreference>
+
+  <RPC_Orientation>성적 지향</RPC_Orientation>
+  <RPC_Kinsey>킨지 척도</RPC_Kinsey>
+  <RPC_MaxAttraction>최대 선호도</RPC_MaxAttraction>
+  <RPC_AttractionMale>남성</RPC_AttractionMale>
+  <RPC_AttractionFemale>여성</RPC_AttractionFemale>
+  <RPC_SexDrive>성욕</RPC_SexDrive>
+  <RPC_Heterosexual>이성애자</RPC_Heterosexual>
+  <RPC_Bisexual>양성애자</RPC_Bisexual>
+  <RPC_Homosexual>동성애자</RPC_Homosexual>
+  <RPC_Asexual>무성애자</RPC_Asexual>
+  <RPC_SexualityUndefined>정해지지 않음</RPC_SexualityUndefined>
+
   <!-- Preference -->
   <RPS_NoPreference>선호사항 없음</RPS_NoPreference>
   <RPS_AttractionReport>{0}가 매력을 느끼는 성격:</RPS_AttractionReport>

@@ -69,6 +69,7 @@
     <Compile Include="PreferenceModule\R_Homewrecking_WhenHomewrecking_Patch.cs" />
     <Compile Include="Preference\OrientationUtility_PreferenceFactor_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Relationship\AfterSexUtility_FinalizeThought_Patch.cs" />
     <Compile Include="SexDrive\RimpsycheRJWSexdriveStatPart.cs" />
   </ItemGroup>
   <ItemGroup>

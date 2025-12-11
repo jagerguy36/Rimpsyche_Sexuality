@@ -60,5 +60,17 @@ namespace Maux36.RimPsyche.Sexuality
             var tickCurrent = Find.TickManager.TicksGame;
             Log.Message($"current tick: {tickCurrent} || NLT: {nlt} ... nextTickFactor: {Mathf.Min(1f / pawn.compPsyche().Sexuality.GetAdjustedSexdrive(), 60f)}");
         }
+        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        public static void LogRelationship(Pawn pawn)
+        {
+            var compPsyche = pawn.compPsyche();
+            if (compPsyche?.Enabled != true)
+                Log.Message($"{pawn.Name} has no psyche");
+
+            var relationship = compPsyche.Sexuality.relationship;
+            var pairs = relationship.Select(kvp => $"{kvp.Key}: {kvp.Value}");
+            string logMessage = $"{pawn.Name} relationship = {{ {string.Join(", ", pairs)} }}";
+            Log.Message($"{logMessage}");
+        }
     }
 }

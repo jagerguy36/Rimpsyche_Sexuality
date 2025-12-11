@@ -20,6 +20,10 @@ namespace Maux36.RimPsyche.Sexuality
                 if (RimpsycheSettings.usePreferenceSystem)
                     harmony.PatchCategory("RPS_Preference");
             }
+            if (!ModsConfig.IsActive("rim.job.world"))
+            {
+                harmony.PatchCategory("RPS_No_RJW");
+            }
         }
     }
 }

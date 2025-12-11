@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rimpsyche_Intimacy_Compat",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPS_VRE_Compat", "..\Mods\RPS_VRE_Compat\RPS_VRE_Compat.csproj", "{ED11BD44-E157-4258-A47B-5C84DD69C88D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RPS_ROR_Compat", "..\Mods\RPS_ROR_Compat\RPS_ROR_Compat.csproj", "{92E2E6D1-9520-4667-A5E8-8A4CE2BD1059}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{ED11BD44-E157-4258-A47B-5C84DD69C88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED11BD44-E157-4258-A47B-5C84DD69C88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED11BD44-E157-4258-A47B-5C84DD69C88D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92E2E6D1-9520-4667-A5E8-8A4CE2BD1059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92E2E6D1-9520-4667-A5E8-8A4CE2BD1059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92E2E6D1-9520-4667-A5E8-8A4CE2BD1059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92E2E6D1-9520-4667-A5E8-8A4CE2BD1059}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

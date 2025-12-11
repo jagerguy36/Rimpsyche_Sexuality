@@ -17,7 +17,7 @@ namespace Maux36.RimPsyche.Sexuality
                 harmony.PatchCategory("RPS_No_RPR");
 
                 //Relation module will implement preference on its own way
-                if (RimpsycheSettings.usePreferenceSystem)
+                if (RimpsycheSexualitySettings.usePreferenceSystem)
                     harmony.PatchCategory("RPS_Preference");
             }
             if (!ModsConfig.IsActive("rim.job.world"))

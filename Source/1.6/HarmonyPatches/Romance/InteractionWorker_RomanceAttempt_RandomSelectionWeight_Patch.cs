@@ -295,7 +295,7 @@ namespace Maux36.RimPsyche.Sexuality
             }
 
             //Apply Gender Difference
-            if (RimpsycheSettings.romanceAttemptGenderDiff)
+            if (RimpsycheSexualitySettings.romanceAttemptGenderDiff)
             {
                 if (initiator.gender == Gender.Female && recipient.gender == Gender.Male)
                 {

@@ -74,7 +74,7 @@ namespace Maux36.RimPsyche.Sexuality
         public override float Evaluate(Pawn observer, Pawn target, float result)
         {
             //Log.Message($"{observer.Name} -> {target.Name}");
-            if (RimpsycheSettings.usePreferenceSystem != true) return result;
+            if (RimpsycheSexualitySettings.usePreferenceSystem != true) return result;
             var observerPsyche = observer.compPsyche();
             if (observerPsyche?.Enabled != true) return result;
             var targetPsyche = target.compPsyche();

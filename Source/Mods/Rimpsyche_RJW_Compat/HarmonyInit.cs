@@ -20,6 +20,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
         static void DelayedUnpatch()
         {
             //Unpatch RJW
+            Log.Message("[Rimpsyche - Sexuality] Running delayed RJW patches");
             MethodInfo RJW_TraitSet_GainTrait_Patch_fixes = typeof(TraitSet).GetMethod("GainTrait", new Type[] { typeof(Trait), typeof(bool) });
             MethodInfo RJW_TraitSet_RemoveTrait_Patch_fixes = typeof(TraitSet).GetMethod("RemoveTrait", new Type[] { typeof(Trait), typeof(bool) });
             MethodInfo RJW_CompAbilityEffect_WordOfLove_ValidateTarget_Patch_fixes = typeof(CompAbilityEffect_WordOfLove).GetMethod("ValidateTarget");

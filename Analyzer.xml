@@ -1,0 +1,8 @@
+<Analyzer>
+    <RimPsycheSexuality>
+        <Types>
+            <li>Maux36.RimPsyche.InteractionWorker_RomanceAttempt</li>
+            <li>Maux36.RimPsyche.Pawn_SexualityTracker</li>
+        </Types>
+    </RimPsycheSexuality>
+</Analyzer>

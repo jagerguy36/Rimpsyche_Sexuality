@@ -8,7 +8,7 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
-    public static class Sexuality_Utility
+    public static class SexualityDebugActions
     {
         [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogPawnPsychePreference(Pawn pawn)
@@ -34,7 +34,7 @@ namespace Maux36.RimPsyche.Sexuality
             }
         }
         [DebugAction("Pawns", null, false, false, false, false, false, 0, false, actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
-        private static void DisplayRelationsInfoWithPreference(Pawn pawn)
+        public static void DisplayRelationsInfoWithPreference(Pawn pawn)
         {
             List<TableDataGetter<Pawn>> list = new List<TableDataGetter<Pawn>>
         {

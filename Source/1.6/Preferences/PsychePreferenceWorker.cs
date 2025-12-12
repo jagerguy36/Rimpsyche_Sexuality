@@ -96,7 +96,7 @@ namespace Maux36.RimPsyche.Sexuality
                 value += Mathf.Max(1-Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth); //-0.4~1.0 * 1.25 * 5 => -2.5~6.25
                 //Log.Message($"{personality.label}| [{pf.target}] ~ {pv} | {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF)} * {(pf.importance + 0.25f * auth)} = {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth)}");
             }
-            float sway = observerPsyche.Evaluate(SexualityFormulaDB.PsychePrefAuthSway);// 0.032~0.128 (0.2~0.16~0.8*0.16)
+            float sway = observerPsyche.Evaluate(SexualityFormula.PsychePrefAuthSway);// 0.032~0.128 (0.2~0.16~0.8*0.16)
             float preferenceFactor =  1f + value * sway; // 0.92~1.2 || 0.68~1.8
             //Log.Message($"value: {value}, sway: {sway} | factor: {preferenceFactor}");
             return result * preferenceFactor;

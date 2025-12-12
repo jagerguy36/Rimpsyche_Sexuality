@@ -86,11 +86,12 @@
     <Compile Include="HarmonyPatches\Attraction\Pawn_RelationsTracker_SecondaryLovinChanceFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\HarmonyPatches.cs" />
     <Compile Include="HarmonyPatches\SexaulityAssignment\TryGenerateSexualityTraitForPatch.cs" />
+    <Compile Include="Database\SexualityDatabase.cs" />
     <Compile Include="Preferences\PsychePreferenceWorker.cs" />
     <Compile Include="RimpsycheSexuality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SexualityFormulaDB.cs" />
-    <Compile Include="Sexuality_Utility.cs" />
+    <Compile Include="Database\SexualityFormula.cs" />
+    <Compile Include="SexualityDebugActions.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -11,6 +11,18 @@ namespace Maux36.RimPsyche.Sexuality
     public static class SexualityDebugActions
     {
         [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        public static void LogSexualityVariables(Pawn pawn)
+        {
+            var compPsyche = pawn.compPsyche();
+            if (compPsyche == null)
+            {
+                return;
+            }
+            var sexuality = compPsyche.Sexuality;
+            Log.Message($"{pawn.Name}: Orientation: {sexuality.orientationCategory} | MKinsey: {sexuality.MKinsey} | Attraction: {sexuality.Attraction} | SexDrive: {sexuality.SexDrive}");
+                
+        }
+        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogPawnPsychePreference(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();

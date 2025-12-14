@@ -16,7 +16,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
             if (observerPsyche?.Enabled == true)
             {
                 float trySeduce = observerPsyche.Evaluate(HomewreckSeduceFactor);
-                float react = observerPsyche.Evaluate(HomewreckReactFactor);
+                float react = observerPsyche.Evaluate(WillingToCheatFactor);
                 __result = trySeduce * react;
             }
         }
@@ -30,13 +30,13 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
             },
             RimpsycheFormulaManager.FormulaIdDict
         );
-        public static RimpsycheFormula HomewreckReactFactor = new(
-            "HomewreckReactFactor",
+        public static RimpsycheFormula WillingToCheatFactor = new(
+            "WillingToCheatFactor",
             (tracker) =>
             {
                 var loyal = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Loyalty);
                 var morality = Mathf.Max(tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Morality), 0f);
-                return Mathf.Max(1f - 0.2f * loyal - morality, 0f);
+                return Mathf.Max(0.5f * (1f - loyal - morality), 0f);
             },
             RimpsycheFormulaManager.FormulaIdDict
         );

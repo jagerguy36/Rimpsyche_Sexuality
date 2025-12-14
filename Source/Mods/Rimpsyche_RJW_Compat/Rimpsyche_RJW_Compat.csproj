@@ -65,10 +65,12 @@
     <Compile Include="HarmonyInit.cs" />
     <Compile Include="Orientation\CompRJW_UpdateOrientation_Patch.cs" />
     <Compile Include="Orientation\Pawn_SexualityTracker_Validate_Patch.cs" />
+    <Compile Include="PreferenceModule\R_Relationship_WhenNotInRelationship_Patch.cs" />
     <Compile Include="Preference\OrientationUtility_CheckPreference_Patch.cs" />
     <Compile Include="PreferenceModule\R_Homewrecking_WhenHomewrecking_Patch.cs" />
     <Compile Include="Preference\OrientationUtility_PreferenceFactor_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PsycheInteraction\xxx_can_rape_Patch.cs" />
     <Compile Include="Relationship\AfterSexUtility_FinalizeThought_Patch.cs" />
     <Compile Include="SexChange\GenderHelper_ChangeSex_Patch.cs" />
     <Compile Include="SexDrive\RimpsycheRJWSexdriveStatPart.cs" />

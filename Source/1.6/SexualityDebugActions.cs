@@ -20,7 +20,18 @@ namespace Maux36.RimPsyche.Sexuality
             }
             var sexuality = compPsyche.Sexuality;
             Log.Message($"{pawn.Name}: Orientation: {sexuality.orientationCategory} | MKinsey: {sexuality.MKinsey} | Attraction: {sexuality.Attraction} | SexDrive: {sexuality.SexDrive}");
-                
+
+        }
+        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        public static void LogAdultAge (Pawn pawn)
+        {
+            var compPsyche = pawn.compPsyche();
+            if (compPsyche == null)
+            {
+                return;
+            }
+            Log.Message($"{pawn.Name}| Age: {pawn.ageTracker.AgeBiologicalYears} | Growth: {pawn.ageTracker.Growth} | MinAdultAge: {compPsyche.MinAdultAge} | FullAdultAge: {compPsyche.FullAdultAge}");
+
         }
         [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogPawnPsychePreference(Pawn pawn)

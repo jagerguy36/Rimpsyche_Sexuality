@@ -68,6 +68,7 @@
   <ItemGroup>
     <Compile Include="ConvoResult\LearnOrientation.cs" />
     <Compile Include="DefOfRimpsycheSexuality.cs" />
+    <Compile Include="HarmonyPatches\Attraction\Pawn_RelationsTracker_LovinAgeFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\Attraction\Pawn_RelationsTracker_PrettinessFactor_Patch.cs" />
     <Compile Include="HarmonyPatches\Attraction\RelationsUtility_AttractedToGender_Patch.cs" />
     <Compile Include="HarmonyPatches\Breakup\InteractionWorker_Breakup_Interacted_Patch.cs" />

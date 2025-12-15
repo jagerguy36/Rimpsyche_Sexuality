@@ -9,15 +9,14 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
     [StaticConstructorOnStartup]
     public static class HarmonyInit
     {
-        private static Harmony harmony;
         static HarmonyInit()
         {
             Log.Message("[Rimpsyche - Sexuality] Patching RJW");
-            harmony = new Harmony("rimworld.mod.Maux.RimPsyche.Sexuality.RJW");
+            Harmony harmony = new Harmony("rimworld.mod.Maux.RimPsyche.Sexuality.RJW");
             harmony.PatchAll(Assembly.GetExecutingAssembly());
-            LongEventHandler.QueueLongEvent(DelayedUnpatch, "RPS_RJW_Unpatching", false, null);
+            LongEventHandler.QueueLongEvent(()=>DelayedUnpatch(harmony), "RPS_RJW_Unpatching", false, null);
         }
-        static void DelayedUnpatch()
+        static void DelayedUnpatch(Harmony harmony)
         {
             //Unpatch RJW
             Log.Message("[Rimpsyche - Sexuality] Running delayed RJW patches");

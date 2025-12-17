@@ -50,7 +50,6 @@ namespace Maux36.RimPsyche.Sexuality
             return true;
         }
 
-        //TODO: better preference report
         public override string Report(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();

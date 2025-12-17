@@ -65,11 +65,10 @@ namespace Maux36.RimPsyche.Sexuality
             new TableDataGetter<Pawn>("kind label", (Pawn p) => p.KindLabel),
             new TableDataGetter<Pawn>("gender", (Pawn p) => p.gender.GetLabel()),
             new TableDataGetter<Pawn>("age", (Pawn p) => p.ageTracker.AgeBiologicalYears),
-            new TableDataGetter<Pawn>("my compat", (Pawn p) => pawn.relations.CompatibilityWith(p).ToString("F2")),
-            new TableDataGetter<Pawn>("their compat", (Pawn p) => p.relations.CompatibilityWith(pawn).ToString("F2")),
+            new TableDataGetter<Pawn>("prettinessFactor", (Pawn p) => pawn.relations.PrettinessFactor(p).ToString("F2")),
             new TableDataGetter<Pawn>("my 2nd\nrom chance", (Pawn p) => pawn.relations.SecondaryRomanceChanceFactor(p).ToStringPercent("F0")),
             new TableDataGetter<Pawn>("their 2nd\nrom chance", (Pawn p) => p.relations.SecondaryRomanceChanceFactor(pawn).ToStringPercent("F0")),
-            new TableDataGetter<Pawn>("LovinAgeFactor", (Pawn p) => p.relations.LovinAgeFactor(pawn).ToString("F2")),
+            new TableDataGetter<Pawn>("LovinAgeFactor", (Pawn p) => pawn.relations.LovinAgeFactor(p).ToString("F2")),
             new TableDataGetter<Pawn>("lovin mtb", (Pawn p) => LovePartnerRelationUtility.GetLovinMtbHours(pawn, p).ToString("F1") + " h"),
             new TableDataGetter<Pawn>("psychePref", (Pawn p) => DefOfRimpsycheSexuality.Rimpsyche_PsychePreference.worker.Evaluate(pawn, p, 1f).ToString("F2"))
         };

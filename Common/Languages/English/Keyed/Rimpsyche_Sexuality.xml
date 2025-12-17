@@ -35,7 +35,8 @@
 
   <!-- Preference -->
   <RPS_NoPreference>No Preference available</RPS_NoPreference>
-  <RPS_AttractionReport>Personality {0} is drawn to:</RPS_AttractionReport>
+  <RPS_AttractionReport>Preferred personalities:</RPS_AttractionReport>
+  <RPS_Importance>Importance</RPS_Importance>
 
   <!-- Stats -->
   <RP_Stat_Sexdrive>Sexdrive</RP_Stat_Sexdrive>

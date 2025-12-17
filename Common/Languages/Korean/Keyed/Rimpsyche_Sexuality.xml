@@ -35,7 +35,8 @@
 
   <!-- Preference -->
   <RPS_NoPreference>선호사항 없음</RPS_NoPreference>
-  <RPS_AttractionReport>{0}가 매력을 느끼는 성격:</RPS_AttractionReport>
+  <RPS_AttractionReport>선호하는 성격:</RPS_AttractionReport>
+  <RPS_Importance>중요도</RPS_Importance>
 
   <!-- Stats -->
   <RP_Stat_Sexdrive>성욕</RP_Stat_Sexdrive>

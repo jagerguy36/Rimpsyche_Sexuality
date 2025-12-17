@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HarmonyInit.cs" />
+    <Compile Include="Orientation\CommonChecks_AreMutuallyAttracted_Patch.cs" />
     <Compile Include="Orientation\CommonChecks_AttractedToGender_Patch.cs" />
     <Compile Include="Orientation\SexUtilities_SexDisposition_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

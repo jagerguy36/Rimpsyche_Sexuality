@@ -12,7 +12,7 @@ namespace Maux36.RimPsyche.Sexuality
         {
             var initPsyche = pawn.compPsyche();
             if (initPsyche?.Enabled != true) return true;
-            if (initPsyche.Sexuality.GetAdjustedAttractionToGender(gender) >= 0.15f)
+            if (initPsyche.Sexuality.CanFeelAttractionToGender(gender))
             {
                 __result = true;
             }

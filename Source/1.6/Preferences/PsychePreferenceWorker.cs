@@ -59,12 +59,17 @@ namespace Maux36.RimPsyche.Sexuality
             if (psychePreference == null) return "RPS_NoPreference";
             var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
             var parts = new StringBuilder();
-            parts.Append("RPS_AttractionReport".Translate(pawn.Name.ToStringShort)+"\n");
+            parts.Append("RPS_AttractionReport".Translate()+"\n");
             for (int i = 0; i < sortedPreferences.Count; i++)
             {
-                if (string.IsNullOrEmpty(sortedPreferences[i].stringKey)) continue;
+                var pref = sortedPreferences[i];
+                if (string.IsNullOrEmpty(pref.stringKey)) continue;
+
                 var def = DefDatabase<PersonalityDef>.GetNamed(sortedPreferences[i].stringKey);
-                parts.Append($"      {Rimpsyche_Utility.GetPersonalityDesc(def, sortedPreferences[i].target)}\n");
+                string colorHex = ColorUtility.ToHtmlStringRGB(Color.Lerp(Color.yellow, Color.green, pref.importance));
+                string heart = $"<color=#{colorHex}>♥</color>";
+
+                parts.Append($"  {heart} {Rimpsyche_Utility.GetPersonalityDesc(def, pref.target)}\n");
             }
             return parts.ToString();
         }
@@ -216,7 +221,7 @@ namespace Maux36.RimPsyche.Sexuality
                 if (Mouse.IsOver(vertRect))
                 {
                     Widgets.DrawHighlight(vertRect);
-                    string tooltipString = "RPC_Importance".Translate() + $": {(importanceValue * 100f).ToString("F1")}";
+                    string tooltipString = "RPS_Importance".Translate() + $": {(importanceValue * 100f).ToString("F1")}";
                     TooltipHandler.TipRegion(vertRect, tooltipString);
                 }
                 float uppercenterY = rowRect.y + rowRect.height * 0.25f;

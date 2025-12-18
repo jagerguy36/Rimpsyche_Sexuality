@@ -47,11 +47,12 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 psychePref = [.. psychePref.OrderByDescending(p => p.importance)];
                 var parts = new StringBuilder();
+                parts.Append($"{pawn.Name}'s preference ||");
                 for (int i = 0; i < psychePref.Count; i++)
                 {
                     if (string.IsNullOrEmpty(psychePref[i].stringKey)) continue;
                     if (parts.Length > 0) parts.Append(" | ");
-                    parts.Append($"{pawn.Name}'s preference || {psychePref[i].stringKey}: {psychePref[i].target:F2} ({psychePref[i].importance:F2})");
+                    parts.Append($"{psychePref[i].stringKey}: {psychePref[i].target:F2} ({psychePref[i].importance:F2})");
                 }
                 Log.Message(parts.ToString());
             }
@@ -59,21 +60,28 @@ namespace Maux36.RimPsyche.Sexuality
         [DebugAction("Pawns", null, false, false, false, false, false, 0, false, actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void DisplayRelationsInfoWithPreference(Pawn pawn)
         {
+            var pawnPsyche = pawn.compPsyche();
+            if (pawnPsyche?.Enabled != true)
+                return;
             List<TableDataGetter<Pawn>> list = new List<TableDataGetter<Pawn>>
-        {
-            new TableDataGetter<Pawn>("name", (Pawn p) => p.LabelCap),
-            new TableDataGetter<Pawn>("kind label", (Pawn p) => p.KindLabel),
-            new TableDataGetter<Pawn>("gender", (Pawn p) => p.gender.GetLabel()),
-            new TableDataGetter<Pawn>("age", (Pawn p) => p.ageTracker.AgeBiologicalYears),
-            new TableDataGetter<Pawn>("prettinessFactor", (Pawn p) => pawn.relations.PrettinessFactor(p).ToString("F2")),
-            new TableDataGetter<Pawn>("my 2nd\nrom chance", (Pawn p) => pawn.relations.SecondaryRomanceChanceFactor(p).ToStringPercent("F0")),
-            new TableDataGetter<Pawn>("their 2nd\nrom chance", (Pawn p) => p.relations.SecondaryRomanceChanceFactor(pawn).ToStringPercent("F0")),
-            new TableDataGetter<Pawn>("LovinAgeFactor", (Pawn p) => pawn.relations.LovinAgeFactor(p).ToString("F2")),
-            new TableDataGetter<Pawn>("lovin mtb", (Pawn p) => LovePartnerRelationUtility.GetLovinMtbHours(pawn, p).ToString("F1") + " h"),
-            new TableDataGetter<Pawn>("psychePref", (Pawn p) => DefOfRimpsycheSexuality.Rimpsyche_PsychePreference.worker.Evaluate(pawn, p, 1f).ToString("F2"))
-        };
+            {
+                new TableDataGetter<Pawn>("name", (Pawn p) => p.LabelCap),
+                new TableDataGetter<Pawn>("kind label", (Pawn p) => p.KindLabel),
+                new TableDataGetter<Pawn>("gender", (Pawn p) => p.gender.GetLabel()),
+                new TableDataGetter<Pawn>("age", (Pawn p) => p.ageTracker.AgeBiologicalYears),
+                new TableDataGetter<Pawn>("prettinessFactor", (Pawn p) => pawn.relations.PrettinessFactor(p).ToString("F2")),
+                new TableDataGetter<Pawn>("my Attraction", (Pawn p) => pawn.compPsyche().Sexuality.GetAdjustedAttraction(p)),
+                new TableDataGetter<Pawn>("their Attraction", (Pawn p) => p.compPsyche().Sexuality.GetAdjustedAttraction(pawn)),
+                new TableDataGetter<Pawn>("my 2nd\nlov factor", (Pawn p) => pawn.relations.SecondaryLovinChanceFactor(p).ToStringPercent("F0")),
+                new TableDataGetter<Pawn>("their 2nd\nlov factor", (Pawn p) => p.relations.SecondaryLovinChanceFactor(pawn).ToStringPercent("F0")),
+                new TableDataGetter<Pawn>("my 2nd\nrom chance", (Pawn p) => pawn.relations.SecondaryRomanceChanceFactor(p).ToStringPercent("F0")),
+                new TableDataGetter<Pawn>("their 2nd\nrom chance", (Pawn p) => p.relations.SecondaryRomanceChanceFactor(pawn).ToStringPercent("F0")),
+                new TableDataGetter<Pawn>("LovinAgeFactor", (Pawn p) => pawn.relations.LovinAgeFactor(p).ToString("F2")),
+                new TableDataGetter<Pawn>("lovin mtb", (Pawn p) => LovePartnerRelationUtility.GetLovinMtbHours(pawn, p).ToString("F1") + " h"),
+                new TableDataGetter<Pawn>("psychePref", (Pawn p) => DefOfRimpsycheSexuality.Rimpsyche_PsychePreference.worker.Evaluate(pawn, p, 1f).ToString("F2"))
+            };
             DebugTables.MakeTablesDialog(from x in pawn.Map.mapPawns.SpawnedPawnsInFaction(pawn.Faction)
-                                         where x != pawn && x.RaceProps.Humanlike
+                                         where x != pawn && x.compPsyche()?.Enabled == true
                                          select x, list.ToArray());
         }
         [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]

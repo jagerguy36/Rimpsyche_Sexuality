@@ -25,6 +25,18 @@
     </modDependencies>
     <incompatibleWith>
         <li>divinederivative.romance</li>
+        <li>Mlie.RationalRomance</li>
+        <li>Mlie.RationalRomance2</li>
+        <li>Mlie.SexualityTraits</li>
+        <li>imranfish.xmlextensions</li>
+        <li>deepfield.nohomotraits</li>
+        <li>Annavis.CommonQueers</li>
+        <li>equalagedisparity.1trickPwnyta</li>
+        <li>com.aquin.romanceagefix</li>
+        <li>Mlie.LadiesCanFlirtToo</li>
+        <li>Mlie.EveryoneIsQueer</li>
+        <li>Mlie.LessStupidRomanceAttempt</li>
+        <li>cedaro.NoHopelessRomance</li>
     </incompatibleWith>
     <packageId>Maux36.Rimpsyche.Sexuality</packageId>
     <description># Rimpsyche Sexuality</description>

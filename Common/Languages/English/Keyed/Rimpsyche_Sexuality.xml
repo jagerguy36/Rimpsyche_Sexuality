@@ -21,12 +21,16 @@
   <RimpsycheShowInterest>Show Interest</RimpsycheShowInterest>
   <RimpsycheShowPreference>Show Preference</RimpsycheShowPreference>
 
+  <RPS_AttractionMaleTooltip>Attraction toward Males</RPS_AttractionMaleTooltip>
+  <RPS_AttractionFemaleTooltip>Attraction toward Females</RPS_AttractionFemaleTooltip>
+  <RPS_SexdriveTooltip>Libido</RPS_SexdriveTooltip>
+
   <RPC_Orientation>Sexuality</RPC_Orientation>
   <RPC_Kinsey>Kinsey Rating</RPC_Kinsey>
   <RPC_MaxAttraction>Max Attraction</RPC_MaxAttraction>
   <RPC_AttractionMale>Male</RPC_AttractionMale>
   <RPC_AttractionFemale>Female</RPC_AttractionFemale>
-  <RPC_SexDrive>Sex Drive</RPC_SexDrive>
+  <RPC_SexDrive>Libido</RPC_SexDrive>
   <RPC_Heterosexual>Heterosexual</RPC_Heterosexual>
   <RPC_Bisexual>Bisexual</RPC_Bisexual>
   <RPC_Homosexual>Homosexual</RPC_Homosexual>
@@ -39,6 +43,6 @@
   <RPS_Importance>Importance</RPS_Importance>
 
   <!-- Stats -->
-  <RP_Stat_Sexdrive>Sexdrive</RP_Stat_Sexdrive>
+  <RP_Stat_Sexdrive>Libido</RP_Stat_Sexdrive>
 
 </LanguageData>

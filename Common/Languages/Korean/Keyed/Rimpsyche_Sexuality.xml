@@ -21,6 +21,10 @@
   <RimpsycheShowInterest>관심사</RimpsycheShowInterest>
   <RimpsycheShowPreference>취향</RimpsycheShowPreference>
 
+  <RPS_AttractionMaleTooltip>남성 선호도</RPS_AttractionMaleTooltip>
+  <RPS_AttractionFemaleTooltip>여성 선호도</RPS_AttractionFemaleTooltip>
+  <RPS_SexdriveTooltip>성욕</RPS_SexdriveTooltip>
+
   <RPC_Orientation>성적 지향</RPC_Orientation>
   <RPC_Kinsey>킨지 척도</RPC_Kinsey>
   <RPC_MaxAttraction>최대 선호도</RPC_MaxAttraction>

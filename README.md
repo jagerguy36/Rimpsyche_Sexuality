@@ -1,4 +1,4 @@
-# Rimpsyche
+# Rimpsyche - Sexuality
 
 ## Steam Link
 [Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=3535112473)

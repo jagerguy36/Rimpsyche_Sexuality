@@ -103,5 +103,17 @@ namespace Maux36.RimPsyche.Sexuality
             string logMessage = $"{pawn.Name} relationship = {{ {string.Join(", ", pairs)} }}";
             Log.Message($"{logMessage}");
         }
+        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        public static void LogKnownOrientation(Pawn pawn)
+        {
+            var compPsyche = pawn.compPsyche();
+            if (compPsyche?.Enabled != true)
+                Log.Message($"{pawn.Name} has no psyche");
+
+            var orientation = compPsyche.Sexuality.knownOrientation;
+            var pawnId = orientation.Select(kvp => $"{kvp}");
+            string logMessage = $"{pawn.Name} knownOrientation = {{ {string.Join(", ", pawnId)} }}";
+            Log.Message($"{logMessage}");
+        }
     }
 }

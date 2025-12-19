@@ -27,7 +27,7 @@ namespace Maux36.RimPsyche.Sexuality
                 {
                     foundFirst = true;
                     yield return code;
-                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Ldarg_1);
                     yield return new CodeInstruction(OpCodes.Call, method_GetOffset);
                     yield return new CodeInstruction(OpCodes.Stloc, offsetLocal);
                     yield return new CodeInstruction(OpCodes.Ldloc, offsetLocal);

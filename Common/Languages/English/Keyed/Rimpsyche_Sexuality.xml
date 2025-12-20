@@ -31,11 +31,17 @@
   <RPC_AttractionMale>Male</RPC_AttractionMale>
   <RPC_AttractionFemale>Female</RPC_AttractionFemale>
   <RPC_SexDrive>Libido</RPC_SexDrive>
+
   <RPC_Heterosexual>Heterosexual</RPC_Heterosexual>
+  <RPC_HeterosexualDescription>{0} is mostly interested in people of the opposite sex.</RPC_HeterosexualDescription>
   <RPC_Bisexual>Bisexual</RPC_Bisexual>
+  <RPC_BisexualDescription>{0} is interested irrespective of the other's sex.</RPC_BisexualDescription>
   <RPC_Homosexual>Homosexual</RPC_Homosexual>
+  <RPC_HomosexualDescription>{0} is mostly interested in people of the same sex.</RPC_HomosexualDescription>
   <RPC_Asexual>Asexual</RPC_Asexual>
+  <RPC_AsexualDescription>{0} is disinterested in sexual activity.</RPC_AsexualDescription>
   <RPC_SexualityUndefined>Undefined</RPC_SexualityUndefined>
+  <RPC_SexualityUndefinedDescription>{0} has lost their sexuality. Can you find it for them?</RPC_SexualityUndefinedDescription>
 
   <!-- Preference -->
   <RPS_NoPreference>No Preference available</RPS_NoPreference>

@@ -9,6 +9,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
     {
         public static bool Prefix(Pawn pawn)
         {
+            //Log.Message($"{pawn.LabelShort} | Update orientation prefix called");
             CompRJW compRJW = pawn.GetCompRJW();
             if (compRJW == null)
             {
@@ -19,7 +20,9 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
             {
                 return true;
             }
+            //Log.Message($"{pawn.LabelShort} | Comp null check passed");
             var o = pawnPsyche.Sexuality.orientationCategory;
+            //Log.Message($"{pawn.LabelShort} | RPS category: {o}");
             if (o == SexualOrientation.Asexual || o == SexualOrientation.Developing)
             {
                 compRJW.orientation = Orientation.Asexual;
@@ -32,15 +35,20 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
             }
 
             //Let RJW logic decide coital asexuality, since their separate logic might depend on it.
+            //RJW asexuality denotes they are not willing to / unable to have sex
+            //RPS asexuality denotes they don't find any gender to be appealing
+            //The two is treated differently for both implementation purpose and conceptual purpose.
             if (!Genital_Helper.has_genitals(pawn) && (pawn.kindDef.race.defName.ToLower().Contains("droid") || pawn.kindDef.race.defName.ToLower().Contains("drone")))
             {
+                //Log.Message($"{pawn.LabelShort} | Droid case");
                 compRJW.orientation = Orientation.Asexual;
                 return false;
             }
 
             //IF the pawn is sexually active, then respect Psyche sexuality.
             int k = pawnPsyche.Sexuality.GetKinseyReport();
-            switch(k)
+            //Log.Message($"{pawn.LabelShort} | Sexually active pawn. Giving orientaiton with kinsey: {k}");
+            switch (k)
             {
                 case 0:
                     compRJW.orientation = Orientation.Heterosexual; break;

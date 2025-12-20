@@ -4,7 +4,7 @@
 [Steam Page](https://steamcommunity.com/sharedfiles/filedetails/?id=3535112473)
 
 ## Compatibilities
-
+[Wiki Page](https://github.com/jagerguy36/Rimpsyche_Sexuality/wiki/Compatibility)
 
 ## Sexuality Distribution Source
 The Default sexuality distribution data is gathered from YouGov.

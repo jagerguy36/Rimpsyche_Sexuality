@@ -7,13 +7,19 @@ namespace Maux36.RimPsyche.Sexuality
     public class RimpsycheSexuality : Mod
     {
         public static RimpsycheSexualitySettings settings;
+        public const string CoreRequirement = "1.0.27";
+        public static string currentVersion;
         public RimpsycheSexuality(ModContentPack content) : base(content)
         {
+            currentVersion = content.ModMetaData.ModVersion;
             settings = GetSettings<RimpsycheSexualitySettings>();
             if (!ModsConfig.IsActive("maux36.rimpsyche"))
             {
                 Log.Error("[Rimpsyche Sexuality] Rimpsyche not loaded. The dependency was not met and the game will not run correctly");
             }
+            var RimpsycheVersion = new Version(Rimpsyche.currentVersion);
+            if (RimpsycheVersion < new Version(CoreRequirement))
+                Log.Error($"[Rimpsyche - Sexuality] Sexuality version {currentVersion} requires Rimpsyche Core version {CoreRequirement} or above. Your Core ({RimpsycheVersion}) needs to be updated or you will experience errors. If Steam does not automatically updates your mod, you can try un-subbing and re-subbing to force the update.");
         }
         public override string SettingsCategory()
         {

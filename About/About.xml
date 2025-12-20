@@ -39,5 +39,11 @@
         <li>cedaro.NoHopelessRomance</li>
     </incompatibleWith>
     <packageId>Maux36.Rimpsyche.Sexuality</packageId>
-    <description># Rimpsyche Sexuality</description>
+    <description># Rimpsyche Sexuality
+
+* True continuous attraction
+* Psyche-based romance interactions
+* Event-aware attraction scores
+* More logical romantic behavior
+* Personality preferences</description>
 </ModMetaData>

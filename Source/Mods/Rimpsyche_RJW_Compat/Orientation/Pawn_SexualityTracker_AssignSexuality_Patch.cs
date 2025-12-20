@@ -3,8 +3,8 @@ using rjw;
 
 namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
 {
-    [HarmonyPatch(typeof(Pawn_SexualityTracker), nameof(Pawn_SexualityTracker.Validate))]
-    public static class Pawn_SexualityTracker_Validate_Patch
+    [HarmonyPatch(typeof(Pawn_SexualityTracker), "AssignSexuality")]
+    public static class Pawn_SexualityTracker_AssignSexuality_Patch
     {
         public static void Postfix(Pawn_SexualityTracker __instance)
         {

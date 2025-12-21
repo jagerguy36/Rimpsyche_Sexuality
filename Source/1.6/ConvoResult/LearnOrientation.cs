@@ -10,9 +10,9 @@ namespace Maux36.RimPsyche.Sexuality
             //compPsyche check is redundant because this is convo result
             var initSexuality = initiator.compPsyche().Sexuality;
             var reciSexuality = recipient.compPsyche().Sexuality;
-            if (Rand.Value < learningChance && reciSexuality.SexualityExpressed())
+            if (Rand.Value < learningChance) // && reciSexuality.SexualityExpressed()
                 initSexuality.LearnOrientationOf(recipient);
-            if (Rand.Value < learningChance && initSexuality.SexualityExpressed())
+            if (Rand.Value < learningChance) //  && initSexuality.SexualityExpressed()
                 reciSexuality.LearnOrientationOf(initiator);
         }
     }

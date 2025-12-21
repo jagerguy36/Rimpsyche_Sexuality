@@ -23,19 +23,27 @@
 
   <RPS_AttractionMaleTooltip>남성 선호도</RPS_AttractionMaleTooltip>
   <RPS_AttractionFemaleTooltip>여성 선호도</RPS_AttractionFemaleTooltip>
+  <RPS_KinseyTitleTooltip>킨제이 척도</RPS_KinseyTitleTooltip>
+  <RPS_KinseyTooltip>킨제이 척도는 0부터 6까지의 범위를 사용하여 개인의 성적 지향을 설명합니다.\n\n0 - 전적으로 이성애자\n3 - 양성애자\n6 - 전적으로 동성애자</RPS_KinseyTooltip>
   <RPS_SexdriveTooltip>성욕</RPS_SexdriveTooltip>
 
   <RPC_Orientation>성적 지향</RPC_Orientation>
-  <RPC_Kinsey>킨지 척도</RPC_Kinsey>
+  <RPC_Kinsey>킨제이 척도</RPC_Kinsey>
   <RPC_MaxAttraction>최대 선호도</RPC_MaxAttraction>
   <RPC_AttractionMale>남성</RPC_AttractionMale>
   <RPC_AttractionFemale>여성</RPC_AttractionFemale>
   <RPC_SexDrive>성욕</RPC_SexDrive>
+
   <RPC_Heterosexual>이성애자</RPC_Heterosexual>
+  <RPC_HeterosexualDescription>{0}(은)는 자신과 다른 성별에 끌립니다.</RPC_HeterosexualDescription>
   <RPC_Bisexual>양성애자</RPC_Bisexual>
+  <RPC_BisexualDescription>{0}(은)는 남녀 모두에게 끌립니다.</RPC_BisexualDescription>
   <RPC_Homosexual>동성애자</RPC_Homosexual>
+  <RPC_HomosexualDescription>{0}(은)는 자신과 같은 성별에 끌립니다.</RPC_HomosexualDescription>
   <RPC_Asexual>무성애자</RPC_Asexual>
+  <RPC_AsexualDescription>{0}(은)는 누구에게도 끌리지 않습니다.</RPC_AsexualDescription>
   <RPC_SexualityUndefined>정해지지 않음</RPC_SexualityUndefined>
+  <RPC_SexualityUndefinedDescription>{0}의 성정체성이 정해지지 않았습니다.</RPC_SexualityUndefinedDescription>
 
   <!-- Preference -->
   <RPS_NoPreference>선호사항 없음</RPS_NoPreference>

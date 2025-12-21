@@ -23,6 +23,8 @@
 
   <RPS_AttractionMaleTooltip>Attraction toward Males</RPS_AttractionMaleTooltip>
   <RPS_AttractionFemaleTooltip>Attraction toward Females</RPS_AttractionFemaleTooltip>
+  <RPS_KinseyTitleTooltip>The Kinsey scale</RPS_KinseyTitleTooltip>
+  <RPS_KinseyTooltip>This is a visual model developed by Alfred Kinsey in 1948 that uses a range from 0 to 6 to describe a person's sexual orientation.\n\n0 - exclusively heterosexual\n3 - bisexual\n6 - exclusively homosexual\n\nNumbers 1 through 5 indicate increasing levels of homosexuality.</RPS_KinseyTooltip>
   <RPS_SexdriveTooltip>Libido</RPS_SexdriveTooltip>
 
   <RPC_Orientation>Sexuality</RPC_Orientation>
@@ -31,11 +33,17 @@
   <RPC_AttractionMale>Male</RPC_AttractionMale>
   <RPC_AttractionFemale>Female</RPC_AttractionFemale>
   <RPC_SexDrive>Libido</RPC_SexDrive>
+
   <RPC_Heterosexual>Heterosexual</RPC_Heterosexual>
+  <RPC_HeterosexualDescription>{0} is mostly interested in people of the opposite sex.</RPC_HeterosexualDescription>
   <RPC_Bisexual>Bisexual</RPC_Bisexual>
+  <RPC_BisexualDescription>{0} is interested irrespective of the other's sex.</RPC_BisexualDescription>
   <RPC_Homosexual>Homosexual</RPC_Homosexual>
+  <RPC_HomosexualDescription>{0} is mostly interested in people of the same sex.</RPC_HomosexualDescription>
   <RPC_Asexual>Asexual</RPC_Asexual>
+  <RPC_AsexualDescription>{0} is disinterested in sexual activity.</RPC_AsexualDescription>
   <RPC_SexualityUndefined>Undefined</RPC_SexualityUndefined>
+  <RPC_SexualityUndefinedDescription>{0} has lost their sexuality. Can you find it for them?</RPC_SexualityUndefinedDescription>
 
   <!-- Preference -->
   <RPS_NoPreference>No Preference available</RPS_NoPreference>

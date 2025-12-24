@@ -76,6 +76,10 @@ namespace Maux36.RimPsyche.Sexuality
                 new TableDataGetter<Pawn>("their 2nd\nlov factor", (Pawn p) => p.relations.SecondaryLovinChanceFactor(pawn).ToStringPercent("F0")),
                 new TableDataGetter<Pawn>("my 2nd\nrom chance", (Pawn p) => pawn.relations.SecondaryRomanceChanceFactor(p).ToStringPercent("F0")),
                 new TableDataGetter<Pawn>("their 2nd\nrom chance", (Pawn p) => p.relations.SecondaryRomanceChanceFactor(pawn).ToStringPercent("F0")),
+                new TableDataGetter<Pawn>("my Romance Attempt Chance", (Pawn p) => InteractionDefOf.RomanceAttempt.Worker.RandomSelectionWeight(pawn, p)),
+                new TableDataGetter<Pawn>("their Romance Attempt Chance", (Pawn p) => InteractionDefOf.RomanceAttempt.Worker.RandomSelectionWeight(p, pawn)),
+                new TableDataGetter<Pawn>("my Romance Success Chance", (Pawn p) => InteractionWorker_RomanceAttempt.SuccessChance(pawn, p)),
+                new TableDataGetter<Pawn>("their Romance Success Chance", (Pawn p) => InteractionWorker_RomanceAttempt.SuccessChance(p, pawn)),
                 new TableDataGetter<Pawn>("LovinAgeFactor", (Pawn p) => pawn.relations.LovinAgeFactor(p).ToString("F2")),
                 new TableDataGetter<Pawn>("lovin mtb", (Pawn p) => LovePartnerRelationUtility.GetLovinMtbHours(pawn, p).ToString("F1") + " h"),
                 new TableDataGetter<Pawn>("psychePref", (Pawn p) => DefOfRimpsycheSexuality.Rimpsyche_PsychePreference.worker.Evaluate(pawn, p, 1f).ToString("F2"))

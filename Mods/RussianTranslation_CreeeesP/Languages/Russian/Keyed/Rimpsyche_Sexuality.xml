@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- General -->
+  <RimpsycheSexualitySettingCategory>RimPsyche - Sexuality</RimpsycheSexualitySettingCategory>
+
+  <!-- Settings -->
+  <RimpsycheKinseyDistributionSettings>Настройки распределения сексуальности (требуется перезапуск)</RimpsycheKinseyDistributionSettings>
+  <RimpsycheKinseyDefaultSetting>Распределение по умолчанию</RimpsycheKinseyDefaultSetting>
+  <RimpsycheUsePreferenceSystem>Использовать систему предпочтений</RimpsycheUsePreferenceSystem>
+  <RimpsycheUsePreferenceSystemTooltip>Наделяет каждую пешку своими собственными предпочтениями.</RimpsycheUsePreferenceSystemTooltip>
+  <RimpsycheRomanceAttemptGenderDiff>Гендерная разница</RimpsycheRomanceAttemptGenderDiff>
+  <RimpsycheRomanceAttemptGenderDiffTooltip>Женщины реже проявляют романтическую инициативу по отношению к мужчинам. (Логика ванильной игры)</RimpsycheRomanceAttemptGenderDiffTooltip>
+  <RimpsycheMinRelAttraction>Мин. влечение для отношений</RimpsycheMinRelAttraction>
+  <RimpsycheMinRelAttractionTooltip>Минимальное влечение к пешкам, которые представляют интерес, будет скорректировано до этого значения.</RimpsycheMinRelAttractionTooltip>
+
+  <!-- Title -->
+  <RPC_Preference>Предпочтение</RPC_Preference>
+
+  <!-- Tab -->
+  <RimpsycheShowInterest>Показать интересы</RimpsycheShowInterest>
+  <RimpsycheShowPreference>Показать предпочтения</RimpsycheShowPreference>
+
+  <RPS_AttractionMaleTooltip>Влечение к мужчинам</RPS_AttractionMaleTooltip>
+  <RPS_AttractionFemaleTooltip>Влечение к женщинам</RPS_AttractionFemaleTooltip>
+  <RPS_KinseyTitleTooltip>Шкала Кинси</RPS_KinseyTitleTooltip>
+  <RPS_KinseyTooltip>Шкала Кинси использует диапазон от 0 до 6 для описания сексуальной ориентации человека.\n\n0 - исключительно гетеросексуал\n3 - бисексуал\n6 - исключительно гомосексуал</RPS_KinseyTooltip>
+  <RPS_SexdriveTooltip>Либидо</RPS_SexdriveTooltip>
+
+  <RPC_Orientation>Сексуальность</RPC_Orientation>
+  <RPC_Kinsey>Рейтинг Кинси</RPC_Kinsey>
+  <RPC_MaxAttraction>Макс. влечение</RPC_MaxAttraction>
+  <RPC_AttractionMale>Мужчины</RPC_AttractionMale>
+  <RPC_AttractionFemale>Женщины</RPC_AttractionFemale>
+  <RPC_SexDrive>Либидо</RPC_SexDrive>
+
+  <RPC_Heterosexual>Гетеросексуал</RPC_Heterosexual>
+  <RPC_HeterosexualDescription>{0} испытывает романтическое влечение к людям противоположного пола.</RPC_HeterosexualDescription>
+  <RPC_Bisexual>Бисексуал</RPC_Bisexual>
+  <RPC_BisexualDescription>{0} испытывает романтическое влечение как к мужчинам, так и к женщинам.</RPC_BisexualDescription>
+  <RPC_Homosexual>Гомосексуал</RPC_Homosexual>
+  <RPC_HomosexualDescription>{0} испытывает романтическое влечение к людям своего пола.</RPC_HomosexualDescription>
+  <RPC_Asexual>Асексуал</RPC_Asexual>
+  <RPC_AsexualDescription>{0} не испытывает сексуального влечения ни к кому.</RPC_AsexualDescription>
+  <RPC_SexualityUndefined>Не определено</RPC_SexualityUndefined>
+  <RPC_SexualityUndefinedDescription>{0} теряет свою сексуальность. Можешь помочь её найти?</RPC_SexualityUndefinedDescription>
+
+  <!-- Preference -->
+  <RPS_NoPreference>Предпочтения недоступны</RPS_NoPreference>
+  <RPS_AttractionReport>Предпочитаемые типы личности:</RPS_AttractionReport>
+  <RPS_Importance>Важность</RPS_Importance>
+
+  <!-- Stats -->
+  <RP_Stat_Sexdrive>Либидо</RP_Stat_Sexdrive>
+
+</LanguageData>

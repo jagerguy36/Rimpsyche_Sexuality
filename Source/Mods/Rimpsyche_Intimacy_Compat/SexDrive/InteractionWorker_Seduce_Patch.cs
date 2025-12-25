@@ -11,7 +11,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat
         {
             if (__result == 0) return;
             var compPsyche = initiator.compPsyche();
-            if (compPsyche.Enabled != true) return;
+            if (compPsyche?.Enabled != true) return;
             __result *= compPsyche.Sexuality.GetAdjustedSexdrive();
         }
     }

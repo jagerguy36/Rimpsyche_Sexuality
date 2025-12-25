@@ -10,7 +10,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat
         public static bool Prefix(ref bool __result, Pawn pawn, Gender gender)
         {
             var compPsyche = pawn.compPsyche();
-            if (compPsyche.Enabled != true) return true;
+            if (compPsyche?.Enabled != true) return true;
             __result = compPsyche.Sexuality.CanFeelAttractionToGender(gender);
             return false;
         }

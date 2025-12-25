@@ -55,7 +55,7 @@ namespace Maux36.RimPsyche.Sexuality
         public static bool CanCastWordOfLove(Pawn initiator, Pawn target)
         {
             var initPsyche = initiator.compPsyche();
-            if (initPsyche.Enabled != true)
+            if (initPsyche?.Enabled != true)
             {
                 //Vanilla logic
                 if (initiator.story.traits.HasTrait(TraitDefOf.Bisexual)) return true;

@@ -22,7 +22,7 @@ namespace Maux36.RimPsyche.Sexuality.RPS_ROR_Compat
             {
                 var pawnPsyche = ___Initiator.compPsyche();
                 var partnerPsyche = ___Recipient.compPsyche();
-                if (pawnPsyche.Enabled != true || partnerPsyche.Enabled != true)
+                if (pawnPsyche?.Enabled != true || partnerPsyche?.Enabled != true)
                     return;
                 int interactionDuration = GetInteractionDuration(__instance);
                 float num = 0.02f * Mathf.Clamp01((float)(Find.TickManager.TicksGame - ___StartInteractionTick) / (float)interactionDuration);
@@ -48,7 +48,7 @@ namespace Maux36.RimPsyche.Sexuality.RPS_ROR_Compat
 
                 var pawnPsyche = ___Initiator.compPsyche();
                 var partnerPsyche = ___Recipient.compPsyche();
-                if (pawnPsyche.Enabled != true || partnerPsyche.Enabled != true)
+                if (pawnPsyche?.Enabled != true || partnerPsyche?.Enabled != true)
                     return;
                 float RomanceNeedGainFromInteraction = GetRomanceNeedGainFromInteraction(__instance);
                 float num = 0.02f * RomanceNeedGainFromInteraction;

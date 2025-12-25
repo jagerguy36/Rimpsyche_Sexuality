@@ -11,7 +11,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat
         {
             var aPsyche = a.compPsyche();
             var bPsyche = b.compPsyche();
-            if (aPsyche.Enabled != true || bPsyche.Enabled != true) return true;
+            if (aPsyche?.Enabled != true || bPsyche?.Enabled != true) return true;
             __result = aPsyche.Sexuality.GetAdjustedAttraction(b) > 0f && bPsyche.Sexuality.GetAdjustedAttraction(a) > 0f;
             return false;
         }

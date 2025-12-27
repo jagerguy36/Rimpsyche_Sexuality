@@ -10,7 +10,7 @@ namespace Maux36.RimPsyche.Sexuality
 {
     public static class SexualityDebugActions
     {
-        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        [DebugAction("Rimpsyche", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogSexualityVariables(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();
@@ -22,7 +22,7 @@ namespace Maux36.RimPsyche.Sexuality
             Log.Message($"{pawn.Name}: Orientation: {sexuality.orientationCategory} | MKinsey: {sexuality.MKinsey} | Attraction: {sexuality.Attraction} | SexDrive: {sexuality.SexDrive}");
 
         }
-        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        [DebugAction("Rimpsyche", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogAdultAge (Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();
@@ -33,7 +33,7 @@ namespace Maux36.RimPsyche.Sexuality
             Log.Message($"{pawn.Name}| Age: {pawn.ageTracker.AgeBiologicalYears} | Growth: {pawn.ageTracker.Growth} | MinAdultAge: {compPsyche.MinAdultAge} | FullAdultAge: {compPsyche.FullAdultAge}");
 
         }
-        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        [DebugAction("Rimpsyche", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogPawnPsychePreference(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();
@@ -57,7 +57,7 @@ namespace Maux36.RimPsyche.Sexuality
                 Log.Message(parts.ToString());
             }
         }
-        [DebugAction("Pawns", null, false, false, false, false, false, 0, false, actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        [DebugAction("Rimpsyche", null, false, false, false, false, false, 0, false, actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void DisplayRelationsInfoWithPreference(Pawn pawn)
         {
             var pawnPsyche = pawn.compPsyche();
@@ -88,14 +88,14 @@ namespace Maux36.RimPsyche.Sexuality
                                          where x != pawn && x.compPsyche()?.Enabled == true
                                          select x, list.ToArray());
         }
-        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        [DebugAction("Rimpsyche", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogNextLovinTick(Pawn pawn)
         {
             var nlt = pawn.mindState.canLovinTick;
             var tickCurrent = Find.TickManager.TicksGame;
             Log.Message($"current tick: {tickCurrent} || NLT: {nlt} ... nextTickFactor: {Mathf.Min(1f / pawn.compPsyche().Sexuality.GetAdjustedSexdrive(), 60f)}");
         }
-        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        [DebugAction("Rimpsyche", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogRelationship(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();
@@ -107,7 +107,7 @@ namespace Maux36.RimPsyche.Sexuality
             string logMessage = $"{pawn.Name} relationship = {{ {string.Join(", ", pairs)} }}";
             Log.Message($"{logMessage}");
         }
-        [DebugAction("Pawns", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
+        [DebugAction("Rimpsyche", actionType = DebugActionType.ToolMapForPawns, allowedGameStates = AllowedGameStates.PlayingOnMap, displayPriority = 1000)]
         public static void LogKnownOrientation(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();

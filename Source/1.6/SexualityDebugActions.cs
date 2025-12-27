@@ -82,7 +82,7 @@ namespace Maux36.RimPsyche.Sexuality
                 new TableDataGetter<Pawn>("their Romance Success Chance", (Pawn p) => InteractionWorker_RomanceAttempt.SuccessChance(p, pawn)),
                 new TableDataGetter<Pawn>("LovinAgeFactor", (Pawn p) => pawn.relations.LovinAgeFactor(p).ToString("F2")),
                 new TableDataGetter<Pawn>("lovin mtb", (Pawn p) => LovePartnerRelationUtility.GetLovinMtbHours(pawn, p).ToString("F1") + " h"),
-                new TableDataGetter<Pawn>("psychePref", (Pawn p) => DefOfRimpsycheSexuality.Rimpsyche_PsychePreference.worker.Evaluate(pawn, p, 1f).ToString("F2"))
+                new TableDataGetter<Pawn>("psychePref", (Pawn p) => DefOfRimpsycheSexuality.Rimpsyche_PsychePreference.worker.Evaluate(pawn, p, 1f, true).ToString("F2"))
             };
             DebugTables.MakeTablesDialog(from x in pawn.Map.mapPawns.SpawnedPawnsInFaction(pawn.Faction)
                                          where x != pawn && x.compPsyche()?.Enabled == true

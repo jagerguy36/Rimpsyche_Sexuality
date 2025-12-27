@@ -75,15 +75,17 @@ namespace Maux36.RimPsyche.Sexuality
 
         private static readonly float minF = -0.5f;
         private static readonly float posRangeInv = 3f; //0.3333
-        public override float Evaluate(Pawn observer, Pawn target, float result)
+        public override float Evaluate(Pawn observer, Pawn target, float result, bool isRomantic)
         {
-            //Log.Message($"{observer.Name} -> {target.Name}");
             if (RimpsycheSexualitySettings.usePreferenceSystem != true) return result;
+            if (isRomantic != true) return result;
             var observerPsyche = observer.compPsyche();
             if (observerPsyche?.Enabled != true) return result;
             var targetPsyche = target.compPsyche();
             if (targetPsyche?.Enabled != true) return result;
             var psychePreference = observerPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
+            if (psychePreference == null)
+                return result;
             float value = 0f;
             float auth = observerPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
             var targetP = targetPsyche.Personality;

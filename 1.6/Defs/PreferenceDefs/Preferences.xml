@@ -8,4 +8,31 @@
     <priority>100</priority>
     <workerClass>Maux36.RimPsyche.Sexuality.PsychePreferenceWorker</workerClass>
   </Maux36.RimPsyche.PreferenceDef>
+
+
+  <Maux36.RimPsyche.PreferenceDef>
+    <defName>Rimpsyche_HairStylePreference</defName>
+    <label>hair style perference</label>
+    <description>Preference about hair and beard style.</description>
+    <category>Sexual</category>
+    <priority>90</priority>
+    <workerClass>Maux36.RimPsyche.Sexuality.HairStylePreferenceWorker</workerClass>
+    <hairPrefBias>
+      <li>
+        <targetTag>Bald</targetTag>
+        <dislike>true</dislike>
+        <toMaleProb>0.5</toMaleProb>
+        <toFemaleProb>0.4</toFemaleProb>
+      </li>
+    </hairPrefBias>
+    <hairPrefBias>
+      <li>
+        <targetTag>Any</targetTag>
+        <dislike>true</dislike>
+        <toMaleProb>0.1</toMaleProb>
+        <toFemaleProb>1</toFemaleProb>
+      </li>
+    </hairPrefBias>
+  </Maux36.RimPsyche.PreferenceDef>
+
 </Defs>

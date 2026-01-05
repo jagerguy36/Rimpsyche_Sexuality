@@ -59,17 +59,22 @@ namespace Maux36.RimPsyche.Sexuality
             var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
             var parts = new StringBuilder();
             parts.Append("RPS_AttractionReport".Translate()+"\n");
+            int activePrefCount = 0;
             for (int i = 0; i < sortedPreferences.Count; i++)
             {
                 var pref = sortedPreferences[i];
                 if (string.IsNullOrEmpty(pref.stringKey)) continue;
+                if (pref.importance == 0f) continue;
 
                 var def = DefDatabase<PersonalityDef>.GetNamed(sortedPreferences[i].stringKey);
                 string colorHex = ColorUtility.ToHtmlStringRGB(Color.Lerp(Color.yellow, Color.green, pref.importance));
                 string heart = $"<color=#{colorHex}>♥</color>";
 
                 parts.Append($"  {heart} {Rimpsyche_Utility.GetPersonalityDesc(def, pref.target)}\n");
+                activePrefCount++;
             }
+            if (activePrefCount == 0)
+                return "RPS_NoPreference";
             return parts.ToString();
         }
 
@@ -97,12 +102,10 @@ namespace Maux36.RimPsyche.Sexuality
                     //Logic to fix it.
                 }
                 var pv = targetP.GetPersonality(personality);
-                value += Mathf.Max(1-Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth); //-0.4~1.0 * 1.25 * 5 => -2.5~6.25
-                //Log.Message($"{personality.label}| [{pf.target}] ~ {pv} | {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF)} * {(pf.importance + 0.25f * auth)} = {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth)}");
+                value += Mathf.Max(1-Mathf.Abs(pv - pf.target) * posRangeInv, minF) * pf.importance; //-0.5~1 * 5 => -2.5~5
             }
-            float sway = observerPsyche.Evaluate(SexualityFormula.PsychePrefAuthSway);// 0.032~0.128 (0.2~0.16~0.8*0.16)
-            float preferenceFactor =  1f + value * sway; // 0.92~1.2 || 0.68~1.8
-            //Log.Message($"value: {value}, sway: {sway} | factor: {preferenceFactor}");
+            float sway = observerPsyche.Evaluate(SexualityFormula.PsychePrefAuthSway);// 0.04~0.16 (0.2*0.2~0.8*0.2)
+            float preferenceFactor =  1f + value * sway; // 0.9~1.2 (low sway) || 0.6~1.8 (high sway)
             return result * preferenceFactor;
         }
         

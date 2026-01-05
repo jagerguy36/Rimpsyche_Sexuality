@@ -193,13 +193,38 @@ namespace Maux36.RimPsyche.Sexuality
 
                 Rect rowRect = new Rect(rect.x, y, rowWidth, personalityRowHeight * 2f);
                 Rect vertRect = new Rect(vertRectX, y, verticalWidth, personalityRowHeight * 2f);
-
-                if (Mouse.IsOver(rowRect))
+                if (!EditEnabled && Mouse.IsOver(rowRect))
                 {
                     Widgets.DrawHighlight(rowRect);
-                    string tooltipString = $"{def.label.CapitalizeFirst()}: {(targetValue * 100f).ToString("F1")}";
-                    TooltipHandler.TipRegion(rowRect, tooltipString);
-                    if (EditEnabled && Event.current.type == EventType.MouseDown && Event.current.button == 0)
+                }
+                string tooltipString = $"{def.label.CapitalizeFirst()}: {(targetValue * 100f).ToString("F1")}";
+                TooltipHandler.TipRegion(rowRect, tooltipString);
+
+                if (Mouse.IsOver(vertRect))
+                {
+                    Widgets.DrawHighlight(vertRect);
+                    string importanceTooltipString = "RPS_Importance".Translate() + $": {(importanceValue * 100f).ToString("F1")}";
+                    TooltipHandler.TipRegion(vertRect, importanceTooltipString);
+                }
+                float uppercenterY = rowRect.y + rowRect.height * 0.25f;
+                float lowercenterY = rowRect.y + rowRect.height * 0.75f;
+                // Left label
+                Rect leftRect = new Rect(leftRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
+                Text.Anchor = TextAnchor.MiddleLeft;
+                Widgets.Label(leftRect, leftLabel);
+
+                // Right label
+                Rect rightRect = new Rect(rightRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
+                Text.Anchor = TextAnchor.MiddleRight;
+                Widgets.Label(rightRect, rightLabel);
+
+                // Label
+                Rect NodeRect = new Rect(rect.x, uppercenterY - Text.LineHeight / 2f, rowWidth, personalityRowHeight);
+
+                if (EditEnabled && Mouse.IsOver(NodeRect))
+                {
+                    Widgets.DrawHighlight(NodeRect);
+                    if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
                     {
                         List<FloatMenuOption> options = new List<FloatMenuOption>();
                         int capturedIndex = i;
@@ -218,25 +243,8 @@ namespace Maux36.RimPsyche.Sexuality
                         Find.WindowStack.Add(new FloatMenu(options));
                         Event.current.Use();
                     }
-
                 }
-                if (Mouse.IsOver(vertRect))
-                {
-                    Widgets.DrawHighlight(vertRect);
-                    string tooltipString = "RPS_Importance".Translate() + $": {(importanceValue * 100f).ToString("F1")}";
-                    TooltipHandler.TipRegion(vertRect, tooltipString);
-                }
-                float uppercenterY = rowRect.y + rowRect.height * 0.25f;
-                float lowercenterY = rowRect.y + rowRect.height * 0.75f;
-                // Left label
-                Rect leftRect = new Rect(leftRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
-                Text.Anchor = TextAnchor.MiddleLeft;
-                Widgets.Label(leftRect, leftLabel);
 
-                // Right label
-                Rect rightRect = new Rect(rightRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
-                Text.Anchor = TextAnchor.MiddleRight;
-                Widgets.Label(rightRect, rightLabel);
                 if (EditEnabled)
                 {
                     Rect sliderRect = new Rect(0, lowercenterY - personalityBarHeight / 2f, rowRect.width, personalityRowHeight);

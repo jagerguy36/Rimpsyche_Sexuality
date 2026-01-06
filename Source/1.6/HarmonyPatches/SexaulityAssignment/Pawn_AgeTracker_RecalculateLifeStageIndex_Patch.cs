@@ -10,6 +10,7 @@ namespace Maux36.RimPsyche.Sexuality
         public static void Postfix(Pawn ___pawn, bool ___lifeStageChange)
         {
             if (!___lifeStageChange) return;
+            if (PawnGenerator.IsBeingGenerated(pawn)) return;
             var compPsyche = ___pawn.compPsyche();
             if (compPsyche != null)
             {

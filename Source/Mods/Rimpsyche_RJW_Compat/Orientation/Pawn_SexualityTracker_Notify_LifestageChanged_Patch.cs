@@ -10,10 +10,6 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
         public static void Postfix(Pawn_SexualityTracker __instance)
         {
             var pawn = __instance.pawn;
-            if (PawnGenerator.IsBeingGenerated(pawn))
-            {
-                return;
-            }
             CompRJW.UpdateOrientation(pawn);
         }
     }

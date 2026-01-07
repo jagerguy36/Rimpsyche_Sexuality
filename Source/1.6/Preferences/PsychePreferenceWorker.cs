@@ -53,9 +53,9 @@ namespace Maux36.RimPsyche.Sexuality
         public override string Report(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();
-            if (compPsyche?.Enabled != true) return "RPS_NoPreference";
+            if (compPsyche?.Enabled != true) return "RPS_NoPreference".Translate();
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
-            if (psychePreference == null) return "RPS_NoPreference";
+            if (psychePreference == null) return "RPS_NoPreference".Translate();
             var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
             var parts = new StringBuilder();
             parts.Append("RPS_AttractionReport".Translate()+"\n");
@@ -74,7 +74,7 @@ namespace Maux36.RimPsyche.Sexuality
                 activePrefCount++;
             }
             if (activePrefCount == 0)
-                return "RPS_NoPreference";
+                return "RPS_NoPreference".Translate();
             return parts.ToString();
         }
 

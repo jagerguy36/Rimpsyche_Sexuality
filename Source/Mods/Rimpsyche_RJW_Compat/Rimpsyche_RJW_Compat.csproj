@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="HarmonyInit.cs" />
     <Compile Include="Orientation\CompRJW_UpdateOrientation_Patch.cs" />
+    <Compile Include="Orientation\Pawn_SexualityTracker_Notify_LifestageChanged_Patch.cs" />
     <Compile Include="Orientation\Pawn_SexualityTracker_AssignSexuality_Patch.cs" />
     <Compile Include="Orientation\PsycheEditPopup_PostClose_Patch.cs" />
     <Compile Include="Orientation\SexualityTracker_DirtyTraitCache_Patch.cs" />

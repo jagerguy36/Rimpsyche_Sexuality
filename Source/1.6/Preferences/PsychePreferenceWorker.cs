@@ -53,23 +53,28 @@ namespace Maux36.RimPsyche.Sexuality
         public override string Report(Pawn pawn)
         {
             var compPsyche = pawn.compPsyche();
-            if (compPsyche?.Enabled != true) return "RPS_NoPreference";
+            if (compPsyche?.Enabled != true) return "RPS_NoPreference".Translate();
             var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
-            if (psychePreference == null) return "RPS_NoPreference";
+            if (psychePreference == null) return "RPS_NoPreference".Translate();
             var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
             var parts = new StringBuilder();
             parts.Append("RPS_AttractionReport".Translate()+"\n");
+            int activePrefCount = 0;
             for (int i = 0; i < sortedPreferences.Count; i++)
             {
                 var pref = sortedPreferences[i];
                 if (string.IsNullOrEmpty(pref.stringKey)) continue;
+                if (pref.importance == 0f) continue;
 
                 var def = DefDatabase<PersonalityDef>.GetNamed(sortedPreferences[i].stringKey);
                 string colorHex = ColorUtility.ToHtmlStringRGB(Color.Lerp(Color.yellow, Color.green, pref.importance));
                 string heart = $"<color=#{colorHex}>♥</color>";
 
                 parts.Append($"  {heart} {Rimpsyche_Utility.GetPersonalityDesc(def, pref.target)}\n");
+                activePrefCount++;
             }
+            if (activePrefCount == 0)
+                return "RPS_NoPreference".Translate();
             return parts.ToString();
         }
 
@@ -99,12 +104,10 @@ namespace Maux36.RimPsyche.Sexuality
                     //Logic to fix it.
                 }
                 var pv = targetP.GetPersonality(personality);
-                value += Mathf.Max(1-Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth); //-0.4~1.0 * 1.25 * 5 => -2.5~6.25
-                //Log.Message($"{personality.label}| [{pf.target}] ~ {pv} | {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF)} * {(pf.importance + 0.25f * auth)} = {Mathf.Max(1 - Mathf.Abs(pv - pf.target) * posRangeInv, minF) * (pf.importance + 0.25f * auth)}");
+                value += Mathf.Max(1-Mathf.Abs(pv - pf.target) * posRangeInv, minF) * pf.importance; //-0.5~1 * 5 => -2.5~5
             }
-            float sway = observerPsyche.Evaluate(SexualityFormula.PsychePrefAuthSway);// 0.032~0.128 (0.2~0.16~0.8*0.16)
-            float preferenceFactor =  1f + value * sway; // 0.92~1.2 || 0.68~1.8
-            //Log.Message($"value: {value}, sway: {sway} | factor: {preferenceFactor}");
+            float sway = observerPsyche.Evaluate(SexualityFormula.PsychePrefAuthSway);// 0.04~0.16 (0.2*0.2~0.8*0.2)
+            float preferenceFactor =  1f + value * sway; // 0.9~1.2 (low sway) || 0.6~1.8 (high sway)
             return result * preferenceFactor;
         }
         
@@ -192,13 +195,38 @@ namespace Maux36.RimPsyche.Sexuality
 
                 Rect rowRect = new Rect(rect.x, y, rowWidth, personalityRowHeight * 2f);
                 Rect vertRect = new Rect(vertRectX, y, verticalWidth, personalityRowHeight * 2f);
-
-                if (Mouse.IsOver(rowRect))
+                if (!EditEnabled && Mouse.IsOver(rowRect))
                 {
                     Widgets.DrawHighlight(rowRect);
-                    string tooltipString = $"{def.label.CapitalizeFirst()}: {(targetValue * 100f).ToString("F1")}";
-                    TooltipHandler.TipRegion(rowRect, tooltipString);
-                    if (EditEnabled && Event.current.type == EventType.MouseDown && Event.current.button == 0)
+                }
+                string tooltipString = $"{def.label.CapitalizeFirst()}: {(targetValue * 100f).ToString("F1")}";
+                TooltipHandler.TipRegion(rowRect, tooltipString);
+
+                if (Mouse.IsOver(vertRect))
+                {
+                    Widgets.DrawHighlight(vertRect);
+                    string importanceTooltipString = "RPS_Importance".Translate() + $": {(importanceValue * 100f).ToString("F1")}";
+                    TooltipHandler.TipRegion(vertRect, importanceTooltipString);
+                }
+                float uppercenterY = rowRect.y + rowRect.height * 0.25f;
+                float lowercenterY = rowRect.y + rowRect.height * 0.75f;
+                // Left label
+                Rect leftRect = new Rect(leftRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
+                Text.Anchor = TextAnchor.MiddleLeft;
+                Widgets.Label(leftRect, leftLabel);
+
+                // Right label
+                Rect rightRect = new Rect(rightRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
+                Text.Anchor = TextAnchor.MiddleRight;
+                Widgets.Label(rightRect, rightLabel);
+
+                // Label
+                Rect NodeRect = new Rect(rect.x, uppercenterY - Text.LineHeight / 2f, rowWidth, personalityRowHeight);
+
+                if (EditEnabled && Mouse.IsOver(NodeRect))
+                {
+                    Widgets.DrawHighlight(NodeRect);
+                    if (Event.current.type == EventType.MouseDown && Event.current.button == 0)
                     {
                         List<FloatMenuOption> options = new List<FloatMenuOption>();
                         int capturedIndex = i;
@@ -217,25 +245,8 @@ namespace Maux36.RimPsyche.Sexuality
                         Find.WindowStack.Add(new FloatMenu(options));
                         Event.current.Use();
                     }
-
                 }
-                if (Mouse.IsOver(vertRect))
-                {
-                    Widgets.DrawHighlight(vertRect);
-                    string tooltipString = "RPS_Importance".Translate() + $": {(importanceValue * 100f).ToString("F1")}";
-                    TooltipHandler.TipRegion(vertRect, tooltipString);
-                }
-                float uppercenterY = rowRect.y + rowRect.height * 0.25f;
-                float lowercenterY = rowRect.y + rowRect.height * 0.75f;
-                // Left label
-                Rect leftRect = new Rect(leftRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
-                Text.Anchor = TextAnchor.MiddleLeft;
-                Widgets.Label(leftRect, leftLabel);
 
-                // Right label
-                Rect rightRect = new Rect(rightRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
-                Text.Anchor = TextAnchor.MiddleRight;
-                Widgets.Label(rightRect, rightLabel);
                 if (EditEnabled)
                 {
                     Rect sliderRect = new Rect(0, lowercenterY - personalityBarHeight / 2f, rowRect.width, personalityRowHeight);

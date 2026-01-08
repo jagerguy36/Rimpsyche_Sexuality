@@ -45,6 +45,10 @@
   <RPC_SexualityUndefined>정해지지 않음</RPC_SexualityUndefined>
   <RPC_SexualityUndefinedDescription>{0}의 성정체성이 정해지지 않았습니다.</RPC_SexualityUndefinedDescription>
 
+  <!-- Edit -->
+  <RPS_KinseySliderTooltip>슬라이더를 움직여 각 성별에 대해 림이 얼마나 매력을 느끼는지를 조절합니다.\n가운데는 두 성별에 대해 동일한 매력을 느끼는 것을 의미하며, 양쪽 끝은 남성 혹은 여성에게만 끌림을 의미합니다.</RPS_KinseySliderTooltip>
+  <RPS_AttractionTooltip>최대 선호도는 림이 두 성별 중 더 선호하는 성별에 대해 느끼는 성적 매력의 수준을 나타냅니다.\n상대적으로 덜 선호하는 성별에 대한 매력은 킨제이 수치에 따라 비례적으로 조정됩니다.\n\n최대 선호도가 충분이 낮다면 무성애자 판정을 받게 됩니다.</RPS_AttractionTooltip>
+
   <!-- Preference -->
   <RPS_NoPreference>선호사항 없음</RPS_NoPreference>
   <RPS_AttractionReport>선호하는 성격:</RPS_AttractionReport>

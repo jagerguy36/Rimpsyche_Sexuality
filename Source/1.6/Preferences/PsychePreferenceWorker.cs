@@ -279,6 +279,22 @@ namespace Maux36.RimPsyche.Sexuality
             Text.Font = oldFont;
             return;
         }
+        public abstract void PostLoadAdjustment(Dictionary<string, List<PrefEntry>> _preference)
+        {
+            if (_preference.TryGetValue("Rimpsyche_PsychePreference", out var psychePreference))
+            {
+                for (int i = 0; i < psychePreference.Count; i++)
+                {
+                    PersonalityDef p = DefDatabase<PersonalityDef>.GetNamed(psychePreference[i].stringKey, false);
+                    if (p == null)
+                    {
+                        Log.Warning($"Psyche Preference unable to load Personality def {psychePreference[i].stringKey}");
+                        //Logic to fix it.
+                    }
+                    else psychePreference[i].intKey = p.shortHash;
+                }
+            }
+        }
         public override void ClearEditorCache()
         {
             relevantDefsCache = null;

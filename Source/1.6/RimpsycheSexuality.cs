@@ -7,7 +7,7 @@ namespace Maux36.RimPsyche.Sexuality
     public class RimpsycheSexuality : Mod
     {
         public static RimpsycheSexualitySettings settings;
-        public const string CoreRequirement = "1.0.33";
+        public const string CoreRequirement = "1.0.34";
         public static string currentVersion;
         public RimpsycheSexuality(ModContentPack content) : base(content)
         {

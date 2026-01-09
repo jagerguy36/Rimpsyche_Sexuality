@@ -17,8 +17,10 @@ namespace Maux36.RimPsyche.Sexuality
 
         public PsychePreferenceWorker()
         {
-            EditorHeight = 200f;
+            EditorHeight = personalityRowHeight * 11f;
         }
+
+        public override void PostInit(){}
 
         public static List<PersonalityDef> RandomNodes()
         {
@@ -50,34 +52,6 @@ namespace Maux36.RimPsyche.Sexuality
             return true;
         }
 
-        public override string Report(Pawn pawn)
-        {
-            var compPsyche = pawn.compPsyche();
-            if (compPsyche?.Enabled != true) return "RPS_NoPreference".Translate();
-            var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
-            if (psychePreference == null) return "RPS_NoPreference".Translate();
-            var sortedPreferences = psychePreference.OrderByDescending(p => p.importance).ToList();
-            var parts = new StringBuilder();
-            parts.Append("RPS_AttractionReport".Translate()+"\n");
-            int activePrefCount = 0;
-            for (int i = 0; i < sortedPreferences.Count; i++)
-            {
-                var pref = sortedPreferences[i];
-                if (string.IsNullOrEmpty(pref.stringKey)) continue;
-                if (pref.importance == 0f) continue;
-
-                var def = DefDatabase<PersonalityDef>.GetNamed(sortedPreferences[i].stringKey);
-                string colorHex = ColorUtility.ToHtmlStringRGB(Color.Lerp(Color.yellow, Color.green, pref.importance));
-                string heart = $"<color=#{colorHex}>♥</color>";
-
-                parts.Append($"  {heart} {Rimpsyche_Utility.GetPersonalityDesc(def, pref.target)}\n");
-                activePrefCount++;
-            }
-            if (activePrefCount == 0)
-                return "RPS_NoPreference".Translate();
-            return parts.ToString();
-        }
-
         private static readonly float minF = -0.5f;
         private static readonly float posRangeInv = 3f; //0.3333
         public override float Evaluate(Pawn observer, Pawn target, float result, bool isRomantic)
@@ -92,7 +66,6 @@ namespace Maux36.RimPsyche.Sexuality
             if (psychePreference == null)
                 return result;
             float value = 0f;
-            float auth = observerPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
             var targetP = targetPsyche.Personality;
             for (int i = 0; i < psychePreference.Count; i++)
             {
@@ -117,13 +90,73 @@ namespace Maux36.RimPsyche.Sexuality
         public static readonly float titleContentSpacing = 5f;
         private static float personalityLabelWidth => RimpsycheDatabase.maxPersonalityLabelWidth;
         //private static float personalityWidthDiff => 2f * (personalityLabelWidth - 130f);
-        private static readonly float personalityRowHeight = 20f;
+        private static readonly float personalityRowHeight = 22f;
         private static readonly float personalityLabelPadding = 2f;
         private static readonly float personalityBarHeight = 4f;
         private static readonly Color barBackgroundColor = new Color(0.2f, 0.2f, 0.2f, 0.5f);
 
         private static readonly float verticalWidth = 20f;
         private static readonly float verticalPadding = 5f;
+
+        public override float GetViewerHeight(Pawn pawn)
+        {
+            var cachedData = GetDrawerCache(pawn);
+            if (cachedData == null) return personalityRowHeight * 2f;
+            float result = personalityRowHeight * (cachedData.Count + 1f);
+            return result;
+        }
+
+        private static List<string> drawerCache = null;
+        private static List<string> GetDrawerCache(Pawn pawn)
+        {
+            if (drawerCache != null) return drawerCache;
+            var compPsyche = pawn.compPsyche();
+            if (compPsyche?.Enabled != true)
+                return null;
+            var psychePreference = compPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_PsychePreference);
+            if (psychePreference == null)
+                return null;
+            drawerCache = new();
+            psychePreference = [.. psychePreference.Where(p => p.importance > 0).OrderByDescending(p => p.importance)];
+            for (int i = 0; i < psychePreference.Count; i++)
+            {
+                var pref = psychePreference[i];
+                if (string.IsNullOrEmpty(pref.stringKey)) continue;
+                var def = DefDatabase<PersonalityDef>.GetNamed(psychePreference[i].stringKey);
+                string colorHex = ColorUtility.ToHtmlStringRGB(Color.Lerp(Color.yellow, Color.green, pref.importance));
+                string heart = $"<color=#{colorHex}>♥</color>";
+                drawerCache.Add($"  {heart} {Rimpsyche_Utility.GetPersonalityDesc(def, pref.target)}");
+            }
+            return drawerCache;
+        }
+        public override void DrawViewer(Rect rect, Pawn pawn)
+        {
+            var rectWidth = rect.width;
+            var y = rect.y;
+            Rect titleRect = new Rect(rect.x, rect.y, rectWidth, personalityRowHeight);
+            Widgets.Label(titleRect, "RPS_AttractionReport".Translate());
+            y += personalityRowHeight;
+            var compPsyche = pawn.compPsyche();
+            if (compPsyche?.Enabled != true)
+            {
+                Rect NoRect = new Rect(titleRect.x, y, rectWidth, personalityRowHeight);
+                Widgets.Label(NoRect, "  " + "RPS_NoPreference".Translate());
+                return;
+            }
+            var cachedData = GetDrawerCache(pawn);
+            if (cachedData == null || cachedData.Count == 0)
+            {
+                Rect NoRect = new Rect(titleRect.x, y, rectWidth, personalityRowHeight);
+                Widgets.Label(NoRect, "  " + "RPS_NoPreference".Translate());
+                return;
+            }
+            for (int i = 0; i < cachedData.Count; i++)
+            {
+                Rect ContentRect = new Rect(titleRect.x, y, rectWidth, personalityRowHeight);
+                Widgets.Label(ContentRect, cachedData[i]);
+                y += personalityRowHeight;
+            }
+        }
 
         //Internal Cache
         private static List<PersonalityDef> relevantDefsCache = null;
@@ -290,7 +323,7 @@ namespace Maux36.RimPsyche.Sexuality
             Text.Font = oldFont;
             return;
         }
-        public abstract void PostLoadAdjustment(Dictionary<string, List<PrefEntry>> _preference)
+        public override void PostLoadAdjustment(Dictionary<string, List<PrefEntry>> _preference)
         {
             if (_preference.TryGetValue("Rimpsyche_PsychePreference", out var psychePreference))
             {
@@ -305,6 +338,10 @@ namespace Maux36.RimPsyche.Sexuality
                     else psychePreference[i].intKey = p.shortHash;
                 }
             }
+        }
+        public override void ClearViewerCache()
+        {
+            drawerCache = null;
         }
         public override void ClearEditorCache()
         {

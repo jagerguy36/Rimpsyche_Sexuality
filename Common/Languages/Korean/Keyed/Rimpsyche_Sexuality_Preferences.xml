@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- HairStyle -->
+  <RPS_Hairstyle>헤어 스타일</RPS_Hairstyle>
+  <RPS_HairPreferenceReport>선호하는 스타일:</RPS_HairPreferenceReport>
+  <RPS_HairList>해당하는 헤어:</RPS_HairList>
+  <RPS_BeardList>해당하는 수염:</RPS_BeardList>
+  <RPS_Bald>대머리</RPS_Bald>
+  <RPS_HairAny>아무 머리</RPS_HairAny>
+  <RPS_Balding>벗겨지는 머리</RPS_Balding>
+  <RPS_Shaved>바싹 민 머리</RPS_Shaved>
+  <RPS_HairShort>짧은 머리</RPS_HairShort>
+  <RPS_HairMid>중간 머리</RPS_HairMid>
+  <RPS_HairLong>긴 머리</RPS_HairLong>
+  <RPS_NoBeard>수염 없음</RPS_NoBeard>
+  <RPS_BeardAny>수염 있음</RPS_BeardAny>
+  <RPS_BeardShort>짧은 수염</RPS_BeardShort>
+  <RPS_BeardMid>중간 수염</RPS_BeardMid>
+  <RPS_BeardLong>긴 수염</RPS_BeardLong>
+  <RPS_NoPref>선호 없음</RPS_NoPref>
+  <RPS_MaleHairP>♂ 선호하는 머리</RPS_MaleHairP>
+  <RPS_MaleHairD>♂ 싫어하는 머리</RPS_MaleHairD>
+  <RPS_MaleBeardP>♂ 선호하는 수염</RPS_MaleBeardP>
+  <RPS_MaleBeardD>♂ 싫어하는 수염</RPS_MaleBeardD>
+  <RPS_FemaleHairP>♀ 선호하는 머리</RPS_FemaleHairP>
+  <RPS_FemaleHairD>♀ 싫어하는 머리</RPS_FemaleHairD>
+  <RPS_FemaleBeardP>♀ 선호하는 수염</RPS_FemaleBeardP>
+  <RPS_FemaleBeardD>♀ 싫어하는 수염</RPS_FemaleBeardD>
+
+
+</LanguageData>

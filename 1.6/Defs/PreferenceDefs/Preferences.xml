@@ -123,6 +123,9 @@
       <li>
         <targetTag>BeardAny</targetTag>
         <weight>0.02</weight>
+        <NulifyingGeneList>
+          <li>Beard_Always</li>
+        </NulifyingGeneList>
       </li>
       <li>
         <targetTag>BeardShort</targetTag>

@@ -144,7 +144,7 @@
       </li>
       <li>
         <targetTag>Bald</targetTag>
-        <weight>0.005</weight>
+        <weight>0.001</weight>
       </li>
       <li>
         <targetTag>HairAny</targetTag>
@@ -199,12 +199,8 @@
     </femaleBeardPrefBias>
     <femaleBeardDislikeBias>
       <li>
-        <targetTag>NoPref</targetTag>
-        <weight>1</weight>
-      </li>
-      <li>
         <targetTag>BeardAny</targetTag>
-        <weight>100</weight>
+        <weight>1</weight>
         <NulifyingGeneList>
           <li>Beard_Always</li>
         </NulifyingGeneList>

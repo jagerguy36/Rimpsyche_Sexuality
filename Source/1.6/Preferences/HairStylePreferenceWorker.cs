@@ -75,14 +75,22 @@ namespace Maux36.RimPsyche.Sexuality
 
         private static HairPreferenceDef hairPreferenceDef;
         private static float mhTotal;
+        public HashSet<int> maleHairPrefBiasGenes = [];
         private static float mhdTotal;
+        public HashSet<int> maleHairDislikeBiasGenes = [];
         private static float mbTotal;
+        public HashSet<int> maleBeardPrefBiasGenes = [];
         private static float mbdTotal;
+        public HashSet<int> maleBeardDislikeBiasGenes = [];
 
         private static float fhTotal;
+        public HashSet<int> femaleHairPrefBiasGenes = [];
         private static float fhdTotal;
+        public HashSet<int> femaleHairDislikeBiasGenes = [];
         private static float fbTotal;
+        public HashSet<int> femaleBeardPrefBiasGenes = [];
         private static float fbdTotal;
+        public HashSet<int> femaleBeardDislikeBiasGenes = [];
 
         public HairStylePreferenceWorker()
         {
@@ -183,23 +191,30 @@ namespace Maux36.RimPsyche.Sexuality
                     StyleLabelBuckets[(int)StyleCategory.BeardMid].Add(bearddef.label);
                 }
             }
-            mhTotal = CalculateTotal(hairPreferenceDef.maleHairPrefBias);
-            mhdTotal = CalculateTotal(hairPreferenceDef.maleHairDislikeBias);
-            mbTotal = CalculateTotal(hairPreferenceDef.maleBeardPrefBias);
-            mbdTotal = CalculateTotal(hairPreferenceDef.maleBeardDislikeBias);
+            mhTotal = CalculateTotal(hairPreferenceDef.maleHairPrefBias, maleHairPrefBiasGenes);
+            mhdTotal = CalculateTotal(hairPreferenceDef.maleHairDislikeBias, maleHairDislikeBiasGenes);
+            mbTotal = CalculateTotal(hairPreferenceDef.maleBeardPrefBias, maleBeardPrefBiasGenes);
+            mbdTotal = CalculateTotal(hairPreferenceDef.maleBeardDislikeBias, maleBeardDislikeBiasGenes);
 
-            fhTotal = CalculateTotal(hairPreferenceDef.femaleHairPrefBias);
-            fhdTotal = CalculateTotal(hairPreferenceDef.femaleHairDislikeBias);
-            fbTotal = CalculateTotal(hairPreferenceDef.femaleBeardPrefBias);
-            fbdTotal = CalculateTotal(hairPreferenceDef.femaleBeardDislikeBias);
+            fhTotal = CalculateTotal(hairPreferenceDef.femaleHairPrefBias, femaleHairPrefBiasGenes);
+            fhdTotal = CalculateTotal(hairPreferenceDef.femaleHairDislikeBias, femaleHairDislikeBiasGenes);
+            fbTotal = CalculateTotal(hairPreferenceDef.femaleBeardPrefBias, femaleBeardPrefBiasGenes);
+            fbdTotal = CalculateTotal(hairPreferenceDef.femaleBeardDislikeBias, femaleBeardDislikeBiasGenes);
         }
-        private static float CalculateTotal(List<HairPreferenceDef.HairStylePrefBias> list)
+        private static float CalculateTotal(List<HairPreferenceDef.HairStylePrefBias> list, HashSet<int> GeneHash)
         {
             if (list == null) return 0f;
             float sum = 0f;
             for (int i = 0; i < list.Count; i++)
             {
                 sum += list[i].weight;
+                if (list[i].NulifyingGeneList != null)
+                {
+                    foreach (var gene in list[i].NulifyingGeneList)
+                    {
+                        GeneHash.Add(gene.shortHash);
+                    }
+                }
             }
             return sum;
         }
@@ -207,22 +222,80 @@ namespace Maux36.RimPsyche.Sexuality
         public override bool TryGenerate(Pawn pawn, out List<PrefEntry> pref)
         {
             pref = new List<PrefEntry>();
+            HashSet<int> pawnGenes = BuildPawnGeneHash(pawn);
+            var mhOff = GetOffendingGenes(pawnGenes, maleHairPrefBiasGenes);
+            var mhdOff = GetOffendingGenes(pawnGenes, maleHairDislikeBiasGenes);
+
+            var mbOff = GetOffendingGenes(pawnGenes, maleBeardPrefBiasGenes);
+            var mbdOff = GetOffendingGenes(pawnGenes, maleBeardDislikeBiasGenes);
+
+            var fhOff = GetOffendingGenes(pawnGenes, femaleHairPrefBiasGenes);
+            var fhdOff = GetOffendingGenes(pawnGenes, femaleHairDislikeBiasGenes);
+
+            var fbOff = GetOffendingGenes(pawnGenes, femaleBeardPrefBiasGenes);
+            var fbdOff = GetOffendingGenes(pawnGenes, femaleBeardDislikeBiasGenes);
+
             // Process Male Hair (Indices 0, 1)
-            AddPreferencePair(pref, hairPreferenceDef.maleHairPrefBias, mhTotal, hairPreferenceDef.maleHairDislikeBias, mhdTotal);
+            AddPreferencePair(pref,
+                hairPreferenceDef.maleHairPrefBias, mhTotal, mhOff,
+                hairPreferenceDef.maleHairDislikeBias, mhdTotal, mhdOff);
+
             // Process Male Beard (Indices 2, 3)
-            AddPreferencePair(pref, hairPreferenceDef.maleBeardPrefBias, mbTotal, hairPreferenceDef.maleBeardDislikeBias, mbdTotal, true);
+            AddPreferencePair(pref,
+                hairPreferenceDef.maleBeardPrefBias, mbTotal, mbOff,
+                hairPreferenceDef.maleBeardDislikeBias, mbdTotal, mbdOff);
+
             // Process Female Hair (Indices 4, 5)
-            AddPreferencePair(pref, hairPreferenceDef.femaleHairPrefBias, fhTotal, hairPreferenceDef.femaleHairDislikeBias, fhdTotal);
+            AddPreferencePair(pref,
+                hairPreferenceDef.femaleHairPrefBias, fhTotal, fhOff,
+                hairPreferenceDef.femaleHairDislikeBias, fhdTotal, fhdOff);
+
             // Process Female Beard (Indices 6, 7)
-            AddPreferencePair(pref, hairPreferenceDef.femaleBeardPrefBias, fbTotal, hairPreferenceDef.femaleBeardDislikeBias, fbdTotal, true);
+            AddPreferencePair(pref,
+                hairPreferenceDef.femaleBeardPrefBias, fbTotal, fbOff,
+                hairPreferenceDef.femaleBeardDislikeBias, fbdTotal, fbdOff);
 
             return true; // Return true so the generation is accepted
         }
-
-        private void AddPreferencePair(List<PrefEntry> prefList, List<HairPreferenceDef.HairStylePrefBias> pList, float pTotal, List<HairPreferenceDef.HairStylePrefBias> dList, float dTotal, bool categoryBeard = false)
+        private static HashSet<int> BuildPawnGeneHash(Pawn pawn)
         {
-            string pTag = GetWeightedTag(pList, pTotal);
-            string dTag = GetWeightedTag(dList, dTotal);
+            var result = new HashSet<int>();
+
+            var genes = pawn.genes?.GenesListForReading;
+            if (genes == null)
+                return result;
+
+            for (int i = 0; i < genes.Count; i++)
+            {
+                result.Add(genes[i].def.shortHash);
+            }
+
+            return result;
+        }
+        private static HashSet<int> GetOffendingGenes(HashSet<int> pawnGenes, HashSet<int> listNullifyingGenes)
+        {
+            if (listNullifyingGenes == null || listNullifyingGenes.Count == 0)
+                return null;
+
+            HashSet<int> result = null;
+
+            foreach (int gene in listNullifyingGenes)
+            {
+                if (pawnGenes.Contains(gene))
+                {
+                    result ??= new HashSet<int>();
+                    result.Add(gene);
+                }
+            }
+
+            return result;
+        }
+        private void AddPreferencePair(List<PrefEntry> prefList,
+            List<HairPreferenceDef.HairStylePrefBias> pList, float pTotal, HashSet<int> pOffendingGenes,
+            List<HairPreferenceDef.HairStylePrefBias> dList, float dTotal, HashSet<int> dOffendingGenes)
+        {
+            string pTag = GetWeightedTag(pList, pTotal, pOffendingGenes);
+            string dTag = GetWeightedTag(dList, dTotal, dOffendingGenes);
             if (pTag == dTag)
             {
                 pTag = "NoPref";
@@ -231,10 +304,57 @@ namespace Maux36.RimPsyche.Sexuality
             prefList.Add(new PrefEntry(pTag, StyleBucketIndex[pTag], 0f, 0f));
             prefList.Add(new PrefEntry(dTag, StyleBucketIndex[dTag], 0f, 0f));
         }
-        private string GetWeightedTag(List<HairPreferenceDef.HairStylePrefBias> list, float totalWeight)
+        private string GetWeightedTag(List<HairPreferenceDef.HairStylePrefBias> list, float precomputedTotal, HashSet<int> offendingGenes)
         {
-            if (list == null || list.Count == 0 || totalWeight <= 0) return "NoPref";
+            if (list == null || list.Count == 0 || precomputedTotal <= 0f)
+                return "NoPref";
 
+            if (offendingGenes == null)
+            {
+                return GetWeightedTagFast(list, precomputedTotal);
+            }
+
+            float total = 0f;
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (!IsInvalidated(list[i], offendingGenes))
+                    total += list[i].weight;
+            }
+
+            if (total <= 0f)
+                return "NoPref";
+
+            float roll = Rand.Range(0f, total);
+            float cumulative = 0f;
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (IsInvalidated(list[i], offendingGenes))
+                    continue;
+
+                cumulative += list[i].weight;
+                if (roll < cumulative)
+                    return list[i].targetTag;
+            }
+
+            return "NoPref";
+        }
+        private static bool IsInvalidated( HairPreferenceDef.HairStylePrefBias bias, HashSet<int> offendingGenes)
+        {
+            if (offendingGenes == null || bias.NulifyingGeneList == null)
+                return false;
+
+            for (int i = 0; i < bias.NulifyingGeneList.Count; i++)
+            {
+                if (offendingGenes.Contains(bias.NulifyingGeneList[i].shortHash))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private string GetWeightedTagFast(List<HairPreferenceDef.HairStylePrefBias> list, float totalWeight)
+        {
             float roll = Rand.Range(0f, totalWeight);
             float cumulative = 0f;
 

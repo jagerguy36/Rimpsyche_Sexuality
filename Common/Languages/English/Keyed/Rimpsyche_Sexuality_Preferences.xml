@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- HairStyle -->
+  <RPS_Hairstyle>Hair Style</RPS_Hairstyle>
+  <RPS_HairPreferenceReport>Preferred hair style:</RPS_HairPreferenceReport>
+  <RPS_HairList>Hairs of this kind:</RPS_HairList>
+  <RPS_BeardList>Beards of this kind:</RPS_BeardList>
+  <RPS_Bald>Bald</RPS_Bald>
+  <RPS_HairAny>Any hair style</RPS_HairAny>
+  <RPS_Balding>Balding</RPS_Balding>
+  <RPS_Shaved>Shaved</RPS_Shaved>
+  <RPS_HairShort>Short hair</RPS_HairShort>
+  <RPS_HairMid>Mid hair</RPS_HairMid>
+  <RPS_HairLong>Long hair</RPS_HairLong>
+  <RPS_NoBeard>No beard</RPS_NoBeard>
+  <RPS_BeardAny>Any beard</RPS_BeardAny>
+  <RPS_BeardShort>Short beard</RPS_BeardShort>
+  <RPS_BeardMid>Mid beard</RPS_BeardMid>
+  <RPS_BeardLong>Long beard</RPS_BeardLong>
+  <RPS_NoPref>No preference</RPS_NoPref>
+  <RPS_MaleHairP>♂ liked hair</RPS_MaleHairP>
+  <RPS_MaleHairD>♂ disliked hair</RPS_MaleHairD>
+  <RPS_MaleBeardP>♂ liked beard</RPS_MaleBeardP>
+  <RPS_MaleBeardD>♂ disliked beard</RPS_MaleBeardD>
+  <RPS_FemaleHairP>♀ liked hair</RPS_FemaleHairP>
+  <RPS_FemaleHairD>♀ disliked hair</RPS_FemaleHairD>
+  <RPS_FemaleBeardP>♀ liked beard</RPS_FemaleBeardP>
+  <RPS_FemaleBeardD>♀ disliked beard</RPS_FemaleBeardD>
+
+
+</LanguageData>

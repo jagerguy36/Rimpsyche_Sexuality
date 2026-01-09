@@ -53,6 +53,8 @@
   <RPS_NoPreference>No Preference available</RPS_NoPreference>
   <RPS_AttractionReport>Preferred personalities:</RPS_AttractionReport>
   <RPS_Importance>Importance</RPS_Importance>
+  <RPS_Likes>Likes</RPS_Likes>
+  <RPS_Dislikes>Dislikes</RPS_Dislikes>
 
   <!-- Stats -->
   <RP_Stat_Sexdrive>Libido</RP_Stat_Sexdrive>

@@ -429,6 +429,14 @@ namespace Maux36.RimPsyche.Sexuality
             { 6, "RPS_FemaleBeardP".Translate() },
             { 7, "RPS_FemaleBeardD".Translate() }
         };
+        bool IsStyleAllowedForIndex(int index, int styleIndex)
+        {
+            if (styleIndex == 12)
+                return true;
+
+            bool isHairSlot = index % 4 < 2;
+            return isHairSlot ? styleIndex <= 6 : styleIndex >= 7;
+        }
         public override void DrawEditor(Rect rect, Pawn pawn, bool EditEnabled)
         {
             TextAnchor oldAnchor = Text.Anchor;
@@ -453,7 +461,7 @@ namespace Maux36.RimPsyche.Sexuality
             for (int i = 0; i < stylePreference.Count; i++)
             {
                 Rect rowRect = new Rect(rect.x, y, rowWidth, rowHeight);
-                Widgets.Label(rowRect, EditKeys[i] + ": " + stylePreference[i].stringKey);
+                Widgets.Label(rowRect, EditKeys[i] + ": " + LabelDict[stylePreference[i].intKey]);
                 if (EditEnabled && Mouse.IsOver(rowRect))
                 {
                     Widgets.DrawHighlight(rowRect);
@@ -461,22 +469,28 @@ namespace Maux36.RimPsyche.Sexuality
                     {
                         List<FloatMenuOption> options = new List<FloatMenuOption>();
                         int capturedIndex = i;
-                        bool isBeardCategory = (capturedIndex == 2 || capturedIndex == 3 || capturedIndex == 6 || capturedIndex == 7);
-                        foreach (string styleKey in StyleBucketIndex.Keys)
+                        foreach (var kv in StyleBucketIndex)
                         {
-                            int styleIndex = StyleBucketIndex[styleKey];
-                            if (isBeardCategory)
-                            {
-                                if (styleIndex < 7) continue;
-                            }
-                            else
-                            {
-                                if (styleIndex > 6 && styleIndex != 12) continue;
-                            }
+                            string styleKey = kv.Key;
+                            int styleIndex = kv.Value;
+                            if (!IsStyleAllowedForIndex(capturedIndex, styleIndex))
+                                continue;
                             Action action = delegate
                             {
-                                stylePreference[capturedIndex].stringKey = styleKey;
-                                stylePreference[capturedIndex].intKey = styleIndex;
+                                int otherIndex = capturedIndex ^ 1;
+                                if (stylePreference[otherIndex].intKey == styleIndex)
+                                {
+                                    stylePreference[capturedIndex].stringKey = "NoPref";
+                                    stylePreference[capturedIndex].intKey = 12;
+
+                                    stylePreference[otherIndex].stringKey = "NoPref";
+                                    stylePreference[otherIndex].intKey = 12;
+                                }
+                                else
+                                {
+                                    stylePreference[capturedIndex].stringKey = styleKey;
+                                    stylePreference[capturedIndex].intKey = styleIndex;
+                                }
                             };
                             options.Add(new FloatMenuOption(LabelDict[styleIndex], action));
                         }

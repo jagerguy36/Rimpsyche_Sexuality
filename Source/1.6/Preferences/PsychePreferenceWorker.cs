@@ -244,17 +244,17 @@ namespace Maux36.RimPsyche.Sexuality
                 float uppercenterY = rowRect.y + rowRect.height * 0.25f;
                 float lowercenterY = rowRect.y + rowRect.height * 0.75f;
                 // Left label
-                Rect leftRect = new Rect(leftRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
+                Rect leftRect = new Rect(leftRectX, rowRect.y, personalityLabelWidth, personalityRowHeight);
                 Text.Anchor = TextAnchor.MiddleLeft;
                 Widgets.Label(leftRect, leftLabel);
 
                 // Right label
-                Rect rightRect = new Rect(rightRectX, uppercenterY - Text.LineHeight / 2f, personalityLabelWidth, Text.LineHeight);
+                Rect rightRect = new Rect(rightRectX, rowRect.y, personalityLabelWidth, personalityRowHeight);
                 Text.Anchor = TextAnchor.MiddleRight;
                 Widgets.Label(rightRect, rightLabel);
 
                 // Label
-                Rect NodeRect = new Rect(rect.x, uppercenterY - Text.LineHeight / 2f, rowWidth, personalityRowHeight);
+                Rect NodeRect = new Rect(rect.x, rowRect.y, rowWidth, personalityRowHeight);
 
                 if (EditEnabled && Mouse.IsOver(NodeRect))
                 {
@@ -279,10 +279,11 @@ namespace Maux36.RimPsyche.Sexuality
                         Event.current.Use();
                     }
                 }
+                float barPartHeight = NodeRect.yMax + (personalityRowHeight - personalityBarHeight) * 0.5f;
 
                 if (EditEnabled)
                 {
-                    Rect sliderRect = new Rect(0, lowercenterY - personalityBarHeight / 2f, rowRect.width, personalityRowHeight);
+                    Rect sliderRect = new Rect(0, barPartHeight, rowRect.width, personalityRowHeight);
                     float newValue = Widgets.HorizontalSlider(sliderRect, targetValue, -1f, 1f);
                     if (newValue != targetValue)
                     {
@@ -294,7 +295,7 @@ namespace Maux36.RimPsyche.Sexuality
                 else
                 {
                     // Bar background
-                    Rect barRect = new Rect(0, lowercenterY - personalityBarHeight / 2f, rowRect.width, personalityBarHeight);
+                    Rect barRect = new Rect(0, barPartHeight, rowRect.width, personalityBarHeight);
                     Widgets.DrawBoxSolid(barRect, barBackgroundColor);
 
                     // Value bar

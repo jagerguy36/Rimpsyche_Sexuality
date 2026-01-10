@@ -45,10 +45,16 @@
   <RPC_SexualityUndefined>Undefined</RPC_SexualityUndefined>
   <RPC_SexualityUndefinedDescription>{0} has lost their sexuality. Can you find it for them?</RPC_SexualityUndefinedDescription>
 
+  <!-- Edit -->
+  <RPS_KinseySliderTooltip>Move the slider left or right to adjust how strongly the pawn is attracted to each gender.\nThe middle represents equal attraction to both genders, while either end represents attraction only to males or only to females.</RPS_KinseySliderTooltip>
+  <RPS_AttractionTooltip>Max Attraction represents the level of sexual attraction the pawn feels toward their preferred gender.\nAttraction toward the less preferred gender is scaled proportionally according to the Kinsey rating.\n\nIf Max Attraction is sufficiently low, the pawn will be considered asexual</RPS_AttractionTooltip>
+
   <!-- Preference -->
   <RPS_NoPreference>No Preference available</RPS_NoPreference>
   <RPS_AttractionReport>Preferred personalities:</RPS_AttractionReport>
   <RPS_Importance>Importance</RPS_Importance>
+  <RPS_Likes>Likes</RPS_Likes>
+  <RPS_Dislikes>Dislikes</RPS_Dislikes>
 
   <!-- Stats -->
   <RP_Stat_Sexdrive>Libido</RP_Stat_Sexdrive>

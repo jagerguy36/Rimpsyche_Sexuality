@@ -6,5 +6,6 @@ namespace Maux36.RimPsyche.Sexuality
     public static class DefOfRimpsycheSexuality
     {
         public static PreferenceDef Rimpsyche_PsychePreference;
+        public static PreferenceDef Rimpsyche_HairStylePreference;
     }
 }

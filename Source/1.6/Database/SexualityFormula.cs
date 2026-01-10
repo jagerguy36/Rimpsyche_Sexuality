@@ -13,5 +13,15 @@ namespace Maux36.RimPsyche.Sexuality
             },
             RimpsycheFormulaManager.FormulaIdDict
         );
+        //Psyche Attraction
+        public static RimpsycheFormula PhysicalPrefAuthSway = new(
+            "PhysicalPrefAuthSway",
+            (tracker) =>
+            {
+                float auth = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
+                return 1f - 0.6f * auth; // 0.8(high auth) ~ 1.2(high superficial)
+            },
+            RimpsycheFormulaManager.FormulaIdDict
+        );
     }
 }

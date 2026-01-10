@@ -7,7 +7,7 @@ namespace Maux36.RimPsyche.Sexuality
     public class RimpsycheSexuality : Mod
     {
         public static RimpsycheSexualitySettings settings;
-        public const string CoreRequirement = "1.0.33";
+        public const string CoreRequirement = "1.0.34";
         public static string currentVersion;
         public RimpsycheSexuality(ModContentPack content) : base(content)
         {
@@ -29,6 +29,8 @@ namespace Maux36.RimPsyche.Sexuality
             return "RimpsycheSexualitySettingCategory".Translate();
         }
         private static Vector2 scrollPosition = new Vector2(0f, 0f);
+        private Vector2 preferenceScrollPosition = Vector2.zero;
+
         private static float totalContentHeight = 400f;
         private const float ScrollBarWidthMargin = 18f;
         public override void DoSettingsWindowContents(Rect inRect)
@@ -46,11 +48,51 @@ namespace Maux36.RimPsyche.Sexuality
             Rect sliderArea = listing_Standard.GetRect(200f);
             DrawKinseyDistributionSliders(sliderArea);
             listing_Standard.Gap(12f);
-            listing_Standard.CheckboxLabeled("RimpsycheUsePreferenceSystem".Translate(), ref RimpsycheSexualitySettings.usePreferenceSystem, "RimpsycheUsePreferenceSystemTooltip".Translate());
-            listing_Standard.Gap(12f);
             listing_Standard.CheckboxLabeled("RimpsycheRomanceAttemptGenderDiff".Translate(), ref RimpsycheSexualitySettings.romanceAttemptGenderDiff, "RimpsycheRomanceAttemptGenderDiffTooltip".Translate());
             listing_Standard.Gap(12f);
             RimpsycheSexualitySettings.minRelAttraction = (float)Math.Round(listing_Standard.SliderLabeled("RimpsycheMinRelAttraction".Translate() + " (" + "Default".Translate() + " 0.7): " + RimpsycheSexualitySettings.minRelAttraction, RimpsycheSexualitySettings.minRelAttraction, 0.00f, 1f, tooltip: "RimpsycheMinRelAttractionTooltip".Translate()), 2);
+
+            listing_Standard.CheckboxLabeled("RimpsycheUsePreferenceSystem".Translate(), ref RimpsycheSexualitySettings.usePreferenceSystem, "RimpsycheUsePreferenceSystemTooltip".Translate());
+            listing_Standard.Gap(12f);
+            if (RimpsycheSexualitySettings.usePreferenceSystem)
+            {
+                float boxHeight =150f; // fixed height for the inner scroll box
+                Rect outerBox = listing_Standard.GetRect(boxHeight);
+
+                Widgets.DrawMenuSection(outerBox);
+
+                var allPreference = DefDatabase<PreferenceDef>.AllDefsListForReading;
+
+                float rowHeight = 28f;
+                float contentHeight = allPreference.Count * rowHeight + 10f;
+
+                Rect viewRect = new Rect(0f, 0f, outerBox.width - ScrollBarWidthMargin, contentHeight);
+                Rect innerRect = outerBox.ContractedBy(4f);
+                Widgets.BeginScrollView(innerRect, ref preferenceScrollPosition, viewRect);
+
+                float curY = 0f;
+                foreach (var pref in allPreference)
+                {
+                    Rect rowRect = new Rect(0f, curY, viewRect.width, rowHeight);
+
+                    bool isActive = RimpsycheSexualitySettings.activePreferences.Contains(pref.defName);
+                    bool checkBuffer = isActive;
+
+                    Widgets.CheckboxLabeled(rowRect, pref.label.CapitalizeFirst(),  ref checkBuffer);
+
+                    if (checkBuffer != isActive)
+                    {
+                        if (checkBuffer)
+                            RimpsycheSexualitySettings.activePreferences.Add(pref.defName);
+                        else
+                            RimpsycheSexualitySettings.activePreferences.Remove(pref.defName);
+                    }
+
+                    curY += rowHeight;
+                }
+
+                Widgets.EndScrollView();
+            }
 
             listing_Standard.End();
             Widgets.EndScrollView();

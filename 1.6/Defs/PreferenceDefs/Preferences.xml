@@ -124,7 +124,7 @@
         <targetTag>BeardAny</targetTag>
         <weight>0.02</weight>
         <NulifyingGeneList>
-          <li>Beard_Always</li>
+          <li MayRequire="Ludeon.RimWorld.Biotech">Beard_Always</li>
         </NulifyingGeneList>
       </li>
       <li>
@@ -205,7 +205,7 @@
         <targetTag>BeardAny</targetTag>
         <weight>1</weight>
         <NulifyingGeneList>
-          <li>Beard_Always</li>
+          <li MayRequire="Ludeon.RimWorld.Biotech">Beard_Always</li>
         </NulifyingGeneList>
       </li>
     </femaleBeardDislikeBias>

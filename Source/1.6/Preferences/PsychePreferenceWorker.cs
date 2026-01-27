@@ -350,29 +350,5 @@ namespace Maux36.RimPsyche.Sexuality
             relevantDefsHash = null;
             potentialDefsCache = null;
         }
-
-        //Temp Function
-        //This makes sexual preference act like prettiness factor, with multiple preference values still not going over the prettiness's influence.
-        public static float EvaluateSexualPreference(Pawn pawn, Pawn otherPawn)
-        {
-            float value = 0f;
-            //Only active preferences are stored in OrderedPrefDefs
-            var prefDefs = RimpsycheDatabase.OrderedSexPreferenceDefs;
-            for (int i = 0; i < prefDefs.Count; i++)
-            {
-                var def = prefDefs[i];
-                value = def.worker.Evaluate(pawn, otherPawn, false);
-            }
-            //Translate value unto -3~3 plane
-            //Then use the prettiness calculation.
-            if (value >= 0f)
-            {
-                value = 3f - 6f/(2f + value);
-                return 1f + (0.85f * value);
-            }
-            else
-                value = 6f(2f - value) -3f;
-                return  1f/(1f - (1.5f * value));
-        }
     }
 }

@@ -21,7 +21,7 @@ namespace Maux36.RimPsyche.Sexuality
                 num = Mathf.Max(-2.5f, num);
                 var pawnPsyche = ___pawn.compPsyche();
                 if (pawnPsyche?.Enabled == true)
-                    num = Mathf.Max(-3f, num * pawnPsyche.Evaluate(AuthenticBeautyMultiplier))
+                    num = Mathf.Max(-3f, num * pawnPsyche.Evaluate(AuthenticBeautyMultiplier));
                 __result = 1f/(1f - (1.5f * num));
                 return false;
             }
@@ -30,7 +30,7 @@ namespace Maux36.RimPsyche.Sexuality
                 num = Mathf.Min(2.5f, num);
                 var pawnPsyche = ___pawn.compPsyche();
                 if (pawnPsyche?.Enabled == true)
-                    num = Mathf.Min(3f, num * pawnPsyche.Evaluate(AuthenticBeautyMultiplier))
+                    num = Mathf.Min(3f, num * pawnPsyche.Evaluate(AuthenticBeautyMultiplier));
                 __result = 1f + (0.85f * num);
                 return false;
             }

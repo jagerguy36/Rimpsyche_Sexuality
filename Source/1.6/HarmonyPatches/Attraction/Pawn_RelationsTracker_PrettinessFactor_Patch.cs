@@ -19,33 +19,24 @@ namespace Maux36.RimPsyche.Sexuality
             if (num < 0f)
             {
                 num = Mathf.Max(-2.5f, num);
-                __result = 1/(1-num);
                 var pawnPsyche = ___pawn.compPsyche();
-                if (pawnPsyche?.Enabled != true) return false;
-                __result *= pawnPsyche.Evaluate(AuthenticUglinessMultiplier);
+                if (pawnPsyche?.Enabled == true)
+                    num = Mathf.Max(-3f, num * pawnPsyche.Evaluate(AuthenticBeautyMultiplier))
+                __result = 1f/(1f - (1.5f * num));
                 return false;
             }
             if (num > 0f)
             {
                 num = Mathf.Min(2.5f, num);
-                __result = num + 1f;
                 var pawnPsyche = ___pawn.compPsyche();
-                if (pawnPsyche?.Enabled != true) return false;
-                __result *= pawnPsyche.Evaluate(AuthenticBeautyMultiplier);
+                if (pawnPsyche?.Enabled == true)
+                    num = Mathf.Min(3f, num * pawnPsyche.Evaluate(AuthenticBeautyMultiplier))
+                __result = 1f + (0.85f * num);
                 return false;
             }
             __result = 1f;
             return false;
         }
-        public static RimpsycheFormula AuthenticUglinessMultiplier = new(
-            "AuthenticUglinessMultiplier",
-            (tracker) =>
-            {
-                float authenticityFactor = tracker.GetPersonalityAsMult(PersonalityDefOf.Rimpsyche_Authenticity, 2f);
-                return authenticityFactor;
-            },
-            RimpsycheFormulaManager.FormulaIdDict
-        );
         public static RimpsycheFormula AuthenticBeautyMultiplier = new(
             "AuthenticBeautyMultiplier",
             (tracker) =>

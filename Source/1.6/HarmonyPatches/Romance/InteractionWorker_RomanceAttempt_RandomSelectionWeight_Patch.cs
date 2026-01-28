@@ -228,15 +228,19 @@ namespace Maux36.RimPsyche.Sexuality
         {
             if (romanceFactor == 0f)
                 return false;
-            float limit = 0.15f;
-            limit -= initComp.Evaluate(SexualOpenness); //-0.15~0.15
-            limit -= GenMath.LerpDoubleClamped(-50f, 50f, -0.05f, 0.05f, (float)initOpinion);
-            limit = Mathf.Max(0.01f, limit);
             float attraction = initComp.Sexuality.GetAdjustedAttraction(recipient);
             if (attraction == 0f)
                 return false;
+            // Vanilla Rimworld puts 0.15 as hard minimum limit for SRC in InteractionWorker_RomanceAttempt.RandomSelectionWeight
+            float limit = 0.15f;
+            limit -= initComp.Evaluate(SexualOpenness); //-0.15~0.15
+            limit -= GenMath.LerpDoubleClamped(-50f, 50f, -0.05f, 0.05f, (float)initOpinion);
+            //Range of personality and opinion aware limit : -0.05~0.3
+            limit = Mathf.Max(0.01f, limit); //Pawns will not attempt to romance gender they have asexual level of attraction to, no matter how open they are.
             if (attraction < limit)
                 return false;
+            //Since SRC = attraction * Age * Prettiness * Pref(Phys) * Relation * Hediff * Gene * PRef(Rom), SRC/attraction means assuming attraction == 1f;
+            //Assuming attraction is 1 (Vanilla compatible sexuality), if the SRC is lower than vanilla limit, we should respect that.
             if (romanceFactor / attraction < 0.15f)
                 return false;
             return true;

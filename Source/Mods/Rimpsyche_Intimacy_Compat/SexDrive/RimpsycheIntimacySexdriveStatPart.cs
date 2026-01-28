@@ -11,7 +11,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat
                 var compPsyche = pawn.compPsyche();
                 if (compPsyche?.Enabled == true)
                 {
-                    val *= 1.5f - compPsyche.Sexuality.SexDrive;
+                    val *= compPsyche.Sexuality.GetAdjustedSexdrive();
                 }
             }
         }
@@ -23,7 +23,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat
                 var compPsyche = pawn.compPsyche();
                 if (compPsyche?.Enabled == true)
                 {
-                    return "RP_Stat_Psyche".Translate() + "\n    " + "RP_Stat_Sexdrive".Translate() + ": x" + (1.5f - compPsyche.Sexuality.SexDrive).ToStringPercent() + "\n";
+                    return "RP_Stat_Psyche".Translate() + "\n    " + "RP_Stat_Sexdrive".Translate() + ": x" + (compPsyche.Sexuality.GetAdjustedSexdrive()).ToStringPercent() + "\n";
                 }
             }
             return null;

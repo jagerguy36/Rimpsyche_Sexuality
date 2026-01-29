@@ -30,16 +30,17 @@ namespace Maux36.RimPsyche.Sexuality
             //Translate value unto -2~2 plane. This maps 2 to 1 and 3 to 1.5 and infinite+ to 2
             //This means combined preference of 2 will have as much impact as having a 'pretty' trait, and 3 will have somewhere between pretty and beautiful.
             //Then use the prettiness calculation.
-            if (physicalPref >= 0f)
-            {
-                physicalPref = 2f - 4f / (2f + physicalPref);
-                return 1f + (0.85f * physicalPref);
-            }
-            else
+            if (physicalPref < 0f)
             {
                 physicalPref = 4f / (2f - physicalPref) - 2f;
-                return 1f / (1f - (1.5f * physicalPref));
+                return 1f / (1f - physicalPref);
             }
+            if (physicalPref > 0f)
+            {
+                physicalPref = 2f - 4f / (2f + physicalPref);
+                return 1f + (1f - (0.1f * physicalPref)) * physicalPref;
+            }
+            return 1f;
         }
     }
 }

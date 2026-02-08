@@ -19,7 +19,7 @@ namespace Maux36.RimPsyche.Sexuality
             (tracker) =>
             {
                 float auth = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
-                return 1f - 0.6f * auth; // 0.8(high auth) ~ 1.2(high superficial)
+                return 1f - 0.8f * auth; // 0.2(high auth) ~ 1.8(high superficial)
             },
             RimpsycheFormulaManager.FormulaIdDict
         );

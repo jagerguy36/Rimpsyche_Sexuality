@@ -11,7 +11,7 @@ namespace Maux36.RimPsyche.Sexuality
         public static void Postfix(ref float __result, Pawn ___pawn, Pawn otherPawn)
         {
             if(__result==0f) return;
-            __result = SexualityHelper.EvaluateRomPreference(___pawn, otherPawn, __result);
+            __result = Sexuality_Utility.EvaluateRomPreference(___pawn, otherPawn, __result);
         }
     }
 }

@@ -408,7 +408,7 @@ namespace Maux36.RimPsyche.Sexuality
             }
             //value -0.5 ~ 0.5
             float sway = observerPsyche.Evaluate(SexualityFormula.PhysicalPrefAuthSway);// 0.2 ~ 1.8
-            return result * (1f + value * sway); //HighAuth(0.966~1.1) HighSuperficial(0.8777~1.4)
+            return value * sway; //HighAuth(-0.1~0.1) HighSuperficial(~0.9~0.9)
         }
 
         private static readonly float rowHeight = 22f;

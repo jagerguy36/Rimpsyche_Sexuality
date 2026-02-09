@@ -58,18 +58,17 @@ namespace Maux36.RimPsyche.Sexuality
             {
                 if (pawn.gender == futureGender)
                     return;
+                pawn.gender = futureGender;
                 var compPsyche = pawn.compPsyche();
                 if (compPsyche == null)
                     return;
                 if (!PawnGenerator.IsBeingGenerated(pawn))
                 {
-                    pawn.gender = futureGender;
                     compPsyche.Sexuality.Notify_Sexchange();
                 }
                 else
                 {
                     //Pawn gender was reversed during generation. Reverse Direction of the Sexual Orientation
-                    pawn.gender = futureGender;
                     compPsyche.Sexuality.SetmKinsey(1f - compPsyche.Sexuality.MKinsey);
                 }
             }

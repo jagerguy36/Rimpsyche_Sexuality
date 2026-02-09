@@ -75,6 +75,7 @@
     <Compile Include="HarmonyPatches\Breakup\InteractionWorker_Breakup_RandomSelectionWeight_Patch.cs" />
     <Compile Include="HarmonyPatches\CompAbilityEffect_WordOfLove_ValidateTarget_Patch.cs" />
     <Compile Include="HarmonyPatches\Marriage\InteractionWorker_MarriageProposal_Patch.cs" />
+    <Compile Include="HarmonyPatches\MiscMods\VEF_Compat.cs" />
     <Compile Include="HarmonyPatches\Pawn_Discard_Patch.cs" />
     <Compile Include="HarmonyPatches\Relationship\JobDriver_Lovin_MakeNewToils_Patch.cs" />
     <Compile Include="HarmonyPatches\Relation\Pawn_RelationsTracker_GainedOrLostDirectRelation_Patch.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Database\SexualityFormula.cs" />
     <Compile Include="SexualityDebugActions.cs" />
+    <Compile Include="Sexuality_Utility.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

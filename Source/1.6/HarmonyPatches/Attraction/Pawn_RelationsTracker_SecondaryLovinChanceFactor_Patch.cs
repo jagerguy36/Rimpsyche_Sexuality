@@ -83,8 +83,9 @@ namespace Maux36.RimPsyche.Sexuality
             if (pawnPsyche?.Enabled == true)
             {
                 float attraction = pawnPsyche.Sexuality.GetAdjustedAttraction(otherPawn);
-                if (!RimpsycheSexualitySettings.usePreferenceSystem) return attraction;
-                return SexualityHelper.EvaluateSexPreference(pawn, otherPawn, attraction);
+                if (RimpsycheSexualitySettings.usePreferenceSystem)
+                    attraction *= Sexuality_Utility.EvaluateSexPreference(pawn, otherPawn, attraction);
+                return attraction;
             }
             //Vanilla logic if psyche not available for some reason.
             if (pawn.story != null && pawn.story.traits != null)

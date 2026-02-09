@@ -384,35 +384,31 @@ namespace Maux36.RimPsyche.Sexuality
             {
                 //0:hair pref | 1: hair dislike | 2: beard pref | 3: beard dislike
                 if (StyleBuckets[hairstylePreference[0].intKey].Contains(target.story.hairDef.shortHash))
-                    value += 0.125f;
+                    value += 0.25f;
                 else if (StyleBuckets[hairstylePreference[1].intKey].Contains(target.story.hairDef.shortHash))
-                    value -= 0.125f;
+                    value -= 0.25f;
 
                 if (StyleBuckets[hairstylePreference[2].intKey].Contains(target.style.beardDef.shortHash))
-                    value += 0.125f;
+                    value += 0.25f;
                 else if (StyleBuckets[hairstylePreference[3].intKey].Contains(target.style.beardDef.shortHash))
-                    value -= 0.125f;
+                    value -= 0.25f;
             }
             else if (target.gender == Gender.Female)
             {
                 //4:hair pref | 5: hair dislike | 6: beard pref | 7: beard dislike
                 if (StyleBuckets[hairstylePreference[4].intKey].Contains(target.story.hairDef.shortHash))
-                    value += 0.125f;
+                    value += 0.25f;
                 else if (StyleBuckets[hairstylePreference[5].intKey].Contains(target.story.hairDef.shortHash))
-                    value -= 0.125f;
+                    value -= 0.25f;
 
                 if (StyleBuckets[hairstylePreference[6].intKey].Contains(target.style.beardDef.shortHash))
-                    value += 0.125f;
+                    value += 0.25f;
                 else if (StyleBuckets[hairstylePreference[7].intKey].Contains(target.style.beardDef.shortHash))
-                    value -= 0.125f;
+                    value -= 0.25f;
             }
-            if (value < 0f)
-                value /= 3f;
-            //value -0.25/3 ~ 0.25
-            //This is due to prettiness factor also becoming less punishing for ugly pawns.
-            //beauty(-1) : * (1 - 1/3) | beuaty(+1): * (1 + 1)
-            float sway = observerPsyche.Evaluate(SexualityFormula.PhysicalPrefAuthSway);// 0.4 ~ 1.6
-            return result * (1f + value * sway); //HighAuth(0.966~1.1) HighSuperficial(0.8777~1.4)
+            //value -0.5 ~ 0.5
+            float sway = observerPsyche.Evaluate(SexualityFormula.PhysicalPrefAuthSway);// 0.2 ~ 1.8
+            return value * sway; //HighAuth(-0.1~0.1) HighSuperficial(~0.9~0.9)
         }
 
         private static readonly float rowHeight = 22f;

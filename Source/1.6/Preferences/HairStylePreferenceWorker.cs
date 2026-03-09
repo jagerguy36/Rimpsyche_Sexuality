@@ -373,12 +373,12 @@ namespace Maux36.RimPsyche.Sexuality
             if (RimpsycheSexualitySettings.usePreferenceSystem != true) return result;
             if (isRomantic) return result;
             var observerPsyche = observer.compPsyche();
-            if (observerPsyche?.Enabled != true) return result;
+            if (observerPsyche?.Enabled != true) return 0f;
             var targetPsyche = target.compPsyche();
-            if (targetPsyche?.Enabled != true) return result;
+            if (targetPsyche?.Enabled != true) return 0f;
             var hairstylePreference = observerPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_HairStylePreference);
             if (hairstylePreference == null)
-                return result;
+                return 0f;
             float value = 0f;
             if (target.gender == Gender.Male)
             {

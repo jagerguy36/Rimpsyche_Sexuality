@@ -21,7 +21,7 @@ namespace Maux36.RimPsyche.Sexuality
                     harmony.PatchCategory("RPS_Preference");
             }
             //Don't patch Jobdriver_lovin if RJW is loaded.
-            if (!ModsConfig.IsActive("rim.job.world"))
+            if (!Rimpsyche_Utility.IsModActive("rim.job.world"))
             {
                 harmony.PatchCategory("RPS_No_RJW");
             }

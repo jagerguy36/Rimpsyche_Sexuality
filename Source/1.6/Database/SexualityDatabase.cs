@@ -12,7 +12,7 @@ namespace Maux36.RimPsyche.Sexuality
 
         public static void Initialize()
         {
-            if (ModsConfig.IsActive("vexedtrees980.rimrobots"))
+            if (Rimpsyche_Utility.IsModActive("vexedtrees980.rimrobots"))
             {
                 var MechanentDef = DefDatabase<ThingDef>.GetNamed("Mechanent", false);
                 if (MechanentDef != null)

@@ -56,8 +56,11 @@ namespace Maux36.RimPsyche.Sexuality
         private static readonly float posRangeInv = 3f; //0.3333
         public override float Evaluate(Pawn observer, Pawn target, float result, bool isRomantic)
         {
+            //safety
             if (RimpsycheSexualitySettings.usePreferenceSystem != true) return result;
-            if (isRomantic != true) return result;
+            //Sexual. Base is 0f
+            if (isRomantic != true) return 0f;
+            //Romantic. Base is result
             var observerPsyche = observer.compPsyche();
             if (observerPsyche?.Enabled != true) return result;
             var targetPsyche = target.compPsyche();

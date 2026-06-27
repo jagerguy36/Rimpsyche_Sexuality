@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <!-- Common -->
+  <RPS_NoPref>No preference</RPS_NoPref>
+
   <!-- HairStyle -->
   <RPS_Hairstyle>Hair Style</RPS_Hairstyle>
   <RPS_HairPreferenceReport>Preferred hair style:</RPS_HairPreferenceReport>
@@ -18,7 +21,6 @@
   <RPS_BeardShort>Short beard</RPS_BeardShort>
   <RPS_BeardMid>Mid beard</RPS_BeardMid>
   <RPS_BeardLong>Long beard</RPS_BeardLong>
-  <RPS_NoPref>No preference</RPS_NoPref>
   <RPS_MaleHairP>♂ liked hair</RPS_MaleHairP>
   <RPS_MaleHairD>♂ disliked hair</RPS_MaleHairD>
   <RPS_MaleBeardP>♂ liked beard</RPS_MaleBeardP>
@@ -28,5 +30,16 @@
   <RPS_FemaleBeardP>♀ liked beard</RPS_FemaleBeardP>
   <RPS_FemaleBeardD>♀ disliked beard</RPS_FemaleBeardD>
 
+  <!-- Bodytype -->
+  <RPS_BodyType>Body Type</RPS_BodyType>
+  <RPS_BodyPreferenceReport>Preferred body type:</RPS_BodyPreferenceReport>
+  <RPS_MBodyP>♂ liked body</RPS_MBodyP>
+  <RPS_MBodyD>♂ disliked body</RPS_MBodyD>
+  <RPS_FBodyP>♀ liked body</RPS_FBodyP>
+  <RPS_FBodyD>♀ disliked body</RPS_FBodyD>
+  <RPS_Thin>Thin</RPS_Thin>
+  <RPS_Standard>Standard</RPS_Standard>
+  <RPS_Hulk>Hulk</RPS_Hulk>
+  <RPS_Fat>Fat</RPS_Fat>
 
 </LanguageData>

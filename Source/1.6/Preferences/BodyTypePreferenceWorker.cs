@@ -156,8 +156,8 @@ namespace Maux36.RimPsyche.Sexuality
 
         private static Dictionary<int, string> LabelDict = new Dictionary<int, string>
         {
-            { 0, "RPS_None".Translate() },
-            { 1, "RPS_Tin".Translate() },
+            { 0, "RPS_NoPref".Translate() },
+            { 1, "RPS_Thin".Translate() },
             { 2, "RPS_Standard".Translate() },
             { 3, "RPS_Hulk".Translate() },
             { 4, "RPS_Fat".Translate() },
@@ -189,11 +189,11 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 if (hasBodyP)
                 {
-                    bodyDrawerCache.Add(($"    <color=#ff0000>♥</color> {LabelDict[bodyPreference[0].intKey]}", "RPS_BodyList".Translate() + "\n" + string.Empty));
+                    bodyDrawerCache.Add(($"    <color=#ff0000>♥</color> {LabelDict[bodyPreference[0].intKey]}", string.Empty));
                 }
                 if (hasBodyD)
                 {
-                    bodyDrawerCache.Add(($"    <color=#555555>♥</color> {LabelDict[bodyPreference[1].intKey]}", "RPS_BodyList".Translate() + "\n" + string.Empty));
+                    bodyDrawerCache.Add(($"    <color=#555555>♥</color> {LabelDict[bodyPreference[1].intKey]}", string.Empty));
                 }
             }
 
@@ -209,11 +209,11 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 if (hasBodyP)
                 {
-                    bodyDrawerCache.Add(($"    <color=#ff0000>♥</color> {LabelDict[bodyPreference[2].intKey]}", "RPS_BodyList".Translate() + "\n" + string.Empty));
+                    bodyDrawerCache.Add(($"    <color=#ff0000>♥</color> {LabelDict[bodyPreference[2].intKey]}", string.Empty));
                 }
                 if (hasBodyD)
                 {
-                    bodyDrawerCache.Add(($"    <color=#555555>♥</color> {LabelDict[bodyPreference[3].intKey]}", "RPS_BodyList".Translate() + "\n" + string.Empty));
+                    bodyDrawerCache.Add(($"    <color=#555555>♥</color> {LabelDict[bodyPreference[3].intKey]}", string.Empty));
                 }
             }
 
@@ -237,10 +237,16 @@ namespace Maux36.RimPsyche.Sexuality
             }
 
             var cachedData = GetBodyDrawerCache(pawn);
-            if (cachedData == null || cachedData.Count == 0)
+            if (cachedData == null)
             {
                 Rect NoRect = new Rect(titleRect.x, y, rectWidth, rowHeight);
                 Widgets.Label(NoRect, "  " + "RPS_NoPreference".Translate());
+                return;
+            }
+            if (cachedData.Count == 0)
+            {
+                Rect NoRect = new Rect(titleRect.x, y, rectWidth, rowHeight);
+                Widgets.Label(NoRect, "  " + "RPS_NoPref".Translate());
                 return;
             }
 

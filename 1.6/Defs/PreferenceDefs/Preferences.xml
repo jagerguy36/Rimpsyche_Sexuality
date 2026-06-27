@@ -58,7 +58,7 @@
       </li>
       <li>
         <targetTag>Bald</targetTag>
-        <weight>1</weight>
+        <weight>0.5</weight>
       </li>
       <li>
         <targetTag>HairAny</targetTag>
@@ -226,7 +226,7 @@
       </li>
       <li>
         <bodytype>Thin</bodytype>
-        <weight>0.1</weight>
+        <weight>0.05</weight>
       </li>
       <li>
         <bodytype>Standard</bodytype>
@@ -292,7 +292,7 @@
       </li>
       <li>
         <bodytype>Thin</bodytype>
-        <weight>0.1</weight>
+        <weight>0.05</weight>
       </li>
       <li>
         <bodytype>Standard</bodytype>

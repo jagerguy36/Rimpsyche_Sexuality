@@ -517,10 +517,16 @@ namespace Maux36.RimPsyche.Sexuality
                 return;
             }
             var cachedData = GetDrawerCache(pawn);
-            if (cachedData == null || cachedData.Count == 0)
+            if (cachedData == null)
             {
                 Rect NoRect = new Rect(titleRect.x, y, rectWidth, rowHeight);
                 Widgets.Label(NoRect, "  " + "RPS_NoPreference".Translate());
+                return;
+            }
+            if (cachedData.Count == 0)
+            {
+                Rect NoRect = new Rect(titleRect.x, y, rectWidth, rowHeight);
+                Widgets.Label(NoRect, "  " + "RPS_NoPref".Translate());
                 return;
             }
             for (int i = 0; i < cachedData.Count; i++)

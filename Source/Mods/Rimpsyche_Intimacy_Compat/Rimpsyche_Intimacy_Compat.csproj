@@ -73,5 +73,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\1.6\Rimpsyche_Sexuality.csproj">
+      <Project>{edc289fa-7926-4de1-9a41-54b168e50028}</Project>
+      <Name>Rimpsyche_Sexuality</Name>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

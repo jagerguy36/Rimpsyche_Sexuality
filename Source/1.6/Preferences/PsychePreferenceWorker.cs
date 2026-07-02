@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using UnityEngine;
 using Verse;
 
@@ -56,8 +55,11 @@ namespace Maux36.RimPsyche.Sexuality
         private static readonly float posRangeInv = 3f; //0.3333
         public override float Evaluate(Pawn observer, Pawn target, float result, bool isRomantic)
         {
+            //safety
             if (RimpsycheSexualitySettings.usePreferenceSystem != true) return result;
-            if (isRomantic != true) return result;
+            //Sexual. Base is 0f
+            if (isRomantic != true) return 0f;
+            //Romantic. Base is result
             var observerPsyche = observer.compPsyche();
             if (observerPsyche?.Enabled != true) return result;
             var targetPsyche = target.compPsyche();
@@ -144,10 +146,16 @@ namespace Maux36.RimPsyche.Sexuality
                 return;
             }
             var cachedData = GetDrawerCache(pawn);
-            if (cachedData == null || cachedData.Count == 0)
+            if (cachedData == null)
             {
                 Rect NoRect = new Rect(titleRect.x, y, rectWidth, personalityRowHeight);
                 Widgets.Label(NoRect, "  " + "RPS_NoPreference".Translate());
+                return;
+            }
+            if (cachedData.Count == 0)
+            {
+                Rect NoRect = new Rect(titleRect.x, y, rectWidth, personalityRowHeight);
+                Widgets.Label(NoRect, "  " + "RPS_NoPref".Translate());
                 return;
             }
             for (int i = 0; i < cachedData.Count; i++)

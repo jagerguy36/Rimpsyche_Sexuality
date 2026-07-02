@@ -58,7 +58,7 @@
       </li>
       <li>
         <targetTag>Bald</targetTag>
-        <weight>1</weight>
+        <weight>0.5</weight>
       </li>
       <li>
         <targetTag>HairAny</targetTag>
@@ -210,5 +210,103 @@
       </li>
     </femaleBeardDislikeBias>
   </Maux36.RimPsyche.Sexuality.HairPreferenceDef>
+
+
+  <Maux36.RimPsyche.Sexuality.BodyTypePreferenceDef>
+    <defName>Rimpsyche_BodyTypePreference</defName>
+    <label>bodytype perference</label>
+    <description>Preference about bodytype.</description>
+    <category>Physical</category>
+    <priority>100</priority>
+    <workerClass>Maux36.RimPsyche.Sexuality.BodyTypePreferenceWorker</workerClass>
+    <maleBodyPrefBias>
+      <li>
+        <bodytype>None</bodytype>
+        <weight>0.1</weight>
+      </li>
+      <li>
+        <bodytype>Thin</bodytype>
+        <weight>0.05</weight>
+      </li>
+      <li>
+        <bodytype>Standard</bodytype>
+        <weight>1</weight>
+      </li>
+      <li>
+        <bodytype>Hulk</bodytype>
+        <weight>0.3</weight>
+      </li>
+      <li>
+        <bodytype>Fat</bodytype>
+        <weight>0.05</weight>
+      </li>
+    </maleBodyPrefBias>
+    <maleBodyDislikeBias>
+      <li>
+        <bodytype>None</bodytype>
+        <weight>1</weight>
+      </li>
+      <li>
+        <bodytype>Thin</bodytype>
+        <weight>0.3</weight>
+      </li>
+      <li>
+        <bodytype>Standard</bodytype>
+        <weight>0.05</weight>
+      </li>
+      <li>
+        <bodytype>Hulk</bodytype>
+        <weight>0.05</weight>
+      </li>
+      <li>
+        <bodytype>Fat</bodytype>
+        <weight>0.3</weight>
+      </li>
+    </maleBodyDislikeBias>
+    <femaleBodyPrefBias>
+      <li>
+        <bodytype>None</bodytype>
+        <weight>0.1</weight>
+      </li>
+      <li>
+        <bodytype>Thin</bodytype>
+        <weight>0.3</weight>
+      </li>
+      <li>
+        <bodytype>Standard</bodytype>
+        <weight>1</weight>
+      </li>
+      <li>
+        <bodytype>Hulk</bodytype>
+        <weight>0.05</weight>
+      </li>
+      <li>
+        <bodytype>Fat</bodytype>
+        <weight>0.05</weight>
+      </li>
+    </femaleBodyPrefBias>
+    <femaleBodyDislikeBias>
+      <li>
+        <bodytype>None</bodytype>
+        <weight>1</weight>
+      </li>
+      <li>
+        <bodytype>Thin</bodytype>
+        <weight>0.05</weight>
+      </li>
+      <li>
+        <bodytype>Standard</bodytype>
+        <weight>0.05</weight>
+      </li>
+      <li>
+        <bodytype>Hulk</bodytype>
+        <weight>0.3</weight>
+      </li>
+      <li>
+        <bodytype>Fat</bodytype>
+        <weight>0.3</weight>
+      </li>
+    </femaleBodyDislikeBias>
+  </Maux36.RimPsyche.Sexuality.BodyTypePreferenceDef>
 
 </Defs>

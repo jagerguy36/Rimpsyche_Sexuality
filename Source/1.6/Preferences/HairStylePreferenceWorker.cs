@@ -370,15 +370,18 @@ namespace Maux36.RimPsyche.Sexuality
         }
         public override float Evaluate(Pawn observer, Pawn target, float result, bool isRomantic)
         {
+            //safety
             if (RimpsycheSexualitySettings.usePreferenceSystem != true) return result;
+            //Romantic. Base is result
             if (isRomantic) return result;
+            //Sexual. Base is 0f
             var observerPsyche = observer.compPsyche();
-            if (observerPsyche?.Enabled != true) return result;
+            if (observerPsyche?.Enabled != true) return 0f;
             var targetPsyche = target.compPsyche();
-            if (targetPsyche?.Enabled != true) return result;
+            if (targetPsyche?.Enabled != true) return 0f;
             var hairstylePreference = observerPsyche.Sexuality.GetPreference(DefOfRimpsycheSexuality.Rimpsyche_HairStylePreference);
             if (hairstylePreference == null)
-                return result;
+                return 0f;
             float value = 0f;
             if (target.gender == Gender.Male)
             {
@@ -416,7 +419,7 @@ namespace Maux36.RimPsyche.Sexuality
         public override float GetViewerHeight(Pawn pawn)
         {
             var cachedData = GetDrawerCache(pawn);
-            if (cachedData == null)
+            if (cachedData == null || cachedData.Count == 0)
                 return rowHeight * 2f;
             float result = rowHeight * (cachedData.Count + 1f);
             return result;
@@ -514,10 +517,16 @@ namespace Maux36.RimPsyche.Sexuality
                 return;
             }
             var cachedData = GetDrawerCache(pawn);
-            if (cachedData == null || cachedData.Count == 0)
+            if (cachedData == null)
             {
                 Rect NoRect = new Rect(titleRect.x, y, rectWidth, rowHeight);
                 Widgets.Label(NoRect, "  " + "RPS_NoPreference".Translate());
+                return;
+            }
+            if (cachedData.Count == 0)
+            {
+                Rect NoRect = new Rect(titleRect.x, y, rectWidth, rowHeight);
+                Widgets.Label(NoRect, "  " + "RPS_NoPref".Translate());
                 return;
             }
             for (int i = 0; i < cachedData.Count; i++)

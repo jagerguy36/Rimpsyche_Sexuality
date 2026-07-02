@@ -7,12 +7,12 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat
     [HarmonyPatch(typeof(CommonChecks), nameof(CommonChecks.AreMutuallyAttracted))]
     public static class CommonChecks_AreMutuallyAttracted_Patch
     {
-        public static bool Prefix(ref bool __result, Pawn a, Pawn b)
+        public static bool Prefix(ref bool __result, Pawn asker, Pawn candidate)
         {
-            var aPsyche = a.compPsyche();
-            var bPsyche = b.compPsyche();
-            if (aPsyche?.Enabled != true || bPsyche?.Enabled != true) return true;
-            __result = aPsyche.Sexuality.GetAdjustedAttraction(b) > 0f && bPsyche.Sexuality.GetAdjustedAttraction(a) > 0f;
+            var askerPsyche = asker.compPsyche();
+            var candidatePsyche = candidate.compPsyche();
+            if (askerPsyche?.Enabled != true || candidatePsyche?.Enabled != true) return true;
+            __result = askerPsyche.Sexuality.GetAdjustedAttraction(candidate) > 0f && candidatePsyche.Sexuality.GetAdjustedAttraction(asker) > 0f;
             return false;
         }
     }

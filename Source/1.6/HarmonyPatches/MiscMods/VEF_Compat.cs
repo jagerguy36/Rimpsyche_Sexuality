@@ -15,7 +15,7 @@ namespace Maux36.RimPsyche.Sexuality
         {
             public static bool Prepare()
             {
-                if (ModsConfig.IsActive("OskarPotocki.VanillaFactionsExpanded.Core"))
+                if (Rimpsyche_Utility.IsModActive("OskarPotocki.VanillaFactionsExpanded.Core"))
                 {
                     return true;
                 }

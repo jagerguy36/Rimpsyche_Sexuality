@@ -11,7 +11,11 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_Intimacy_Compat
         {
             var compPsyche = initiator.compPsyche();
             if (compPsyche?.Enabled != true) return;
-            __result *= compPsyche.Sexuality.GetAdjustedAttraction(recipient);
+
+            float attraction = compPsyche.Sexuality.GetAdjustedAttraction(recipient);
+            if (RimpsycheSexualitySettings.usePreferenceSystem)
+                attraction *= Sexuality_Utility.EvaluateSexPreference(initiator, recipient, attraction);
+            __result *= attraction;
         }
     }
 }

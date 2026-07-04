@@ -124,17 +124,17 @@ namespace Maux36.RimPsyche.Sexuality
             {
                 //0:male pref | 1: male dislike
                 if (mBodyTypeDict[bodyPreference[0].intKey] == target.story.bodyType)
-                    value += 0.25f;
+                    value += 0.5f;
                 else if (mBodyTypeDict[bodyPreference[1].intKey] == target.story.bodyType)
-                    value -= 0.25f;
+                    value -= 0.5f;
             }
             else if (target.gender == Gender.Female)
             {
                 //2: female pref | 3: female dislike
                 if (fBodyTypeDict[bodyPreference[2].intKey] == target.story.bodyType)
-                    value += 0.25f;
+                    value += 0.5f;
                 if (fBodyTypeDict[bodyPreference[3].intKey] == target.story.bodyType)
-                    value -= 0.25f;
+                    value -= 0.5f;
             }
             //value -0.5 ~ 0.5
             float sway = observerPsyche.Evaluate(SexualityFormula.PhysicalPrefAuthSway);// 0.2 ~ 1.8

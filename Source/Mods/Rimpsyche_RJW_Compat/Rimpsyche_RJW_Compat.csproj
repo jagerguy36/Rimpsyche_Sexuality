@@ -44,6 +44,10 @@
       <HintPath>..\..\..\..\DEV_RimPsyche\1.6\Assemblies\RimPsyche.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Rimpsyche_Sexuality">
+      <HintPath>..\..\..\1.6\Assemblies\Rimpsyche_Sexuality.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="RJW">
       <HintPath>..\..\..\..\DEV_rjw\1.6\Assemblies\RJW.dll</HintPath>
       <Private>False</Private>
@@ -69,6 +73,7 @@
     <Compile Include="Orientation\PsycheEditPopup_PostClose_Patch.cs" />
     <Compile Include="Orientation\SexualityTracker_DirtyTraitCache_Patch.cs" />
     <Compile Include="Orientation\SexualityTracker_InjectData_Patch.cs" />
+    <Compile Include="PreferenceModule\P_HumanToBodyType_Patch.cs" />
     <Compile Include="PreferenceModule\R_Relationship_WhenNotInRelationship_Patch.cs" />
     <Compile Include="Preference\OrientationUtility_CheckPreference_Patch.cs" />
     <Compile Include="PreferenceModule\R_Homewrecking_WhenHomewrecking_Patch.cs" />

@@ -31,12 +31,83 @@ namespace Maux36.RimPsyche.Sexuality
     {
         protected override float Score(CompPsyche compPsyche)
         {
-            var loyalty = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Loyalty);
-            return loyalty;
+            float loyalty = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Loyalty);
+            float passion = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
+            float loveC = loyalty * (3 + passion) / 4f; // -1 ~ 1
+            float social = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Sociability); // -1 ~ 1
+            return (5f * loveC + social ) / 6f;
         }
         protected override void Evaluate(StringBuilder ctx, CompPsyche compPsyche, float score)
         {
             Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Loyalty);
+            Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Passion);
+            Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Sociability);
+        }
+    }
+    public class BoldRomantistDescriptorWorker : PsycheDescriptorWorker
+    {
+        protected override float Score(CompPsyche compPsyche)
+        {
+            float confidence = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
+            float passion = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
+            return (confidence + passion) * 0.5f;
+        }
+        protected override void Evaluate(StringBuilder ctx, CompPsyche compPsyche, float score)
+        {
+            Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Confidence);
+            Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Passion);
+        }
+    }
+    public class SexualOpennessDescriptorWorker : PsycheDescriptorWorker
+    {
+        protected override float Score(CompPsyche compPsyche)
+        {
+            float openness = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Openness);
+            float experimental = Mathf.Max(0f, compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Experimentation));
+            return (openness + 0.5f * experimental) / 1.5f;
+        }
+        protected override void Evaluate(StringBuilder ctx, CompPsyche compPsyche, float score)
+        {
+            Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Openness);
+            if(compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Experimentation) > 0f)
+                Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Experimentation);
+        }
+    }
+    public class CooperativeRomantistDescriptorWorker : PsycheDescriptorWorker
+    {
+        protected override float Score(CompPsyche compPsyche)
+        {
+            var cooperative = -Mathf.Min(compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Competitiveness), 0f); //0~1
+            var passion = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Passion); // -1~1
+            return Mathf.Max(0f, 0.8f * cooperative - 0.2f * passion);
+        }
+        protected override void Evaluate(StringBuilder ctx, CompPsyche compPsyche, float score)
+        {
+            if (compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Competitiveness) < 0f)
+                Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Competitiveness, PsycheDescDirection.Negative);
+            Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Passion, PsycheDescDirection.Negative);
+        }
+    }
+    public class ConsiderateRomantistDescriptorWorker : PsycheDescriptorWorker
+    {
+        protected override float Score(CompPsyche compPsyche)
+        {
+            var tracker = compPsyche.Personality;
+            var confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
+            var openness = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Openness);
+            var optimism = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Optimism);
+            var compassion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Compassion);
+            var selfInterest = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_SelfInterest);
+            var confidenceFactor = 0.1f * confidence; //-0.1~0.1
+            var hopefulnessFactor = 0.1f * Mathf.Max(0f, openness) * Mathf.Max(0f, optimism - 0.5f);//-0.15~0.05
+            var entitlementFactor = 0.1f * Mathf.Max(0f, -compassion) * Mathf.Max(0f, selfInterest);//-0.1~0.1
+            var orientationSensitivityOffset =  confidenceFactor + hopefulnessFactor + entitlementFactor - 0.25f;//-0.6~0
+            var score = (orientationSensitivityOffset + 0.6f) / 0.6f; //0 ~ 1
+            //TODO: Adjust score so that it 0 because neutral
+            return score;
+        }
+        protected override void Evaluate(StringBuilder ctx, CompPsyche compPsyche, float score)
+        {
         }
     }
 }

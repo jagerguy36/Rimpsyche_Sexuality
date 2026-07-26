@@ -43,7 +43,7 @@ negativeDescription: Shows up if negatively aligned
     <positiveDescription>More likely to initiate romantic interaction.</positiveDescription>
     <negativeDescription>Reluctant to initiate romantic interaction.</negativeDescription>
     <threshold>0.55</threshold>
-    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+    <workerClass>Maux36.RimPsyche.Sexuality.BoldRomantistDescriptorWorker</workerClass>
   </Maux36.RimPsyche.PsycheDescriptorDef>
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
@@ -51,14 +51,14 @@ negativeDescription: Shows up if negatively aligned
     <positiveDescription>Lower minimum sexual attraction threshold.</positiveDescription>
     <negativeDescription>Higher minimum sexual attraction threshold.</negativeDescription>
     <threshold>0.55</threshold>
-    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+    <workerClass>Maux36.RimPsyche.Sexuality.SexualOpennessDescriptorWorker</workerClass>
   </Maux36.RimPsyche.PsycheDescriptorDef>
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_CooperativeRomantist</defName>
     <positiveDescription>Reluctant to romance pawns who already have lovers.</positiveDescription>
     <threshold>0.55</threshold>
-    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+    <workerClass>Maux36.RimPsyche.Sexuality.CooperativeRomantistDescriptorWorker</workerClass>
   </Maux36.RimPsyche.PsycheDescriptorDef>
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
@@ -66,6 +66,6 @@ negativeDescription: Shows up if negatively aligned
     <positiveDescription>More mindful of others' orientations in romance.</positiveDescription>
     <negativeDescription>Less deterred by others' orientations in romance.</negativeDescription>
     <threshold>0.55</threshold>
-    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+    <workerClass>Maux36.RimPsyche.Sexuality.ConsiderateRomantistDescriptorWorker</workerClass>
   </Maux36.RimPsyche.PsycheDescriptorDef>
 </Defs>

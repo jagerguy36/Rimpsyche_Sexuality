@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+# Documentation
+## Labels
+Labels show on the Disposition UI.
+Descriptor shows up as positiveLabel if the score is positive, negativeLabel if negative.
+If score is zero, the label becomes empty.
+If there is no available label per the score, the Descriptor is not shown up on the Disposition UI.
+
+## Descriptions
+Descriptions show up as the tooltip for Descriptors and Personality Effect description.
+positiveDescription: Shows up if positively aligned 
+negativeDescription: Shows up if negatively aligned 
+-->
+
+<Defs>
+  <Maux36.RimPsyche.PsycheDescriptorDef>
+    <defName>RP_Desc_AuthSway</defName>
+    <positiveDescription>Less influenced by physical attraction.</positiveDescription>
+    <negativeDescription>More influenced by physical attraction.</negativeDescription>
+    <threshold>0.55</threshold>
+    <workerClass>Maux36.RimPsyche.Sexuality.AuthSwayDescriptorWorker</workerClass>
+  </Maux36.RimPsyche.PsycheDescriptorDef>
+
+  <Maux36.RimPsyche.PsycheDescriptorDef>
+    <defName>RP_Desc_LoyalPartner</defName>
+    <positiveDescription>Less likely to cheat or break up.</positiveDescription>
+    <negativeDescription>More likely to cheat or break up.</negativeDescription>
+    <threshold>0.55</threshold>
+    <workerClass>Maux36.RimPsyche.Sexuality.LoyalPartnerDescriptorWorker</workerClass>
+  </Maux36.RimPsyche.PsycheDescriptorDef>
+
+  <Maux36.RimPsyche.PsycheDescriptorDef>
+    <defName>RP_Desc_MarriageProne</defName>
+    <positiveDescription>More willing to get married.</positiveDescription>
+    <negativeDescription>Reluctant to get married.</negativeDescription>
+    <threshold>0.55</threshold>
+    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+  </Maux36.RimPsyche.PsycheDescriptorDef>
+
+  <Maux36.RimPsyche.PsycheDescriptorDef>
+    <defName>RP_Desc_BoldRomantist</defName>
+    <positiveDescription>More likely to initiate romantic interaction.</positiveDescription>
+    <negativeDescription>Reluctant to initiate romantic interaction.</negativeDescription>
+    <threshold>0.55</threshold>
+    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+  </Maux36.RimPsyche.PsycheDescriptorDef>
+
+  <Maux36.RimPsyche.PsycheDescriptorDef>
+    <defName>RP_Desc_SexualOpenness</defName>
+    <positiveDescription>Lower minimum sexual attraction threshold.</positiveDescription>
+    <negativeDescription>Higher minimum sexual attraction threshold.</negativeDescription>
+    <threshold>0.55</threshold>
+    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+  </Maux36.RimPsyche.PsycheDescriptorDef>
+
+  <Maux36.RimPsyche.PsycheDescriptorDef>
+    <defName>RP_Desc_CooperativeRomantist</defName>
+    <positiveDescription>Reluctant to romance pawns who already have lovers.</positiveDescription>
+    <threshold>0.55</threshold>
+    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+  </Maux36.RimPsyche.PsycheDescriptorDef>
+
+  <Maux36.RimPsyche.PsycheDescriptorDef>
+    <defName>RP_Desc_ConsiderateRomantist</defName>
+    <positiveDescription>More mindful of others' orientations in romance.</positiveDescription>
+    <negativeDescription>Less deterred by others' orientations in romance.</negativeDescription>
+    <threshold>0.55</threshold>
+    <workerClass>Maux36.RimPsyche.Sexuality.MarriageProneDescriptorWorker</workerClass>
+  </Maux36.RimPsyche.PsycheDescriptorDef>
+</Defs>

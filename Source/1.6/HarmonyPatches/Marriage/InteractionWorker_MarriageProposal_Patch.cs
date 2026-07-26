@@ -22,14 +22,14 @@ namespace Maux36.RimPsyche.Sexuality
             (tracker) =>
             {
                 float loyalty = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Loyalty);
-                float confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
                 float passion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
+                float loveC = loyalty * (3 + passion) / 4f; // -1 ~ 1
+                float confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
                 float social = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Sociability);
-                float lovedFactor = 1f + loyalty * 0.2f; //0.8~1.2
+                float lovedFactor = 1f + loveC * 0.25f; //0.75~1.25
                 float confidenceFactor = 1f + confidence * 0.15f; //0.85~1.15
-                float passionFactor = 1f + passion * 0.05f; //0.95~1.05
                 float socialFactor = 1f + social * 0.05f; //0.95~1.05
-                return lovedFactor * passionFactor * socialFactor * confidenceFactor; //0.6137 ~ 1.52145
+                return lovedFactor * confidenceFactor * socialFactor; //0.605625 ~ 1.509375
             },
             RimpsycheFormulaManager.FormulaIdDict
         );
@@ -77,10 +77,11 @@ namespace Maux36.RimPsyche.Sexuality
                 float baseValue = 0.9f;
                 float loyalty = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Loyalty);
                 float passion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
+                float loveC = loyalty * (3 +  passion) / 4f; // -1 ~ 1
                 float social = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Sociability);
-                float lovedFactor = 1f + loyalty * 0.2f; //0.8~1.2
+                float lovedFactor = 1f + loveC * 0.25f; //0.75~1.25
                 float socialFactor = 1f + social * 0.05f; //0.95~1.05
-                return baseValue * lovedFactor * socialFactor; //0.9 * (0.76~1.26)
+                return baseValue * lovedFactor * socialFactor; //0.9 * (0.7125~1.3125)
             },
             RimpsycheFormulaManager.FormulaIdDict
         );

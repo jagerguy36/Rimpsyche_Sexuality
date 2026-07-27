@@ -98,16 +98,35 @@ namespace Maux36.RimPsyche.Sexuality
             var optimism = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Optimism);
             var compassion = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Compassion);
             var selfInterest = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_SelfInterest);
-            var confidenceFactor = 0.1f * confidence; //-0.1~0.1
-            var hopefulnessFactor = 0.1f * Mathf.Max(0f, openness) * Mathf.Max(0f, optimism - 0.5f);//-0.15~0.05
-            var entitlementFactor = 0.1f * Mathf.Max(0f, -compassion) * Mathf.Max(0f, selfInterest);//-0.1~0.1
-            var orientationSensitivityOffset =  confidenceFactor + hopefulnessFactor + entitlementFactor - 0.25f;//-0.6~0
-            var score = (orientationSensitivityOffset + 0.6f) / 0.6f; //0 ~ 1
-            //TODO: Adjust score so that it 0 because neutral
-            return score;
+            var confidenceFactor = 0.15f * confidence; //-0.15~0.15
+            //Optimism > 0.5
+            var hopefulnessFactor = 0.1f * Mathf.Max(0f, openness) * Mathf.Max(0f, optimism - 0.5f);//0~0.05
+            //Optimism < -0.5
+            var pessimisticFactor = 0.05f * (1f + Mathf.Max(0f, -openness)) * Mathf.Min(0f, optimism + 0.5);//0.05 * (1~2) * (-0.5~0): -0.05~0
+            var entitlementFactor = 0.1f * Mathf.Max(0f, -compassion) * Mathf.Max(0f, selfInterest);//0~0.1
+            //-0.2~0.3
+            var collected = confidenceFactor + hopefulnessFactor + pessimisticFactor + entitlementFactor;
+            return collected / -0.3f;
         }
         protected override void Evaluate(StringBuilder ctx, CompPsyche compPsyche, float score)
         {
+            Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Confidence, PsycheDescDirection.Negative);
+            if (compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Optimism) > 0.5f && compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Openness) > 0f)
+            {
+                Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Openness, PsycheDescDirection.Negative);
+                Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Optimism, PsycheDescDirection.Negative);
+            }
+            if(compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Optimism) < -0.5f)
+            {
+                if (compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Openness) < 0f)
+                    Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Openness, PsycheDescDirection.Negative);
+                Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Optimism, PsycheDescDirection.Negative);
+            }
+            if (compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Compassion) < 0f && compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_SelfInterest) > 0f)
+            {
+                Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_Compassion, PsycheDescDirection.Negative);
+                Blame(ctx, compPsyche, PersonalityDefOf.Rimpsyche_SelfInterest);
+            }
         }
     }
 }

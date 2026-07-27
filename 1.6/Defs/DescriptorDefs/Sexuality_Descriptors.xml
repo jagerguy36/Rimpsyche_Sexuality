@@ -16,6 +16,7 @@ negativeDescription: Shows up if negatively aligned
 <Defs>
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_AuthSway</defName>
+    <type>Romance</type>
     <positiveDescription>Less influenced by physical attraction.</positiveDescription>
     <negativeDescription>More influenced by physical attraction.</negativeDescription>
     <threshold>0.55</threshold>
@@ -32,6 +33,7 @@ negativeDescription: Shows up if negatively aligned
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_MarriageProne</defName>
+    <type>Romance</type>
     <positiveDescription>More willing to get married.</positiveDescription>
     <negativeDescription>Reluctant to get married.</negativeDescription>
     <threshold>0.55</threshold>
@@ -40,14 +42,16 @@ negativeDescription: Shows up if negatively aligned
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_BoldRomantist</defName>
+    <type>Romance</type>
     <positiveDescription>More likely to initiate romantic interaction.</positiveDescription>
-    <negativeDescription>Reluctant to initiate romantic interaction.</negativeDescription>
+    <negativeDescription>Less likely to initiate romantic interaction.</negativeDescription>
     <threshold>0.55</threshold>
     <workerClass>Maux36.RimPsyche.Sexuality.BoldRomantistDescriptorWorker</workerClass>
   </Maux36.RimPsyche.PsycheDescriptorDef>
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_SexualOpenness</defName>
+    <type>Romance</type>
     <positiveDescription>Lower minimum sexual attraction threshold.</positiveDescription>
     <negativeDescription>Higher minimum sexual attraction threshold.</negativeDescription>
     <threshold>0.55</threshold>
@@ -56,6 +60,7 @@ negativeDescription: Shows up if negatively aligned
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_CooperativeRomantist</defName>
+    <type>Romance</type>
     <positiveDescription>Reluctant to romance pawns who already have lovers.</positiveDescription>
     <threshold>0.55</threshold>
     <workerClass>Maux36.RimPsyche.Sexuality.CooperativeRomantistDescriptorWorker</workerClass>
@@ -63,6 +68,7 @@ negativeDescription: Shows up if negatively aligned
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_ConsiderateRomantist</defName>
+    <type>Romance</type>
     <positiveDescription>More mindful of others' orientations in romance.</positiveDescription>
     <negativeDescription>Less deterred by others' orientations in romance.</negativeDescription>
     <threshold>0.55</threshold>

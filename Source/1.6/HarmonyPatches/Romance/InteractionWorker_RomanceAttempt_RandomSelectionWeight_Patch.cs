@@ -367,7 +367,7 @@ namespace Maux36.RimPsyche.Sexuality
                 //Optimism >= 0.5
                 var hopefulnessFactor = 0.1f * Mathf.Max(0f, openness) * Mathf.Max(0f, optimism - 0.5f);//0~0.05
                 //Optimism < -0.5
-                var pessimisticFactor = 0.05f * (1f + Mathf.Max(0f, -openness)) * Mathf.Min(0f, optimism + 0.5);//0.05 * (1~2) * (-0.5~0): -0.05~0
+                var pessimisticFactor = 0.05f * (1f + Mathf.Max(0f, -openness)) * Mathf.Min(0f, optimism + 0.5f);//0.05 * (1~2) * (-0.5~0): -0.05~0
                 var entitlementFactor = 0.1f * Mathf.Max(0f, -compassion) * Mathf.Max(0f, selfInterest);//0~0.1
                 //-0.2~0.3
                 return confidenceFactor + hopefulnessFactor + pessimisticFactor + entitlementFactor - 0.15f;//-0.35 [-0.15] 0.15

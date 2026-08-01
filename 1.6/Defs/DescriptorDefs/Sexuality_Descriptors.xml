@@ -52,8 +52,8 @@ negativeDescription: Shows up if negatively aligned
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_SexualOpenness</defName>
     <type>Romance</type>
-    <positiveDescription>Lower minimum sexual attraction threshold.</positiveDescription>
-    <negativeDescription>Higher minimum sexual attraction threshold.</negativeDescription>
+    <positiveDescription>More flexible about sexual attraction.</positiveDescription>
+    <negativeDescription>More rigid about sexual attraction.</negativeDescription>
     <threshold>0.55</threshold>
     <workerClass>Maux36.RimPsyche.Sexuality.SexualOpennessDescriptorWorker</workerClass>
   </Maux36.RimPsyche.PsycheDescriptorDef>

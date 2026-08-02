@@ -7,6 +7,8 @@ namespace Maux36.RimPsyche.Sexuality
     {
         protected override float Score(CompPsyche compPsyche)
         {
+            if (!compPsyche.Sexuality.SexualityExpressed())
+                return 0f;
             var authenticity = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
             return authenticity;
         }
@@ -19,6 +21,8 @@ namespace Maux36.RimPsyche.Sexuality
     {
         protected override float Score(CompPsyche compPsyche)
         {
+            if (!compPsyche.Sexuality.SexualityExpressed())
+                return 0f;
             var loyalty = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Loyalty);
             return loyalty;
         }
@@ -31,6 +35,8 @@ namespace Maux36.RimPsyche.Sexuality
     {
         protected override float Score(CompPsyche compPsyche)
         {
+            if (!compPsyche.Sexuality.SexualityExpressed())
+                return 0f;
             float loyalty = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Loyalty);
             float passion = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
             float loveC = loyalty * (3 + passion) / 4f; // -1 ~ 1
@@ -48,6 +54,8 @@ namespace Maux36.RimPsyche.Sexuality
     {
         protected override float Score(CompPsyche compPsyche)
         {
+            if (!compPsyche.Sexuality.SexualityExpressed())
+                return 0f;
             float confidence = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
             float passion = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Passion);
             return (confidence + passion) * 0.5f;
@@ -62,6 +70,12 @@ namespace Maux36.RimPsyche.Sexuality
     {
         protected override float Score(CompPsyche compPsyche)
         {
+            if (!compPsyche.Sexuality.SexualityExpressed())
+                return 0f;
+            var kinseyScale = compPsyche.Sexuality.MKinsey;
+            //Strict Gender preference is not affected.
+            if (kinseyScale == 1f || kinseyScale == 0f)
+                return 0f;
             float openness = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Openness);
             float experimental = Mathf.Max(0f, compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Experimentation));
             return (openness + 0.5f * experimental) / 1.5f;
@@ -77,6 +91,8 @@ namespace Maux36.RimPsyche.Sexuality
     {
         protected override float Score(CompPsyche compPsyche)
         {
+            if (!compPsyche.Sexuality.SexualityExpressed())
+                return 0f;
             var cooperative = -Mathf.Min(compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Competitiveness), 0f); //0~1
             var passion = compPsyche.Personality.GetPersonality(PersonalityDefOf.Rimpsyche_Passion); // -1~1
             return Mathf.Max(0f, 0.8f * cooperative - 0.2f * passion);
@@ -92,6 +108,8 @@ namespace Maux36.RimPsyche.Sexuality
     {
         protected override float Score(CompPsyche compPsyche)
         {
+            if (!compPsyche.Sexuality.SexualityExpressed())
+                return 0f;
             var tracker = compPsyche.Personality;
             var confidence = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Confidence);
             var openness = tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Openness);

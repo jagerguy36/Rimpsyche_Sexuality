@@ -8,5 +8,10 @@ namespace Maux36.RimPsyche.Sexuality
         public static PreferenceDef Rimpsyche_PsychePreference;
         public static PreferenceDef Rimpsyche_HairStylePreference;
         public static PreferenceDef Rimpsyche_BodyTypePreference;
+
+        static DefOfRimpsycheSexuality()
+        {
+            DefOfHelper.EnsureInitializedInCtor(typeof(DefOfRimpsycheSexuality));
+        }
     }
 }

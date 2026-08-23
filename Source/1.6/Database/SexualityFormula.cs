@@ -23,5 +23,15 @@ namespace Maux36.RimPsyche.Sexuality
             },
             RimpsycheFormulaManager.FormulaIdDict
         );
+        //Beauty factor
+        public static RimpsycheFormula AuthenticBeautyMultiplier = new(
+            "AuthenticBeautyMultiplier",
+            (tracker) =>
+            {
+                float authenticityFactor = 1f - 0.5f * tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
+                return authenticityFactor;
+            },
+            RimpsycheFormulaManager.FormulaIdDict
+        );
     }
 }

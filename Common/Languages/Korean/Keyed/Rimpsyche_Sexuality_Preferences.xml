@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
+  <!-- Common -->
+  <RPS_NoPref>선호 없음</RPS_NoPref>
+
   <!-- HairStyle -->
   <RPS_Hairstyle>헤어 스타일</RPS_Hairstyle>
   <RPS_HairPreferenceReport>선호하는 스타일:</RPS_HairPreferenceReport>
@@ -18,7 +21,6 @@
   <RPS_BeardShort>짧은 수염</RPS_BeardShort>
   <RPS_BeardMid>중간 수염</RPS_BeardMid>
   <RPS_BeardLong>긴 수염</RPS_BeardLong>
-  <RPS_NoPref>선호 없음</RPS_NoPref>
   <RPS_MaleHairP>♂ 선호하는 머리</RPS_MaleHairP>
   <RPS_MaleHairD>♂ 싫어하는 머리</RPS_MaleHairD>
   <RPS_MaleBeardP>♂ 선호하는 수염</RPS_MaleBeardP>
@@ -28,5 +30,16 @@
   <RPS_FemaleBeardP>♀ 선호하는 수염</RPS_FemaleBeardP>
   <RPS_FemaleBeardD>♀ 싫어하는 수염</RPS_FemaleBeardD>
 
+  <!-- Bodytype -->
+  <RPS_BodyType>체형</RPS_BodyType>
+  <RPS_BodyPreferenceReport>선호 체형:</RPS_BodyPreferenceReport>
+  <RPS_MBodyP>♂ 선호하는 체형</RPS_MBodyP>
+  <RPS_MBodyD>♂ 싫어하는 체형</RPS_MBodyD>
+  <RPS_FBodyP>♀ 선호하는 체형</RPS_FBodyP>
+  <RPS_FBodyD>♀ 싫어하는 체형</RPS_FBodyD>
+  <RPS_Thin>마른 체형</RPS_Thin>
+  <RPS_Standard>표준 체형</RPS_Standard>
+  <RPS_Hulk>거대한 체형</RPS_Hulk>
+  <RPS_Fat>뚱뚱한 체형</RPS_Fat>
 
 </LanguageData>

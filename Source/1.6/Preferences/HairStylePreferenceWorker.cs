@@ -447,22 +447,22 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 if (hasHairP)
                 {
-                    string hairString = string.Join(",\n", StyleLabelBuckets[hairstylePref[0].intKey].Select(s => "  " + s));
+                    string hairString = string.Join(", ", StyleLabelBuckets[hairstylePref[0].intKey]);
                     drawerCache.Add(($"    <color=#ff0000>♥</color> {LabelDict[hairstylePref[0].intKey]}", "RPS_HairList".Translate() + "\n" + hairString));
                 }
                 if (hasBeardP)
                 {
-                    string beardString = string.Join(",\n", StyleLabelBuckets[hairstylePref[2].intKey].Select(s => "  " + s));
+                    string beardString = string.Join(", ", StyleLabelBuckets[hairstylePref[2].intKey]);
                     drawerCache.Add(($"    <color=#ff0000>♥</color> {LabelDict[hairstylePref[2].intKey]}", "RPS_BeardList".Translate() + "\n" + beardString));
                 }
                 if (hasHairD)
                 {
-                    string hairString = string.Join(",\n", StyleLabelBuckets[hairstylePref[1].intKey].Select(s => "  " + s));
+                    string hairString = string.Join(", ", StyleLabelBuckets[hairstylePref[1].intKey]);
                     drawerCache.Add(($"    <color=#555555>♥</color> {LabelDict[hairstylePref[1].intKey]}", "RPS_HairList".Translate() + "\n" + hairString));
                 }
                 if (hasBeardD)
                 {
-                    string beardString = string.Join(",\n", StyleLabelBuckets[hairstylePref[3].intKey].Select(s => "  " + s));
+                    string beardString = string.Join(", ", StyleLabelBuckets[hairstylePref[3].intKey]);
                     drawerCache.Add(($"    <color=#555555>♥</color> {LabelDict[hairstylePref[3].intKey]}", "RPS_BeardList".Translate() + "\n" + beardString));
                 }
             }
@@ -478,12 +478,12 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 if (hasHairP)
                 {
-                    string hairString = string.Join(",\n", StyleLabelBuckets[hairstylePref[4].intKey].Select(s => "  " + s));
+                    string hairString = string.Join(", ", StyleLabelBuckets[hairstylePref[4].intKey]);
                     drawerCache.Add(($"    <color=#ff0000>♥</color> {LabelDict[hairstylePref[4].intKey]}", "RPS_HairList".Translate() + "\n" + hairString));
                 }
                 if (hasBeardP)
                 {
-                    string beardString = string.Join(",\n", StyleLabelBuckets[hairstylePref[6].intKey].Select(s => "  " + s));
+                    string beardString = string.Join(", ", StyleLabelBuckets[hairstylePref[6].intKey]);
                     drawerCache.Add(($"    <color=#ff0000>♥</color> {LabelDict[hairstylePref[6].intKey]}", "RPS_BeardList".Translate() + "\n" + beardString));
                 }
                 if (hasHairD || hasBeardD)
@@ -491,12 +491,12 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 if (hasHairD)
                 {
-                    string hairString = string.Join(",\n", StyleLabelBuckets[hairstylePref[5].intKey].Select(s => "  " + s));
+                    string hairString = string.Join(", ", StyleLabelBuckets[hairstylePref[5].intKey]);
                     drawerCache.Add(($"    <color=#555555>♥</color> {LabelDict[hairstylePref[5].intKey]}", "RPS_HairList".Translate() + "\n" + hairString));
                 }
                 if (hasBeardD)
                 {
-                    string beardString = string.Join(",\n", StyleLabelBuckets[hairstylePref[7].intKey].Select(s => "  " + s));
+                    string beardString = string.Join(", ", StyleLabelBuckets[hairstylePref[7].intKey]);
                     drawerCache.Add(($"    <color=#555555>♥</color> {LabelDict[hairstylePref[7].intKey]}", "RPS_BeardList".Translate() + "\n" + beardString));
                 }
             }

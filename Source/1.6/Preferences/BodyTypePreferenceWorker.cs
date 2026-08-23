@@ -86,6 +86,17 @@ namespace Maux36.RimPsyche.Sexuality
             var mDis = GetWeightedPref(bodyTypePreferenceDef.maleBodyDislikeBias, mDislikeTotal);
             var fPref = GetWeightedPref(bodyTypePreferenceDef.femaleBodyPrefBias, fPrefTotal);
             var fDis = GetWeightedPref(bodyTypePreferenceDef.femaleBodyDislikeBias, fDislikeTotal);
+            // If preference and dislike conflict, reset both to None
+            if (mPref == mDis)
+            {
+                mPref = BodyTypePreferenceDef.BodyTypePrefEnum.None;
+                mDis = BodyTypePreferenceDef.BodyTypePrefEnum.None;
+            }
+            if (fPref == fDis)
+            {
+                fPref = BodyTypePreferenceDef.BodyTypePrefEnum.None;
+                fDis = BodyTypePreferenceDef.BodyTypePrefEnum.None;
+            }
             //string int float float
             pref.Add(new PrefEntry(mPref.ToString(), (int)mPref, 0f, 0f));
             pref.Add(new PrefEntry(mDis.ToString(), (int)mDis, 0f, 0f));
@@ -124,17 +135,17 @@ namespace Maux36.RimPsyche.Sexuality
             {
                 //0:male pref | 1: male dislike
                 if (mBodyTypeDict[bodyPreference[0].intKey] == target.story.bodyType)
-                    value += 0.25f;
+                    value += 0.5f;
                 else if (mBodyTypeDict[bodyPreference[1].intKey] == target.story.bodyType)
-                    value -= 0.25f;
+                    value -= 0.5f;
             }
             else if (target.gender == Gender.Female)
             {
                 //2: female pref | 3: female dislike
                 if (fBodyTypeDict[bodyPreference[2].intKey] == target.story.bodyType)
-                    value += 0.25f;
+                    value += 0.5f;
                 if (fBodyTypeDict[bodyPreference[3].intKey] == target.story.bodyType)
-                    value -= 0.25f;
+                    value -= 0.5f;
             }
             //value -0.5 ~ 0.5
             float sway = observerPsyche.Evaluate(SexualityFormula.PhysicalPrefAuthSway);// 0.2 ~ 1.8

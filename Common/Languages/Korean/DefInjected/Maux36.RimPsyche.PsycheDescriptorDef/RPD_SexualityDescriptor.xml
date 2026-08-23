@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <!-- Non-stat -->
+  <!-- RP_Desc_AuthSway -->
+  <RP_Desc_AuthSway.positiveDescription>외모적 끌림의 영향을 적게 받음.</RP_Desc_AuthSway.positiveDescription>
+  <RP_Desc_AuthSway.negativeDescription>외모적 끌림의 영향을 크게 받음.</RP_Desc_AuthSway.negativeDescription>
+
+  <!-- RP_Desc_LoyalPartner -->
+  <RP_Desc_LoyalPartner.positiveDescription>외도나 이별을 시도할 가능성이 낮음.</RP_Desc_LoyalPartner.positiveDescription>
+  <RP_Desc_LoyalPartner.negativeDescription>외도나 이별을 시도할 가능성이 높음.</RP_Desc_LoyalPartner.negativeDescription>
+
+  <!-- RP_Desc_MarriageProne -->
+  <RP_Desc_MarriageProne.positiveDescription>결혼에 더 적극적임.</RP_Desc_MarriageProne.positiveDescription>
+  <RP_Desc_MarriageProne.negativeDescription>결혼을 꺼림.</RP_Desc_MarriageProne.negativeDescription>
+
+  <!-- RP_Desc_BoldRomantist -->
+  <RP_Desc_BoldRomantist.positiveDescription>고백을 시도할 가능성이 높음.</RP_Desc_BoldRomantist.positiveDescription>
+  <RP_Desc_BoldRomantist.negativeDescription>고백을 시도할 가능성이 낮음.</RP_Desc_BoldRomantist.negativeDescription>
+
+  <!-- RP_Desc_SexualOpenness -->
+  <RP_Desc_SexualOpenness.positiveDescription>성적 지향의 경계가 상대적으로 유연함.</RP_Desc_SexualOpenness.positiveDescription>
+  <RP_Desc_SexualOpenness.negativeDescription>성적 지향의 경계가 상대적으로 경직됨.</RP_Desc_SexualOpenness.negativeDescription>
+
+  <!-- RP_Desc_CooperativeRomantist -->
+  <RP_Desc_CooperativeRomantist.positiveDescription>이미 연인이 있는 대상에게 고백하기를 꺼림.</RP_Desc_CooperativeRomantist.positiveDescription>
+
+  <!-- RP_Desc_ConsiderateRomantist -->
+  <RP_Desc_ConsiderateRomantist.positiveDescription>상대방의 성적 지향을 존중함.</RP_Desc_ConsiderateRomantist.positiveDescription>
+  <RP_Desc_ConsiderateRomantist.negativeDescription>상대방의 성적 지향에 개의치 않고 다가감.</RP_Desc_ConsiderateRomantist.negativeDescription>
+
+</LanguageData>

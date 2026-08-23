@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 using RimWorld;
-using UnityEngine;
 using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
@@ -11,40 +10,8 @@ namespace Maux36.RimPsyche.Sexuality
         [HarmonyPriority(Priority.First)]
         public static bool Prefix(ref float __result, Pawn ___pawn, Pawn otherPawn)
         {
-            float num = 0f;
-            if (otherPawn.RaceProps.Humanlike)
-            {
-                num = otherPawn.GetStatValue(StatDefOf.PawnBeauty);
-            }
-            if (num < 0f)
-            {
-                num = Mathf.Max(-2.5f, num);
-                var pawnPsyche = ___pawn.compPsyche();
-                if (pawnPsyche?.Enabled == true)
-                    num = num * pawnPsyche.Evaluate(AuthenticBeautyMultiplier);
-                __result = 1f/(1f - num);
-                return false;
-            }
-            if (num > 0f)
-            {
-                num = Mathf.Min(2.5f, num);
-                var pawnPsyche = ___pawn.compPsyche();
-                if (pawnPsyche?.Enabled == true)
-                    num = num * pawnPsyche.Evaluate(AuthenticBeautyMultiplier);
-                __result = 1f + (1f - (0.1f * num)) * num;
-                return false;
-            }
-            __result = 1f;
+            __result = Sexuality_Utility.EvaluatePhysicalAttractiveness(___pawn, otherPawn);
             return false;
         }
-        public static RimpsycheFormula AuthenticBeautyMultiplier = new(
-            "AuthenticBeautyMultiplier",
-            (tracker) =>
-            {
-                float authenticityFactor = 1f - 0.5f * tracker.GetPersonality(PersonalityDefOf.Rimpsyche_Authenticity);
-                return authenticityFactor;
-            },
-            RimpsycheFormulaManager.FormulaIdDict
-        );
     }
 }

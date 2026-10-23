@@ -75,8 +75,9 @@ namespace Maux36.RimPsyche.Sexuality
                 PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(pf.stringKey, false);
                 if (personality == null)
                 {
-                    Log.Warning($"Psyche Preference unable to load Personality def {pf.stringKey}");
-                    //Logic to fix it.
+                    // Evaluate runs on every attraction check, so warn once per missing def and skip the entry
+                    Log.WarningOnce($"Psyche Preference unable to load Personality def {pf.stringKey}", pf.stringKey.GetHashCode());
+                    continue;
                 }
                 var pv = targetP.GetPersonality(personality);
                 value += Mathf.Max(1-Mathf.Abs(pv - pf.target) * posRangeInv, minF) * pf.importance; //-0.5~1 * 5 => -2.5~5
@@ -277,6 +278,7 @@ namespace Maux36.RimPsyche.Sexuality
                             Action action = delegate
                             {
                                 psychePreference[capturedIndex].stringKey = capturedDef.defName;
+                                psychePreference[capturedIndex].intKey = capturedDef.shortHash;
                                 relevantDefsCache = null;
                                 relevantDefsHash = null;
                                 potentialDefsCache = null;

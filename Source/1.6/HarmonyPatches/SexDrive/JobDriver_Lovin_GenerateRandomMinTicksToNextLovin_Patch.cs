@@ -18,6 +18,7 @@ namespace Maux36.RimPsyche.Sexuality
 
             MethodInfo getMultiplier = AccessTools.Method(typeof(JobDriver_Lovin_GenerateRandomMinTicksToNextLovin_Patch), nameof(JobDriver_Lovin_GenerateRandomMinTicksToNextLovin_Patch.GetSexdriveMultiplier));
 
+            bool patched = false;
             for (int i = 0; i < codes.Count; i++)
             {
                 var code = codes[i];
@@ -27,8 +28,11 @@ namespace Maux36.RimPsyche.Sexuality
                     yield return new CodeInstruction(OpCodes.Ldarg_1);
                     yield return new CodeInstruction(OpCodes.Call, getMultiplier);
                     yield return new CodeInstruction(OpCodes.Mul);
+                    patched = true;
                 }
             }
+            if (!patched)
+                Log.Error("[Rimpsyche - Sexuality] Lovin interval transpiler failed to patch");
         }
         public static float GetSexdriveMultiplier(Pawn initiator)
         {

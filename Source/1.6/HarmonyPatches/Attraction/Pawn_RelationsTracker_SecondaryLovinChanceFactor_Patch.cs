@@ -19,6 +19,7 @@ namespace Maux36.RimPsyche.Sexuality
             MethodInfo multiplierMethod = AccessTools.Method(typeof(Pawn_RelationsTracker_SecondaryLovinChanceFactor_Patch), nameof(Pawn_RelationsTracker_SecondaryLovinChanceFactor_Patch.PsycheBasedLovinChance));
 
             bool chancePatched = false;
+            bool attractionPatched = false;
 
             //Skip Trait Sexuality Check
             Label? skipLabel = null;
@@ -64,12 +65,12 @@ namespace Maux36.RimPsyche.Sexuality
                         new CodeInstruction(OpCodes.Mul)
                     };
                     codes.InsertRange(i + 2, newInstrs);
-                    chancePatched = chancePatched && true;
+                    attractionPatched = true;
                     break;
                 }
             }
 
-            if (!chancePatched)
+            if (!chancePatched || !attractionPatched)
             {
                 Log.Error("[Rimpsyche - Sexuality] Could not patch SecondaryLovinChanceFactor. Pawn sexuality will not work correctly");
             }

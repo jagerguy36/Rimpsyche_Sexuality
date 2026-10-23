@@ -18,6 +18,7 @@ namespace Maux36.RimPsyche.Sexuality
             var method_GetOffset = AccessTools.Method(typeof(InteractionWorker_Breakup_RandomSelectionWeight_Patch), nameof(GetLoyaltyOffset));
             var offsetLocal = generator.DeclareLocal(typeof(float)).LocalIndex;
             bool foundFirst = false;
+            bool foundSecond = false;
 
             for (int i = 0; i < codes.Count; i++)
             {
@@ -36,6 +37,7 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 if (foundFirst && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == -100f)
                 {
+                    foundSecond = true;
                     yield return code;
                     yield return new CodeInstruction(OpCodes.Ldloc, offsetLocal);
                     yield return new CodeInstruction(OpCodes.Add);
@@ -43,6 +45,8 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 yield return code;
             }
+            if (!foundSecond)
+                Log.Error("[Rimpsyche - Sexuality] Breakup loyalty transpiler failed to patch");
         }
         public static float GetLoyaltyOffset(Pawn initiator)
         {

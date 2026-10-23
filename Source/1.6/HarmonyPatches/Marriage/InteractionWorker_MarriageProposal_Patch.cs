@@ -42,6 +42,7 @@ namespace Maux36.RimPsyche.Sexuality
         {
             var MarriageAcceptanceBase = AccessTools.Method(typeof(InteractionWorker_MarriageProposal_AcceptanceChance_Patch), nameof(InteractionWorker_MarriageProposal_AcceptanceChance_Patch.MarriageAcceptanceBase));
             var codes = new List<CodeInstruction>(instructions);
+            bool patched = false;
 
             //Loyalty offset
             for (int i = 0; i < codes.Count; i++)
@@ -57,10 +58,13 @@ namespace Maux36.RimPsyche.Sexuality
                     }
                     yield return ldarg_line;
                     yield return new CodeInstruction(OpCodes.Call, MarriageAcceptanceBase);
+                    patched = true;
                     continue;
                 }
                 yield return code;
             }
+            if (!patched)
+                Log.Error("[Rimpsyche - Sexuality] Marriage acceptance transpiler failed to patch");
         }
 
         public static float MarriageAcceptanceBase(Pawn recipient)

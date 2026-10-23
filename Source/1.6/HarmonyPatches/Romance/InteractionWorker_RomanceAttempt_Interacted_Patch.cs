@@ -55,7 +55,7 @@ namespace Maux36.RimPsyche.Sexuality
                 yield return code;
             }
             if (!patchedSuccess)
-                Log.Error("RomanceAttempt_Interacted patch failed");
+                Log.Error("[Rimpsyche - Sexuality] RomanceAttempt_Interacted patch failed");
         }
 
         public static void PostSuccessIncrement(Pawn initiator, Pawn recipient)

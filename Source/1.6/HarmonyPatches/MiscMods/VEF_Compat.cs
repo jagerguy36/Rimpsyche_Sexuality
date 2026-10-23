@@ -41,6 +41,7 @@ namespace Maux36.RimPsyche.Sexuality
                     yield break;
                 }
                 var codes = instructions.ToList();
+                bool patched = false;
                 for (int i = 0; i < codes.Count; i++)
                 {
                     if (i>5 && codes[i-5].opcode == OpCodes.Ldfld)
@@ -48,11 +49,14 @@ namespace Maux36.RimPsyche.Sexuality
                         if ((codes[i - 5].OperandIs(forceFemaleField) || codes[i - 5].OperandIs(forceMaleField)) && codes[i].opcode == OpCodes.Stfld)
                         {
                             yield return new CodeInstruction(OpCodes.Call, methodForceGender);
+                            patched = true;
                             continue;
                         }
                     }
                     yield return codes[i];
                 }
+                if (!patched)
+                    Log.Error("[Rimpsyche - Sexuality] Rimpsyche failed to patch VEF.Genes.GeneUtils.ApplyGeneEffects (pattern not found)");
             }
             private static void ForceGender(Pawn pawn, Gender futureGender)
             {
@@ -66,9 +70,10 @@ namespace Maux36.RimPsyche.Sexuality
                 {
                     compPsyche.Sexuality.Notify_Sexchange();
                 }
-                else
+                else if (compPsyche.Sexuality.MKinsey >= 0f)
                 {
                     //Pawn gender was reversed during generation. Reverse Direction of the Sexual Orientation
+                    //Children have no sexuality yet (mKinsey -1); theirs is generated with the new gender when they come of age
                     compPsyche.Sexuality.SetmKinsey(1f - compPsyche.Sexuality.MKinsey);
                 }
             }

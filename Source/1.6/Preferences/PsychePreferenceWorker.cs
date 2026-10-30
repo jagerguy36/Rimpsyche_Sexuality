@@ -72,7 +72,8 @@ namespace Maux36.RimPsyche.Sexuality
             for (int i = 0; i < psychePreference.Count; i++)
             {
                 var pf = psychePreference[i];
-                PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(pf.stringKey, false);
+                // intKey is re-synced from stringKey on load
+                PersonalityDef personality = DefDatabase<PersonalityDef>.GetByShortHash((ushort)pf.intKey);
                 if (personality == null)
                 {
                     // Evaluate runs on every attraction check, so warn once per missing def and skip the entry
@@ -124,8 +125,8 @@ namespace Maux36.RimPsyche.Sexuality
             for (int i = 0; i < psychePreference.Count; i++)
             {
                 var pref = psychePreference[i];
-                if (string.IsNullOrEmpty(pref.stringKey)) continue;
-                var def = DefDatabase<PersonalityDef>.GetNamed(psychePreference[i].stringKey);
+                var def = DefDatabase<PersonalityDef>.GetByShortHash((ushort)pref.intKey);
+                if (def == null) continue; // Missing def not listed
                 string colorHex = ColorUtility.ToHtmlStringRGB(Color.Lerp(Color.yellow, Color.green, pref.importance));
                 string heart = $"<color=#{colorHex}>♥</color>";
                 drawerCache.Add($"  {heart} {Rimpsyche_Utility.GetPersonalityDesc(def, pref.target)}");
@@ -178,9 +179,9 @@ namespace Maux36.RimPsyche.Sexuality
             for(int i = 0; i < psychePrefs.Count; i++)
             {
                 var pf = psychePrefs[i];
-                PersonalityDef personality = DefDatabase<PersonalityDef>.GetNamed(pf.stringKey, false);
-                relevantDefsCache.Add(personality);
-                relevantDefsHash.Add(personality.shortHash);
+                PersonalityDef personality = DefDatabase<PersonalityDef>.GetByShortHash((ushort)pf.intKey);
+                relevantDefsCache.Add(personality); // Null kept for a missing def so the list stays index-aligned with psychePrefs
+                if (personality != null) relevantDefsHash.Add(personality.shortHash);
             }
             return relevantDefsCache;
         }
@@ -233,7 +234,10 @@ namespace Maux36.RimPsyche.Sexuality
                 var targetValue = psychePreference[i].target;
                 var importanceValue = psychePreference[i].importance;
                 var def = personalityDefList[i];
-                var (leftLabel, rightLabel, leftColor, rightColor) = (def.low.CapitalizeFirst(), def.high.CapitalizeFirst(), Color.red, Color.green);
+                // Missing def: show its saved name;
+                var (leftLabel, rightLabel, leftColor, rightColor) = def != null
+                    ? (def.low.CapitalizeFirst(), def.high.CapitalizeFirst(), Color.red, Color.green)
+                    : (psychePreference[i].stringKey, string.Empty, Color.red, Color.green);
 
                 Rect rowRect = new Rect(rect.x, y, rowWidth, personalityRowHeight * 2f);
                 Rect vertRect = new Rect(vertRectX, y, verticalWidth, personalityRowHeight * 2f);
@@ -241,7 +245,7 @@ namespace Maux36.RimPsyche.Sexuality
                 {
                     Widgets.DrawHighlight(rowRect);
                 }
-                string tooltipString = $"{def.label.CapitalizeFirst()}: {(targetValue * 100f).ToString("F1")}";
+                string tooltipString = $"{(def != null ? def.label.CapitalizeFirst() : psychePreference[i].stringKey)}: {(targetValue * 100f).ToString("F1")}";
                 TooltipHandler.TipRegion(rowRect, tooltipString);
 
                 if (Mouse.IsOver(vertRect))
@@ -344,7 +348,8 @@ namespace Maux36.RimPsyche.Sexuality
                     if (p == null)
                     {
                         Log.Warning($"Psyche Preference unable to load Personality def {psychePreference[i].stringKey}");
-                        //Logic to fix it.
+                        // Clear the stale hash
+                        psychePreference[i].intKey = 0;
                     }
                     else psychePreference[i].intKey = p.shortHash;
                 }

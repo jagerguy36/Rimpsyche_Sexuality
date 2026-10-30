@@ -31,7 +31,7 @@ namespace Maux36.RimPsyche.Sexuality
         private static Vector2 scrollPosition = new Vector2(0f, 0f);
         private Vector2 preferenceScrollPosition = Vector2.zero;
 
-        private static float totalContentHeight = 400f;
+        private static float totalContentHeight = 520f;
         private const float ScrollBarWidthMargin = 18f;
         public override void DoSettingsWindowContents(Rect inRect)
         {

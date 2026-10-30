@@ -7,7 +7,7 @@
   <!-- Settings -->
   <RimpsycheKinseyDistributionSettings>성적 지향 분포 세팅 (재시작 필요)</RimpsycheKinseyDistributionSettings>
   <RimpsycheKinseyDefaultSetting>기본값으로</RimpsycheKinseyDefaultSetting>
-  <RimpsycheUsePreferenceSystem>취향 시스템 사용</RimpsycheUsePreferenceSystem>
+  <RimpsycheUsePreferenceSystem>취향 시스템 사용 (재시작 필요)</RimpsycheUsePreferenceSystem>
   <RimpsycheUsePreferenceSystemTooltip>각 림에게 취향을 부여합니다.</RimpsycheUsePreferenceSystemTooltip>
   <RimpsycheRomanceAttemptGenderDiff>성별 차이</RimpsycheRomanceAttemptGenderDiff>
   <RimpsycheRomanceAttemptGenderDiffTooltip>여성은 일반적으로 남성에게 먼저 고백할 가능성이 낮습니다. (바닐라 로직)</RimpsycheRomanceAttemptGenderDiffTooltip>

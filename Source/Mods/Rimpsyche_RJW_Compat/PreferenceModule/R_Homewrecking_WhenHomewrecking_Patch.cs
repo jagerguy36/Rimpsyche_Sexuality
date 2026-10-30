@@ -17,7 +17,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
             {
                 float trySeduce = observerPsyche.Evaluate(HomewreckSeduceFactor);
                 float react = observerPsyche.Evaluate(WillingToCheatFactor);
-                __result = trySeduce * react;
+                __result *= trySeduce * react;
             }
         }
         public static RimpsycheFormula HomewreckSeduceFactor = new(

@@ -18,6 +18,7 @@ namespace Maux36.RimPsyche.Sexuality
             var method_GetOffset = AccessTools.Method(typeof(InteractionWorker_RomanceAttempt_PartnerFactor_Patch), nameof(GetLoyaltyOffset));
             var offsetLocal = generator.DeclareLocal(typeof(float)).LocalIndex;
             bool foundFirst = false;
+            bool foundSecond = false;
 
             for (int i = 0; i < codes.Count; i++)
             {
@@ -27,7 +28,7 @@ namespace Maux36.RimPsyche.Sexuality
                 {
                     foundFirst = true;
                     yield return code;
-                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Ldarg_1);
                     yield return new CodeInstruction(OpCodes.Call, method_GetOffset);
                     yield return new CodeInstruction(OpCodes.Stloc, offsetLocal);
                     yield return new CodeInstruction(OpCodes.Ldloc, offsetLocal);
@@ -36,6 +37,7 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 if (foundFirst && code.opcode == OpCodes.Ldc_R4 && (float)code.operand == 0f)
                 {
+                    foundSecond = true;
                     yield return code;
                     yield return new CodeInstruction(OpCodes.Ldloc, offsetLocal);
                     yield return new CodeInstruction(OpCodes.Add);
@@ -43,14 +45,16 @@ namespace Maux36.RimPsyche.Sexuality
                 }
                 yield return code;
             }
+            if (!foundSecond)
+                Log.Error("[Rimpsyche - Sexuality] Romance partner loyalty transpiler failed to patch");
         }
-        public static float GetLoyaltyOffset(Pawn initiator)
+        public static float GetLoyaltyOffset(Pawn recipient)
         {
             float offset = 0f;
-            var initPsyche = initiator.compPsyche();
-            if (initPsyche?.Enabled == true)
+            var reciPsyche = recipient.compPsyche();
+            if (reciPsyche?.Enabled == true)
             {
-                offset = initPsyche.Evaluate(PartnerFactorLoyaltyOffset);
+                offset = reciPsyche.Evaluate(PartnerFactorLoyaltyOffset);
             }
             return offset;
         }

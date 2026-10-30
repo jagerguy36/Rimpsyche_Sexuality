@@ -14,6 +14,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
             var method_LerpDouble = AccessTools.Method(typeof(GenMath), nameof(GenMath.LerpDouble));
             var WillingToCheatMultiplier = AccessTools.Method(typeof(R_Relationship_WhenNotInRelationship_Patch), nameof(R_Relationship_WhenNotInRelationship_Patch.WillingToCheatMult));
             var codes = new List<CodeInstruction>(instructions);
+            bool patched = false;
             for (int i = 0; i < codes.Count; i++)
             {
                 var code = codes[i];
@@ -23,6 +24,7 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
                     yield return new CodeInstruction(OpCodes.Ldloc_0);
                     yield return new CodeInstruction(OpCodes.Call, WillingToCheatMultiplier);
                     yield return new CodeInstruction(OpCodes.Mul);
+                    patched = true;
                     continue;
                 }
                 if (i == codes.Count-1)
@@ -34,6 +36,8 @@ namespace Maux36.RimPsyche.Sexuality.Rimpsyche_RJW_Compat
 
                 yield return code;
             }
+            if (!patched)
+                Log.Error("[Rimpsyche - Sexuality] RJW WhenNotInRelationship transpiler failed to patch the drunk cheat factor");
         }
 
         public static float WillingToCheatMult(Pawn pawn)

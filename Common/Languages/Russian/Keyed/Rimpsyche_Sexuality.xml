@@ -7,7 +7,7 @@
   <!-- Settings -->
   <RimpsycheKinseyDistributionSettings>Настройки распределения сексуальности (требуется перезапуск)</RimpsycheKinseyDistributionSettings>
   <RimpsycheKinseyDefaultSetting>Распределение по умолчанию</RimpsycheKinseyDefaultSetting>
-  <RimpsycheUsePreferenceSystem>Использовать систему предпочтений</RimpsycheUsePreferenceSystem>
+  <RimpsycheUsePreferenceSystem>Использовать систему предпочтений (требуется перезапуск)</RimpsycheUsePreferenceSystem>
   <RimpsycheUsePreferenceSystemTooltip>Наделяет каждую пешку своими собственными предпочтениями.</RimpsycheUsePreferenceSystemTooltip>
   <RimpsycheRomanceAttemptGenderDiff>Гендерная разница</RimpsycheRomanceAttemptGenderDiff>
   <RimpsycheRomanceAttemptGenderDiffTooltip>Женщины реже проявляют романтическую инициативу по отношению к мужчинам. (Логика ванильной игры)</RimpsycheRomanceAttemptGenderDiffTooltip>

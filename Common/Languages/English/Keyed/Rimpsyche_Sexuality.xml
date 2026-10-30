@@ -7,7 +7,7 @@
   <!-- Settings -->
   <RimpsycheKinseyDistributionSettings>Sexuality Distribution Settings (Requires restart)</RimpsycheKinseyDistributionSettings>
   <RimpsycheKinseyDefaultSetting>Default Distribution</RimpsycheKinseyDefaultSetting>
-  <RimpsycheUsePreferenceSystem>Use Preference System</RimpsycheUsePreferenceSystem>
+  <RimpsycheUsePreferenceSystem>Use Preference System (Requires restart)</RimpsycheUsePreferenceSystem>
   <RimpsycheUsePreferenceSystemTooltip>Give each pawns their own preference.</RimpsycheUsePreferenceSystemTooltip>
   <RimpsycheRomanceAttemptGenderDiff>Gender Difference</RimpsycheRomanceAttemptGenderDiff>
   <RimpsycheRomanceAttemptGenderDiffTooltip>Women are less likely to make a romance attempt at men. (Vanilla logic) </RimpsycheRomanceAttemptGenderDiffTooltip>

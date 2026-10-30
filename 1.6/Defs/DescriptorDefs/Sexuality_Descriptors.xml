@@ -25,6 +25,7 @@ negativeDescription: Shows up if negatively aligned
 
   <Maux36.RimPsyche.PsycheDescriptorDef>
     <defName>RP_Desc_LoyalPartner</defName>
+    <type>Romance</type>
     <positiveDescription>Less likely to cheat or break up.</positiveDescription>
     <negativeDescription>More likely to cheat or break up.</negativeDescription>
     <threshold>0.55</threshold>

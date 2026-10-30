@@ -2,7 +2,7 @@
 <Defs>
   <Maux36.RimPsyche.PreferenceDef>
     <defName>Rimpsyche_PsychePreference</defName>
-    <label>personality perference</label>
+    <label>personality preference</label>
     <description>Preference about personality.</description>
     <category>Romantic</category>
     <priority>100</priority>
@@ -12,7 +12,7 @@
 
   <Maux36.RimPsyche.Sexuality.HairPreferenceDef>
     <defName>Rimpsyche_HairStylePreference</defName>
-    <label>hair style perference</label>
+    <label>hair style preference</label>
     <description>Preference about hair and beard style.</description>
     <category>Physical</category>
     <priority>90</priority>
@@ -214,7 +214,7 @@
 
   <Maux36.RimPsyche.Sexuality.BodyTypePreferenceDef>
     <defName>Rimpsyche_BodyTypePreference</defName>
-    <label>bodytype perference</label>
+    <label>bodytype preference</label>
     <description>Preference about bodytype.</description>
     <category>Physical</category>
     <priority>100</priority>

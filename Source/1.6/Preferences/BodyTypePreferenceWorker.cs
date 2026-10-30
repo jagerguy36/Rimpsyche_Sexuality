@@ -144,7 +144,7 @@ namespace Maux36.RimPsyche.Sexuality
                 //2: female pref | 3: female dislike
                 if (fBodyTypeDict[bodyPreference[2].intKey] == target.story.bodyType)
                     value += 0.5f;
-                if (fBodyTypeDict[bodyPreference[3].intKey] == target.story.bodyType)
+                else if (fBodyTypeDict[bodyPreference[3].intKey] == target.story.bodyType)
                     value -= 0.5f;
             }
             //value -0.5 ~ 0.5

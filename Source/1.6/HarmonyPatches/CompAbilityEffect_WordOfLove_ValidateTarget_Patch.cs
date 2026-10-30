@@ -17,6 +17,7 @@ namespace Maux36.RimPsyche.Sexuality
             FieldInfo storyField = AccessTools.Field(typeof(Pawn), "story");
             FieldInfo field_Gender = AccessTools.Field(typeof(Pawn), "gender");
             bool skipping = false;
+            bool patched = false;
 
             var maxCount = codes.Count;
             for (int i = 0; i < maxCount; i++)
@@ -45,11 +46,14 @@ namespace Maux36.RimPsyche.Sexuality
                         yield return new CodeInstruction(OpCodes.Call, method_CanCastWordOfLove);
                         var nCode = new CodeInstruction(OpCodes.Brtrue, code.operand);
                         yield return nCode;
+                        patched = true;
                     }
                     continue;
                 }
                 yield return code;
             }
+            if (!patched)
+                Log.Error("[Rimpsyche - Sexuality] Word of Love transpiler failed to patch");
         }
 
         public static bool CanCastWordOfLove(Pawn initiator, Pawn target)

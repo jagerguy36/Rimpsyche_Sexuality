@@ -28,7 +28,7 @@ namespace Maux36.RimPsyche.Sexuality
                 {
                     foundFirst = true;
                     yield return code;
-                    yield return new CodeInstruction(OpCodes.Ldarg_0);
+                    yield return new CodeInstruction(OpCodes.Ldarg_1);
                     yield return new CodeInstruction(OpCodes.Call, method_GetOffset);
                     yield return new CodeInstruction(OpCodes.Stloc, offsetLocal);
                     yield return new CodeInstruction(OpCodes.Ldloc, offsetLocal);
@@ -48,13 +48,13 @@ namespace Maux36.RimPsyche.Sexuality
             if (!foundSecond)
                 Log.Error("[Rimpsyche - Sexuality] Romance partner loyalty transpiler failed to patch");
         }
-        public static float GetLoyaltyOffset(Pawn initiator)
+        public static float GetLoyaltyOffset(Pawn recipient)
         {
             float offset = 0f;
-            var initPsyche = initiator.compPsyche();
-            if (initPsyche?.Enabled == true)
+            var reciPsyche = recipient.compPsyche();
+            if (reciPsyche?.Enabled == true)
             {
-                offset = initPsyche.Evaluate(PartnerFactorLoyaltyOffset);
+                offset = reciPsyche.Evaluate(PartnerFactorLoyaltyOffset);
             }
             return offset;
         }

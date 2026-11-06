@@ -20,13 +20,10 @@ namespace Maux36.RimPsyche.Sexuality
                 var newToil = ToilMaker.MakeToil("RelationIncrease");
                 newToil.AddFinishAction(delegate
                 {
+                    //Both pawns run JobDriver_Lovin, so each adds its own side.
                     var pawnPsyche = pawn.compPsyche();
-                    var partnerPsyche = partner.compPsyche();
-                    if (pawnPsyche?.Enabled == true && partnerPsyche?.Enabled == true)
-                    {
+                    if (pawnPsyche?.Enabled == true && partner.compPsyche()?.Enabled == true)
                         pawnPsyche.Sexuality.IncrementRelationshipWith(partner, 0.01f);
-                        partnerPsyche.Sexuality.IncrementRelationshipWith(pawn, 0.01f);
-                    }
                 });
                 __result = __result.AddItem(newToil);
             }

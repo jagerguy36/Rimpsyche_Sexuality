@@ -11,7 +11,7 @@ namespace Maux36.RimPsyche.Sexuality
         {
             var pawnPsyche = ___pawn.compPsyche();
             if (pawnPsyche?.Enabled != true) return;
-            pawnPsyche.Sexuality.DirtyLoversCache();
+            pawnPsyche.DirtyLoversCache();
         }
     }
 }

@@ -9,9 +9,7 @@ namespace Maux36.RimPsyche.Sexuality
     {
         public static void Postfix(Pawn ___pawn)
         {
-            var pawnPsyche = ___pawn.compPsyche();
-            if (pawnPsyche?.Enabled != true) return;
-            pawnPsyche.DirtyLoversCache();
+            ___pawn.compPsyche()?.DirtyLoversCache();
         }
     }
 }

@@ -8,11 +8,18 @@ using Verse;
 
 namespace Maux36.RimPsyche.Sexuality
 {
-    [HarmonyPatch(typeof(JobDriver_Lovin), "GenerateRandomMinTicksToNextLovin")]
+    [HarmonyPatch]
     public static class JobDriver_Lovin_GenerateRandomMinTicksToNextLovin_Patch
     {
-        //Remove vanilla orientation block.
-        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+        static IEnumerable<MethodBase> TargetMethods()
+        {
+            yield return AccessTools.Method(typeof(JobDriver_Lovin), "GenerateRandomMinTicksToNextLovin");
+            //Relationship module's copy (used by its own lovin drivers).
+            if (Rimpsyche.RelationshipModuleLoaded)
+                yield return AccessTools.Method("Maux36.RimPsyche.Relationship.RPR_LovinUtility:GenerateRandomMinTicksToNextLovin");
+        }
+        //Lovin interval x 1/sexdrive.
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase original)
         {
             var codes = new List<CodeInstruction>(instructions);
 
@@ -25,7 +32,8 @@ namespace Maux36.RimPsyche.Sexuality
                 yield return code;
                 if (codes[i].opcode == OpCodes.Ldc_R4 && (float)codes[i].operand == 2500f)
                 {
-                    yield return new CodeInstruction(OpCodes.Ldarg_1);
+                    //Vanilla: instance (pawn = arg1). Relationship: static (pawn = arg0).
+                    yield return new CodeInstruction(original.IsStatic ? OpCodes.Ldarg_0 : OpCodes.Ldarg_1);
                     yield return new CodeInstruction(OpCodes.Call, getMultiplier);
                     yield return new CodeInstruction(OpCodes.Mul);
                     patched = true;
